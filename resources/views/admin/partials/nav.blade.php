@@ -6,19 +6,39 @@
                     <span data-feather="home"></span> Domov </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link{{ isActiveRoute('admin.users.index') }}" href="{{ route('admin.users.index') }}">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle {{ isActiveRoute('admin.users.index') }}" data-toggle="dropdown" href="{{ route('admin.users.index') }}" role="button" aria-haspopup="true" aria-expanded="false">
                     <span data-feather="users"></span>
                     Používatelia
                 </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item {{ isActiveRoute('admin.users.index') }}" href="{{ route('admin.users.index') }}">
+                        <span data-feather="list"></span>
+                        Zoznam</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item {{ isActiveRoute('admin.users.create') }}" href="{{ route('admin.users.create') }}">
+                        <span data-feather="user-plus"></span>
+                        Pridať
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle {{ isActiveRoute('admin.realestateoffices.index') }}" data-toggle="dropdown" href="{{ route('admin.realestateoffices.index') }}" role="button" aria-haspopup="true" aria-expanded="false">
+                    <span data-feather="github"></span>
+                    Realitné kancelárie
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item {{ isActiveRoute('admin.realestateoffices.index') }}" href="{{ route('admin.realestateoffices.index') }}">
+                        <span data-feather="list"></span>
+                        Zoznam</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item {{ isActiveRoute('admin.realestateoffices.create') }}" href="{{ route('admin.realestateoffices.create') }}">
+                        <span data-feather="user-plus"></span>
+                        Pridať
+                    </a>
+                </div>
             </li>
             <!--<li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="shopping-cart"></span>
-                    Products
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="#">
                     <span data-feather="users"></span>
                     Customers

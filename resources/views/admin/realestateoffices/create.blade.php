@@ -1,47 +1,51 @@
 @extends('admin.layouts.app')
-@section('title', 'Users')
+@section('title', 'Real estate offices')
 
 @section('content')
     <!--<h2></h2><br/>-->
     <br>
-    <form method="post" action="{{ route('admin.users.store') }}">
+    <form method="post" action="{{ route('admin.realestateoffices.store') }}">
         @csrf
         <div class="row">
             <div class="col-md-4"></div>
             <div class="form-group col-md-4">
-                <label for="surname">Meno:</label>
-                <input id="surname" type="text" class="form-control" name="surname">
+                <label for="name">Názov:</label>
+                <input id="name" type="text" class="form-control" name="name">
             </div>
         </div>
         <div class="row">
             <div class="col-md-4"></div>
             <div class="form-group col-md-4">
-                <label for="lastname">Priezvisko:</label>
-                <input id="lastname" type="text" class="form-control" name="lastname">
+                <label for="address">Adresa:</label>
+                <input id="address" type="text" class="form-control" name="address">
             </div>
         </div>
         <div class="row">
             <div class="col-md-4"></div>
             <div class="form-group col-md-4">
-                <label for="Email">Email:</label>
-                <input id="Email" type="email" class="form-control" name="email">
+                <label for="city">Mesto:</label>
+                <input id="city" type="text" class="form-control" name="city">
             </div>
         </div>
         <div class="row">
             <div class="col-md-4"></div>
             <div class="form-group col-md-4">
-                <label for="password">Heslo:</label>
-                <input id="password" type="password" class="form-control" name="password">
+                <label for="zip">PSČ:</label>
+                <input id="zip" type="text" class="form-control" name="zip">
             </div>
         </div>
         <div class="row">
             <div class="col-md-4"></div>
             <div class="form-group col-md-4">
-                <label for="admin">Admin:</label>
-                <select name="admin" id="admin">
-                    <option value="1">Áno</option>
-                    <option value="0">Nie</option>
-                </select>
+                <label for="web">Webová stránka:</label>
+                <input id="web" type="text" class="form-control" name="web">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                <label for="phone">Telefónne číslo:</label>
+                <input id="phone" type="text" class="form-control" name="phone">
             </div>
         </div>
         <!--<div class="row">

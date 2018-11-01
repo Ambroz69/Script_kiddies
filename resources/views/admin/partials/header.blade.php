@@ -7,6 +7,7 @@
             <a class="nav-link" href="{{ route('logout') }}"
                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
+                <span data-feather="log-out"></span>
                 {{ __('Odhlásiť sa') }}
             </a>
 
