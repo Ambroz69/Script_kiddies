@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\RealEstateOffice;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -77,7 +78,9 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        return view('admin.users.edit', compact('user'));
+        $user = User::findOrFail($user->id);
+        $real_estate_office = RealEstateOffice::pluck('name','id');
+        return view('admin.users.edit', compact('user','real_estate_office'));
     }
 
 
@@ -95,6 +98,7 @@ class UserController extends Controller
         $user->lastname = $request->get('lastname');
         $user->email = $request->get('email');
         $user->isAdmin = $request->get('admin');
+        $user->real_estate_office_id = $request->get('real_estate_office_id');
         $user->save();
 
         return redirect(route('admin.users.index'));

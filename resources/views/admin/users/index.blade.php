@@ -17,6 +17,7 @@
             <th>Priezvisko</th>
             <th>E-mail</th>
             <th>Admin</th>
+            <th>ID RK</th>
             <th>Vytvorené</th>
             <th>Upravené</th>
             <th></th>
@@ -31,6 +32,7 @@
                 <td>{{$user->lastname}}</td>
                 <td>{{$user->email}}</td>
                 <td>{{$user->isAdmin}}</td>
+                <td>{{$user->real_estate_office_id}}</td>
                 <td>{{$user->created_at->format('Y-m-d H:m')}}</td>
                 <td>{{$user->updated_at->format('Y-m-d H:m')}}</td>
 

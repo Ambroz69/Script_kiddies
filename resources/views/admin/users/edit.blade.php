@@ -40,7 +40,14 @@
         </div>
         <div class="row">
             <div class="col-md-4"></div>
-            <div class="form-group col-md-4" >
+            <div class="form-group col-md-4">
+                {!! Form::Label('name', 'RK:') !!}
+                {!! Form::select('name', $real_estate_office, null, ['class' => 'form-control']) !!}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
                 <button type="submit" class="btn btn-primary text-white float-lg-right">Zmeniť</button>
             </div>
         </div>
