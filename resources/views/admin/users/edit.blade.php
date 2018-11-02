@@ -31,7 +31,7 @@
             <div class="col-md-4"></div>
             <div class="form-group col-md-4">
                 <label for="admin">Admin:</label>
-                <select name="admin" id="admin">
+                <select name="admin" id="admin" class="form-control">
                     <option value="1">Áno</option>
                     <option value="0">Nie</option>
                 </select>
@@ -41,14 +41,15 @@
         <div class="row">
             <div class="col-md-4"></div>
             <div class="form-group col-md-4">
-                {!! Form::Label('name', 'RK:') !!}
-                {!! Form::select('name', $real_estate_office, null, ['class' => 'form-control']) !!}
+                {!! Form::Label('real_estate_office_id', 'RK:') !!}
+                {!! Form::select('real_estate_office_id', $real_estate_office, $selected_real_estate_office_id, ['class' => 'form-control']) !!}
             </div>
         </div>
         <div class="row">
             <div class="col-md-4"></div>
             <div class="form-group col-md-4">
                 <button type="submit" class="btn btn-primary text-white float-lg-right">Zmeniť</button>
+                <button href="{{ route('admin.users.index') }}" class="btn btn-secondary text-white float-lg-left">Zrušiť</button>
             </div>
         </div>
     </form>

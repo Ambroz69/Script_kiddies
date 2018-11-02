@@ -6,7 +6,7 @@
     <!--<a class="btn btn-md btn-success my-3" href="}}{{ route('admin.users.create') }}"><span data-feather="plus-square"></span></a>-->
 
     {{--@component('admin.components.alert', ['type' => 'success'])--}}
-        {{--pomoc--}}
+    {{--pomoc--}}
     {{--@endcomponent--}}
     <br>
     <table id="table" class="mt-3 table table-striped">
@@ -32,11 +32,16 @@
                 <td>{{$user->lastname}}</td>
                 <td>{{$user->email}}</td>
                 <td>{{$user->isAdmin}}</td>
-                <td>{{$user->real_estate_office_id}}</td>
+                <td>
+                    @isset($user->realEstateOffice)
+                        <a href="{{ route('admin.realestateoffices.edit', $user->realEstateOffice->id) }}">{{$user->realEstateOffice->name}}</a>
+                    @endisset
+                </td>
                 <td>{{$user->created_at->format('Y-m-d H:m')}}</td>
                 <td>{{$user->updated_at->format('Y-m-d H:m')}}</td>
 
-                <td><a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-info text-white"><span data-feather="edit"></span></a></td>
+                <td><a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-info text-white"><span
+                                data-feather="edit"></span></a></td>
                 <td>
                     <form action="{{ route('admin.users.destroy', $user->id) }}" method="post">
                         @csrf

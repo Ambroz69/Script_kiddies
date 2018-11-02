@@ -16,8 +16,13 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'surname','lastname', 'email', 'password',
+        'surname', 'lastname', 'email', 'password',
     ];
+
+    public function realEstateOffice()
+    {
+        return $this->belongsTo(RealEstateOffice::class);
+    }
 
     /**
      * The attributes that should be hidden for arrays.
