@@ -69,8 +69,12 @@ class UserController extends Controller
     {
 
         $real_estate_office = RealEstateOffice::pluck('name','id');
-        $selected_real_estate_office_id = $user->realEstateOffice->id;
 
+        $selected_real_estate_office_id = null;
+
+        if ($user->realEstateOffice) {
+            $selected_real_estate_office_id = $user->realEstateOffice->id;
+        }
         return view('admin.users.edit', compact('user','real_estate_office', 'selected_real_estate_office_id'));
     }
     /**

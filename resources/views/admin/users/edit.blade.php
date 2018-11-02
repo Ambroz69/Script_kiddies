@@ -49,8 +49,12 @@
             <div class="col-md-4"></div>
             <div class="form-group col-md-4">
                 <button type="submit" class="btn btn-primary text-white float-lg-right">Zmeniť</button>
-                <button href="{{ route('admin.users.index') }}" class="btn btn-secondary text-white float-lg-left">Zrušiť</button>
+                <a role="button" href="{{ route('admin.users.index') }}" class="btn btn-secondary text-white float-lg-left">Zrušiť</a>
             </div>
         </div>
     </form>
+    <div  class="form-group col-md-4 container-fluid">
+
+    </div>
+
 @endsection
