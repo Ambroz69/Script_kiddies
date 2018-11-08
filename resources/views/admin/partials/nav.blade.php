@@ -6,7 +6,7 @@
                     <span data-feather="home"></span> Domov </a>
             </li>
 
-            <li class="nav-item dropdown">
+           <!-- <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle {{ isActiveRoute('admin.users.index') }}" data-toggle="dropdown" href="{{ route('admin.users.index') }}" role="button" aria-haspopup="true" aria-expanded="false">
                     <span data-feather="users"></span>
                     Používatelia
@@ -32,6 +32,44 @@
                         <span data-feather="list"></span>
                         Zoznam</a>
                     <div class="dropdown-divider"></div>
+                    <a class="dropdown-item {{ isActiveRoute('admin.realestateoffices.create') }}" href="{{ route('admin.realestateoffices.create') }}">
+                        <span data-feather="user-plus"></span>
+                        Pridať
+                    </a>
+                </div>
+            </li>-->
+
+<!-- testik a Janku boli zebvo!-->
+            <li>
+                <a class="collapsible nav-item" role="button">
+                    <span data-feather="users"></span>
+                    Používatelia
+                    <span data-feather="chevron-down"></span></a>
+
+                <div class="content">
+                    <a class="dropdown-item {{ isActiveRoute('admin.users.index') }}" href="{{ route('admin.users.index') }}">
+                        <span data-feather="list"></span>
+                        Zoznam
+                    </a>
+                    <a class="dropdown-item {{ isActiveRoute('admin.users.create') }}" href="{{ route('admin.users.create') }}">
+                        <span data-feather="user-plus"></span>
+                        Pridať
+                    </a>
+                </div>
+
+
+            </li>
+            <li>
+                <a class="collapsible nav-item" role="button">
+                    <span data-feather="github"></span>
+                     Realitné kancelárie
+                    <span data-feather="chevron-down"></span></a>
+
+                <div class="content">
+                    <a class="dropdown-item {{ isActiveRoute('admin.realestateoffices.index') }}" href="{{ route('admin.realestateoffices.index') }}">
+                        <span data-feather="list"></span>
+                        Zoznam
+                    </a>
                     <a class="dropdown-item {{ isActiveRoute('admin.realestateoffices.create') }}" href="{{ route('admin.realestateoffices.create') }}">
                         <span data-feather="user-plus"></span>
                         Pridať
@@ -91,4 +129,20 @@
             </li>-->
         </ul>
     </div>
+    <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            });
+        }
+    </script>
 </nav>

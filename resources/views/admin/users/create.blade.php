@@ -56,6 +56,7 @@
             <div class="col-md-4"></div>
             <div class="form-group col-md-4">
                 <button type="submit" class="btn btn-primary text-white float-right">Pridať</button>
+                <a role="button" href="{{ route('admin.users.index') }}" class="btn btn-secondary text-white float-lg-left">Zrušiť</a>
             </div>
         </div>
     </form>
