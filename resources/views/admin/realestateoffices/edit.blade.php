@@ -16,27 +16,6 @@
         <div class="row">
             <div class="col-md-4"></div>
             <div class="form-group col-md-4">
-                <label for="address">Adresa:</label>
-                <input id="address" type="text" class="form-control" name="address" value="{{$realestateoffice->address}}">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4"></div>
-            <div class="form-group col-md-4">
-                <label for="city">Mesto:</label>
-                <input id="city" type="text" class="form-control" name="city" value="{{$realestateoffice->city}}">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4"></div>
-            <div class="form-group col-md-4">
-                <label for="zip">PSČ:</label>
-                <input id="zip" type="text" class="form-control" name="zip" value="{{$realestateoffice->zip}}">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4"></div>
-            <div class="form-group col-md-4">
                 <label for="web">Webová adresa:</label>
                 <input id="web" type="text" class="form-control" name="web" value="{{$realestateoffice->web}}">
             </div>

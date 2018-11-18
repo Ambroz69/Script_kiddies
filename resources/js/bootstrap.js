@@ -18,4 +18,4 @@ if (token) {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
-require('datatables.net-bs4');
+//require('datatables.net-bs4');

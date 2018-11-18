@@ -16,9 +16,6 @@ class CreateRealEstateOfficesTable extends Migration
         Schema::create('real_estate_offices', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('address');
-            $table->string('city');
-            $table->string('zip');
             $table->string('web');
             $table->string('phone');
             $table->timestamps();

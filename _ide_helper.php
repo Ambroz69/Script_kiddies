@@ -6259,7 +6259,7 @@ namespace Illuminate\Support\Facades {
     class Mail {
         
         /**
-         * Set the global from address and name.
+         * Set the global from addresses and name.
          *
          * @param string $address
          * @param string|null $name
@@ -6272,7 +6272,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Set the global reply-to address and name.
+         * Set the global reply-to addresses and name.
          *
          * @param string $address
          * @param string|null $name
@@ -6285,7 +6285,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Set the global to address and name.
+         * Set the global to addresses and name.
          *
          * @param string $address
          * @param string|null $name
@@ -7896,7 +7896,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Get the client IP address.
+         * Get the client IP addresses.
          *
          * @return string 
          * @static 
@@ -8083,7 +8083,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Get a unique fingerprint for the request / route / IP address.
+         * Get a unique fingerprint for the request / route / IP addresses.
          *
          * @return string 
          * @throws \RuntimeException
@@ -8465,8 +8465,8 @@ namespace Illuminate\Support\Facades {
         /**
          * Returns the client IP addresses.
          * 
-         * In the returned array the most trusted IP address is first, and the
-         * least trusted one last. The "real" client IP address is the last one,
+         * In the returned array the most trusted IP addresses is first, and the
+         * least trusted one last. The "real" client IP addresses is the last one,
          * but this is also the least trusted one. Trusted proxies are stripped.
          * 
          * Use this method carefully; you should use getClientIp() instead.
@@ -8482,15 +8482,15 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Returns the client IP address.
+         * Returns the client IP addresses.
          * 
-         * This method can read the client IP address from the "X-Forwarded-For" header
+         * This method can read the client IP addresses from the "X-Forwarded-For" header
          * when trusted proxies were set via "setTrustedProxies()". The "X-Forwarded-For"
          * header value is a comma+space separated list of IP addresses, the left-most
          * being the original client, and each successive proxy that passed the request
-         * adding the IP address where it received the request from.
+         * adding the IP addresses where it received the request from.
          *
-         * @return string|null The client IP address
+         * @return string|null The client IP addresses
          * @see getClientIps()
          * @see http://en.wikipedia.org/wiki/X-Forwarded-For
          * @static 

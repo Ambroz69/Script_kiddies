@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ app()->getLocale() }}">
+<html lang="{{ app()->getLocale() }}" style="height: 100%;">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -9,10 +9,7 @@
     <style>
     </style>
 </head>
-<body style="background:url({{ URL::to('/') }}/image/bg.png);
-        background-size: 100% 100%;
-        background-repeat: no-repeat;">
-@include('partials.nav')
+<body style="height: 100%;">
 @yield('content')
 
 <script src="{{ asset('js/app.js') }}"></script>

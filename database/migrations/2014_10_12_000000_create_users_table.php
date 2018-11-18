@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             //$table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('isAdmin')->nullable();
-            $table->unsignedInteger('real_estate_office_id');
+            $table->unsignedInteger('real_estate_office_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
 

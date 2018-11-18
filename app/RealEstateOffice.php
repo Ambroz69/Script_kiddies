@@ -8,7 +8,7 @@ class RealEstateOffice extends Model
 {
     //
     protected $fillable = [
-        'name', 'address', 'city', 'zip', 'web', 'phone',
+        'name', 'web', 'phone',
     ];
 
     public function isAdmin()

@@ -3,79 +3,66 @@
         <ul class="nav flex-column">
             <li class="nav-item">
                 <a class="nav-link{{ isActiveRoute('admin.home') }}"  href="{{ route('admin.home') }}">
-                    <span data-feather="home"></span> Domov </a>
+                    <span data-feather="home"></span> &nbsp Domov </a>
             </li>
 
-           <!-- <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle {{ isActiveRoute('admin.users.index') }}" data-toggle="dropdown" href="{{ route('admin.users.index') }}" role="button" aria-haspopup="true" aria-expanded="false">
+        <li class="nav-item">
+                <a class="nav-link{{ isActiveRoute('admin.users.index') }}" href="{{ route('admin.users.index') }}">
                     <span data-feather="users"></span>
-                    Používatelia
+                    &nbsp Používatelia
                 </a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item {{ isActiveRoute('admin.users.index') }}" href="{{ route('admin.users.index') }}">
-                        <span data-feather="list"></span>
-                        Zoznam</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item {{ isActiveRoute('admin.users.create') }}" href="{{ route('admin.users.create') }}">
-                        <span data-feather="user-plus"></span>
-                        Pridať
-                    </a>
-                </div>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle {{ isActiveRoute('admin.realestateoffices.index') }}" data-toggle="dropdown" href="{{ route('admin.realestateoffices.index') }}" role="button" aria-haspopup="true" aria-expanded="false">
-                    <span data-feather="github"></span>
-                    Realitné kancelárie
+
+       <li class="nav-item">
+                <a class="nav-link{{ isActiveRoute('admin.addresses.index') }}" href="{{ route('admin.addresses.index') }}">
+                    <span data-feather="mail"></span>
+                    &nbsp Adresy
                 </a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item {{ isActiveRoute('admin.realestateoffices.index') }}" href="{{ route('admin.realestateoffices.index') }}">
-                        <span data-feather="list"></span>
-                        Zoznam</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item {{ isActiveRoute('admin.realestateoffices.create') }}" href="{{ route('admin.realestateoffices.create') }}">
-                        <span data-feather="user-plus"></span>
-                        Pridať
-                    </a>
-                </div>
-            </li>-->
-
-<!-- testik a Janku boli zebvo!-->
-            <li>
-                <a class="collapsible nav-item" role="button">
-                    <span data-feather="users"></span>
-                    Používatelia
-                    <span data-feather="chevron-down"></span></a>
-
-                <div class="content">
-                    <a class="dropdown-item {{ isActiveRoute('admin.users.index') }}" href="{{ route('admin.users.index') }}">
-                        <span data-feather="list"></span>
-                        Zoznam
-                    </a>
-                    <a class="dropdown-item {{ isActiveRoute('admin.users.create') }}" href="{{ route('admin.users.create') }}">
-                        <span data-feather="user-plus"></span>
-                        Pridať
-                    </a>
-                </div>
-
-
             </li>
-            <li>
-                <a class="collapsible nav-item" role="button">
-                    <span data-feather="github"></span>
-                     Realitné kancelárie
-                    <span data-feather="chevron-down"></span></a>
 
-                <div class="content">
-                    <a class="dropdown-item {{ isActiveRoute('admin.realestateoffices.index') }}" href="{{ route('admin.realestateoffices.index') }}">
-                        <span data-feather="list"></span>
-                        Zoznam
-                    </a>
-                    <a class="dropdown-item {{ isActiveRoute('admin.realestateoffices.create') }}" href="{{ route('admin.realestateoffices.create') }}">
-                        <span data-feather="user-plus"></span>
-                        Pridať
-                    </a>
-                </div>
+            <li class="nav-item">
+                <a class="nav-link{{ isActiveRoute('admin.realestateoffices.index') }}" href="{{ route('admin.realestateoffices.index') }}">
+                    <span data-feather="coffee"></span>
+                    &nbsp Realitné kancelárie
+                </a>
             </li>
+
+            <li class="nav-item" id="fialova">
+                <a class="nav-link" href="#">
+                    <span data-feather="file"></span>
+                    &nbsp Inzeráty
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#" style="margin-left: 12px">
+                    <span data-feather="circle"></span>
+                    &nbsp Domy
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#" style="margin-left: 12px">
+                    <span data-feather="circle"></span>
+                    &nbsp Byty
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#" style="margin-left: 12px">
+                    <span data-feather="disc"></span>
+                    &nbsp Pozemky
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#" style="margin-left: 12px">
+                    <span data-feather="box"></span>
+                    &nbsp Detaily nehnuteľností
+                </a>
+            </li>
+
+
             <!--<li class="nav-item">
                 <a class="nav-link" href="#">
                     <span data-feather="users"></span>

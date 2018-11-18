@@ -47,9 +47,6 @@ class RealEstateOfficeController extends Controller
     {
         $realestateoffice = new \App\RealEstateOffice();
         $realestateoffice->name = $request->get('name');
-        $realestateoffice->address = $request->get('address');
-        $realestateoffice->city = $request->get('city');
-        $realestateoffice->zip = $request->get('zip');
         $realestateoffice->web = $request->get('web');
         $realestateoffice->phone = $request->get('phone');
         $realestateoffice->save();
@@ -91,9 +88,6 @@ class RealEstateOfficeController extends Controller
     {
         //
         $realestateoffice->name = $request->get('name');
-        $realestateoffice->address = $request->get('address');
-        $realestateoffice->city = $request->get('city');
-        $realestateoffice->zip = $request->get('zip');
         $realestateoffice->web = $request->get('web');
         $realestateoffice->phone = $request->get('phone');
         $realestateoffice->save();
