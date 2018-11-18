@@ -1,0 +1,115 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\House;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
+class HouseController extends Controller
+{
+
+    public function __construct()
+    {
+        $this->middleware('admin');
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+        $houses = House::all();
+        return view('admin.houses.index', compact('houses'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+        return view('admin.houses.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request, House $house)
+    {
+        //
+        $house = new \App\House();
+        $house->floor_count = $request->get('floor_count');
+        $house->terrace = $request->get('terrace');
+        $house->garden = $request->get('garden');
+        $house->save();
+
+        return redirect(route('admin.houses.index'))->with('success', 'Záznam bol pridaný.');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(House $house)
+    {
+        //
+        return view('admin.houses.edit', compact('house'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, House $house)
+    {
+        //
+        $house->floor_count = $request->get('floor_count');
+        $house->terrace = $request->get('terrace');
+        $house->garden = $request->get('garden');
+        $house->save();
+
+        return redirect(route('admin.houses.index'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(House $house)
+    {
+        //
+        try {
+            $house->delete();
+        } catch (\Exception $e) {
+
+        }
+        return redirect(route('admin.houses.index'))
+            ->with('success', 'Záznam bol vymazaný.');
+    }
+}

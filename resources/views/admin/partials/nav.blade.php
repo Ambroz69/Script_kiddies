@@ -35,28 +35,28 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#" style="margin-left: 12px">
+                <a class="nav-link{{ isActiveRoute('admin.houses.index') }}" href="{{ route('admin.houses.index') }}" style="margin-left: 12px">
                     <span data-feather="circle"></span>
                     &nbsp Domy
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#" style="margin-left: 12px">
+                <a class="nav-link{{ isActiveRoute('admin.apartments.index') }}" href="{{ route('admin.apartments.index') }}" style="margin-left: 12px">
                     <span data-feather="circle"></span>
                     &nbsp Byty
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#" style="margin-left: 12px">
+                <a class="nav-link{{ isActiveRoute('admin.estates.index') }}" href="{{ route('admin.estates.index') }}" style="margin-left: 12px">
                     <span data-feather="disc"></span>
                     &nbsp Pozemky
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#" style="margin-left: 12px">
+                <a class="nav-link{{ isActiveRoute('admin.propertydetails.index') }}" href="{{ route('admin.propertydetails.index') }}" style="margin-left: 12px">
                     <span data-feather="box"></span>
                     &nbsp Detaily nehnuteľností
                 </a>

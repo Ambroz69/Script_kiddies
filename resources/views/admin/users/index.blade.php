@@ -62,16 +62,23 @@
                 <td>{{$user->updated_at->format('Y-m-d H:m')}}</td>-->
                             <td></td>
 
-                            <td class="form-inline" style="padding-right: 0; text-align: right;">
-                                        <a  href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-info text-white float-left"
-                                            style="margin-right: 5px;">
-                                            <span data-feather="edit"></span>
-                                        </a>
+                            <td style="padding-right: 0;">
+                                <div id="container">
+                                    <div style="float: right; margin-left: 10px;">
                                         <form action="{{ route('admin.users.destroy', $user->id) }}" method="post" class="float-right">
                                             @csrf
                                             @method('delete')
                                             <button class="btn btn-danger" type="submit"><span data-feather="trash-2"></span></button>
                                         </form>
+                                    </div>
+                                    <div style="float: right; margin-right: 0px;">
+                                        <a  href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-info text-white float-left">
+                                            <span data-feather="edit"></span>
+                                        </a>
+                                    </div>
+                                </div>
+
+
                             </td>
                         </tr>
                     @endforeach

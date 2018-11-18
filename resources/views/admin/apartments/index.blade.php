@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', 'Real estate offices')
+@section('title', 'Apartments')
 
 @section('content')
     <div class="container-fluid">
@@ -8,10 +8,10 @@
             <div class="col-md-12 py-5">
                 <div class="col-md-12 px-0 pb-5">
                     <div class=" col-md-10 float-left">
-                        <h2>Realitné kancelárie</h2>
+                        <h2>Byty</h2>
                     </div>
                     <div class="col-md-2 float-right pr-0">
-                        <a role="button" class="btn btn-secondary btn-block" href="{{ route('admin.realestateoffices.create') }}">
+                        <a role="button" class="btn btn-secondary btn-block" href="{{ route('admin.apartments.create') }}">
                             Pridať
                         </a>
                     </div>
@@ -19,33 +19,31 @@
                 <table id="table" class="mt-3 table" style="width: 100%">
                     <thead>
                     <tr>
-                        <th class="bg-primary text-white">#</th>
-                        <th>Názov</th>
-                        <th>Webová stránka</th>
-                        <th>Telefónne číslo</th>
-                        <th></th>
+                        <th>#</th>
+                        <th>Počet izieb</th>
+                        <th>Poschodie</th>
+                        <th> </th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($realestateoffices as $realestateoffice)
+                    @foreach($apartments as $apartment)
                         <tr>
-                            <td>{{$realestateoffice->id}}</td>
-                            <td>{{$realestateoffice->name}}</td>
-                            <td>{{$realestateoffice->web}}</td>
-                            <td>{{$realestateoffice->phone}}</td>
+                            <td>{{$apartment->id}}</td>
+                            <td>{{$apartment->room_count}}</td>
+                            <td>{{$apartment->floor}}</td>
                             <td></td>
                             <td style="padding-right: 0;">
                                 <div id="container">
                                     <div style="float: right; margin-left: 10px;">
-                                        <form action="{{ route('admin.realestateoffices.destroy', $realestateoffice->id) }}" method="post" class="float-right">
+                                        <form action="{{ route('admin.apartments.destroy', $apartment->id) }}" method="post" class="float-right">
                                             @csrf
                                             @method('delete')
                                             <button class="btn btn-danger" type="submit"><span data-feather="trash-2"></span></button>
                                         </form>
                                     </div>
                                     <div style="float: right; margin-right: 0px;">
-                                        <a  href="{{ route('admin.realestateoffices.edit', $realestateoffice->id) }}" class="btn btn-info text-white float-left">
+                                        <a  href="{{ route('admin.apartments.edit', $apartment->id) }}" class="btn btn-info text-white float-left">
                                             <span data-feather="edit"></span>
                                         </a>
                                     </div>
