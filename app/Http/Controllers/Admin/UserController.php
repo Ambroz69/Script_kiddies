@@ -68,9 +68,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-
         $real_estate_office = RealEstateOffice::pluck('name','id');
-
         $selected_real_estate_office_id = null;
 
         if ($user->realEstateOffice) {

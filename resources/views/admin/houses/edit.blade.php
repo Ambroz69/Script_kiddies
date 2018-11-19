@@ -30,7 +30,13 @@
                 <input id="garden" type="text" class="form-control" name="garden" value="{{$house->garden}}">
             </div>
         </div>
-
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                {!! Form::Label('property_detail_id', 'Detaily ID:') !!}
+                {!! Form::select('property_detail_id', $property_detail, $selected_property_detail_id, ['class' => 'form-control']) !!}
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-4"></div>
             <div class="form-group col-md-4" >

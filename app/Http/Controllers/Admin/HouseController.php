@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\House;
+use App\PropertyDetail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -21,8 +22,9 @@ class HouseController extends Controller
     public function index()
     {
         //
-        $houses = House::all();
+        $houses = House::all()->load('propertyDetails');
         return view('admin.houses.index', compact('houses'));
+
     }
 
     /**
@@ -73,8 +75,13 @@ class HouseController extends Controller
      */
     public function edit(House $house)
     {
-        //
-        return view('admin.houses.edit', compact('house'));
+        $property_detail = PropertyDetail::pluck('type','id');
+        $selected_property_detail_id = null;
+
+        if ($house->realEstateOffice) {
+            $selected_property_detail_id = $house->realEstateOffice->id;
+        }
+        return view('admin.houses.edit', compact('house','property_detail','selected_property_detail_id'));
     }
 
     /**

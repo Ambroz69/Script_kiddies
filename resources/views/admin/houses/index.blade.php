@@ -23,6 +23,7 @@
                         <th>Počet poschodí</th>
                         <th>Terasa</th>
                         <th>Záhrada</th>
+                        <th>Detaily</th>
                         <th> </th>
                         <th> </th>
                     </tr>
@@ -34,6 +35,13 @@
                             <td>{{$house->floor_count}}</td>
                             <td>{{$house->terrace}}</td>
                             <td>{{$house->garden}}</td>
+                            <td>
+                                @isset($house->propertyDetails)
+                                    <a href="{{ route('admin.propertydetails.edit', $house->propertyDetails->id) }}">
+                                        {{$house->propertyDetails->id}}
+                                    </a>
+                                @endisset
+                            </td>
                             <td></td>
                             <td style="padding-right: 0;">
                                 <div id="container">

@@ -23,6 +23,7 @@
                         <th>Názov</th>
                         <th>Webová stránka</th>
                         <th>Telefónne číslo</th>
+                        <th>Adresa</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -34,6 +35,13 @@
                             <td>{{$realestateoffice->name}}</td>
                             <td>{{$realestateoffice->web}}</td>
                             <td>{{$realestateoffice->phone}}</td>
+                            <td>
+                                @isset($realestateoffice->address)
+                                    <a href="{{ route('admin.addresses.edit', $realestateoffice->address->id) }}">
+                                        {{$realestateoffice->address->address_name}} {{$realestateoffice->address->address_number}}, {{$realestateoffice->address->zip}} {{$realestateoffice->address->city}}
+                                    </a>
+                                @endisset
+                            </td>
                             <td></td>
                             <td style="padding-right: 0;">
                                 <div id="container">

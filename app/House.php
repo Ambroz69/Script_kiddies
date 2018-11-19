@@ -15,4 +15,9 @@ class House extends Model
     {
         return false;
     }
+
+    public function propertyDetails()
+    {
+        return $this->belongsTo(PropertyDetail::class);
+    }
 }

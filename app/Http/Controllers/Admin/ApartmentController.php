@@ -20,7 +20,7 @@ class ApartmentController extends Controller
     public function index()
     {
         //
-        $apartments = Apartment::all();
+        $apartments = Apartment::all()->load('propertyDetails');
         return view('admin.apartments.index', compact('apartments'));
     }
 

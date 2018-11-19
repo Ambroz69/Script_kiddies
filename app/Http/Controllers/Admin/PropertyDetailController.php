@@ -79,7 +79,6 @@ class PropertyDetailController extends Controller
      */
     public function edit(PropertyDetail $propertydetail)
     {
-        //
         return view('admin.propertydetails.edit', compact('propertydetail'));
     }
 

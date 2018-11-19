@@ -15,4 +15,15 @@ class PropertyDetail extends Model
     {
         return false;
     }
+
+    public function houses()
+    {
+        return $this->hasMany(House::class);
+    }
+
+    public function apartments()
+    {
+        return $this->hasMany(Apartment::class);
+    }
+
 }

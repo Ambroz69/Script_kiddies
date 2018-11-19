@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\RealEstateOffice;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Address;
 
 class RealEstateOfficeController extends Controller
 {
@@ -22,7 +23,7 @@ class RealEstateOfficeController extends Controller
     public function index()
     {
         //
-        $realestateoffices = RealEstateOffice::all();
+        $realestateoffices = RealEstateOffice::all()->load('address');
         return view('admin.realestateoffices.index', compact('realestateoffices'));
     }
 
@@ -33,8 +34,8 @@ class RealEstateOfficeController extends Controller
      */
     public function create()
     {
-        //
-        return view('admin.realestateoffices.create');
+        $address = Address::get()->pluck('full_address', 'id');
+        return view('admin.realestateoffices.create', compact('address'));
     }
 
     /**
@@ -49,6 +50,7 @@ class RealEstateOfficeController extends Controller
         $realestateoffice->name = $request->get('name');
         $realestateoffice->web = $request->get('web');
         $realestateoffice->phone = $request->get('phone');
+        $realestateoffice->address_id = $request->get('address_id');
         $realestateoffice->save();
 
         return redirect(route('admin.realestateoffices.index'))->with('success', 'Záznam bol pridaný.');
@@ -68,13 +70,16 @@ class RealEstateOfficeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit(RealEstateOffice $realestateoffice)
     {
-        //
-        return view('admin.realestateoffices.edit', compact('realestateoffice'));
+        $address = Address::get()->pluck('full_address', 'id');
+        $selected_address_id = null;
+
+        if ($realestateoffice->address) {
+            $selected_address_id = $realestateoffice->address->id;
+        }
+        return view('admin.realestateoffices.edit', compact('realestateoffice','address','selected_address_id'));
     }
 
     /**
@@ -90,6 +95,7 @@ class RealEstateOfficeController extends Controller
         $realestateoffice->name = $request->get('name');
         $realestateoffice->web = $request->get('web');
         $realestateoffice->phone = $request->get('phone');
+        $realestateoffice->address_id = $request->get('address_id');
         $realestateoffice->save();
 
         return redirect(route('admin.realestateoffices.index'));

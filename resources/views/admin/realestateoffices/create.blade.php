@@ -27,14 +27,13 @@
                 <input id="phone" type="text" class="form-control" name="phone">
             </div>
         </div>
-        <!--<div class="row">
+        <div class="row">
             <div class="col-md-4"></div>
             <div class="form-group col-md-4">
-                <label for="Number">Phone Number:</label>
-                <input type="text" class="form-control" name="number">
+                {!! Form::Label('address_id', 'Adresa:') !!}
+                {!! Form::select('address_id', $address, null, ['class' => 'form-control']) !!}
             </div>
-        </div>-->
-
+        </div>
         <div class="row">
             <div class="col-md-4"></div>
             <div class="form-group col-md-4">
