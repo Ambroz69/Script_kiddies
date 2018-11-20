@@ -33,7 +33,15 @@
                         <tr>
                             <td>{{$house->id}}</td>
                             <td>{{$house->floor_count}}</td>
-                            <td>{{$house->terrace}}</td>
+                            <td>
+                                @php
+                                    if ($house->terrace == 0) {
+                                        echo ' <span data-feather="x"></span>';
+                                    } else {
+                                        echo '<span data-feather="check"></span>';
+                                    }
+                                @endphp
+                            </td>
                             <td>{{$house->garden}}</td>
                             <td>
                                 @isset($house->propertyDetails)

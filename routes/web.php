@@ -15,6 +15,7 @@ Route::name('admin.')->group(function () {
     Route::resource('admin/apartments', 'Admin\ApartmentController');
     Route::resource('admin/estates', 'Admin\EstateController');
     Route::resource('admin/propertydetails', 'Admin\PropertyDetailController');
+    Route::resource('admin/ads','Admin\AdController');
 });
 
 

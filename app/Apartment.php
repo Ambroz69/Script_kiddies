@@ -20,4 +20,9 @@ class Apartment extends Model
     {
         return $this->belongsTo(PropertyDetail::class);
     }
+
+    public function ads()
+    {
+        return $this->hasMany(Ad::class);
+    }
 }

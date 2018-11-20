@@ -32,7 +32,7 @@
                         <th>Kúrenie</th>
                         <th>Internet</th>
                         <th></th>
-                        <th></th>
+                        <th style="width: 12%"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -43,10 +43,42 @@
                             <td>{{$propertydetail->type}}</td>
                             <td>{{$propertydetail->window_type}}</td>
                             <td>{{$propertydetail->direction}}</td>
-                            <td>{{$propertydetail->balcony}}</td>
-                            <td>{{$propertydetail->cellar}}</td>
-                            <td>{{$propertydetail->garage}}</td>
-                            <td>{{$propertydetail->insulated}}</td>
+                            <td>
+                                @php
+                                    if ($propertydetail->balcony == 0) {
+                                        echo ' <span data-feather="x"></span>';
+                                    } else {
+                                        echo '<span data-feather="check"></span>';
+                                    }
+                                @endphp
+                            </td>
+                            <td>
+                                @php
+                                    if ($propertydetail->cellar == 0) {
+                                        echo ' <span data-feather="x"></span>';
+                                    } else {
+                                        echo '<span data-feather="check"></span>';
+                                    }
+                                @endphp
+                            </td>
+                            <td>
+                                @php
+                                    if ($propertydetail->garage == 0) {
+                                        echo ' <span data-feather="x"></span>';
+                                    } else {
+                                        echo '<span data-feather="check"></span>';
+                                    }
+                                @endphp
+                            </td>
+                            <td>
+                                @php
+                                    if ($propertydetail->insulated == 0) {
+                                        echo ' <span data-feather="x"></span>';
+                                    } else {
+                                        echo '<span data-feather="check"></span>';
+                                    }
+                                @endphp
+                            </td>
                             <td>{{$propertydetail->heating}}</td>
                             <td>{{$propertydetail->internet}}</td>
                             <td></td>
