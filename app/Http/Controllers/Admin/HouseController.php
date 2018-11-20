@@ -21,10 +21,8 @@ class HouseController extends Controller
      */
     public function index()
     {
-        //
         $houses = House::all()->load('propertyDetails');
         return view('admin.houses.index', compact('houses'));
-
     }
 
     /**
@@ -34,8 +32,8 @@ class HouseController extends Controller
      */
     public function create()
     {
-        //
-        return view('admin.houses.create');
+        $property_detail = PropertyDetail::pluck('id', 'id');
+        return view('admin.houses.create', compact('property_detail'));
     }
 
     /**
@@ -46,11 +44,13 @@ class HouseController extends Controller
      */
     public function store(Request $request, House $house)
     {
-        //
+
         $house = new \App\House();
         $house->floor_count = $request->get('floor_count');
         $house->terrace = $request->get('terrace');
         $house->garden = $request->get('garden');
+        $house->property_details_id = $request->get('property_details_id');
+
         $house->save();
 
         return redirect(route('admin.houses.index'))->with('success', 'Záznam bol pridaný.');
@@ -64,7 +64,7 @@ class HouseController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -75,12 +75,13 @@ class HouseController extends Controller
      */
     public function edit(House $house)
     {
-        $property_detail = PropertyDetail::pluck('type','id');
+        $property_detail = PropertyDetail::pluck('id','id');
         $selected_property_detail_id = null;
 
-        if ($house->realEstateOffice) {
-            $selected_property_detail_id = $house->realEstateOffice->id;
+        if ($house->propertyDetails) {
+            $selected_property_detail_id = $house->propertyDetails->id;
         }
+        //return dd($property_detail, $selected_property_detail_id);
         return view('admin.houses.edit', compact('house','property_detail','selected_property_detail_id'));
     }
 
@@ -93,10 +94,10 @@ class HouseController extends Controller
      */
     public function update(Request $request, House $house)
     {
-        //
         $house->floor_count = $request->get('floor_count');
         $house->terrace = $request->get('terrace');
         $house->garden = $request->get('garden');
+        $house->property_details_id = $request->get('property_details_id');
         $house->save();
 
         return redirect(route('admin.houses.index'));
@@ -110,7 +111,6 @@ class HouseController extends Controller
      */
     public function destroy(House $house)
     {
-        //
         try {
             $house->delete();
         } catch (\Exception $e) {

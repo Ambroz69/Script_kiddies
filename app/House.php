@@ -8,7 +8,7 @@ class House extends Model
 {
     //
     protected $fillable = [
-        'floor_count', 'terrace', 'garden',
+        'floor_count', 'terrace', 'garden'
     ];
 
     public function isAdmin()
@@ -19,5 +19,10 @@ class House extends Model
     public function propertyDetails()
     {
         return $this->belongsTo(PropertyDetail::class);
+    }
+
+    public function ads()
+    {
+        return $this->hasMany(Ad::class);
     }
 }

@@ -28,7 +28,7 @@
             </li>
 
             <li class="nav-item" id="fialova">
-                <a class="nav-link" href="#">
+                <a class="nav-link{{ isActiveRoute('admin.ads.index') }}" href="{{ route('admin.ads.index') }}">
                     <span data-feather="file"></span>
                     &nbsp Inzeráty
                 </a>

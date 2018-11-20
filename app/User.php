@@ -19,9 +19,18 @@ class User extends Authenticatable
         'surname', 'lastname', 'email', 'password',
     ];
 
+    protected $appends = [
+        'full_name'
+    ];
+
     public function realEstateOffice()
     {
         return $this->belongsTo(RealEstateOffice::class);
+    }
+
+    public function ads()
+    {
+        return $this->hasMany(Ad::class);
     }
 
     /**
@@ -36,5 +45,9 @@ class User extends Authenticatable
     public function isAdmin()
     {
         return false;
+    }
+
+    public function getFullNameAttribute() {
+        return $this->surname . ' ' . $this->lastname;
     }
 }

@@ -22,7 +22,8 @@
                         <th>#</th>
                         <th>Počet izieb</th>
                         <th>Poschodie</th>
-                        <th> </th>
+                        <th>Detaily</th>
+                        <th></th>
                         <th></th>
                     </tr>
                     </thead>
@@ -32,6 +33,13 @@
                             <td>{{$apartment->id}}</td>
                             <td>{{$apartment->room_count}}</td>
                             <td>{{$apartment->floor}}</td>
+                            <td>
+                                @isset($apartment->propertyDetails)
+                                    <a href="{{ route('admin.propertydetails.edit', $apartment->propertyDetails->id) }}">
+                                        {{$apartment->propertyDetails->id}}
+                                    </a>
+                                @endisset
+                            </td>
                             <td></td>
                             <td style="padding-right: 0;">
                                 <div id="container">

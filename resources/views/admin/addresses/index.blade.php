@@ -36,17 +36,21 @@
                             <td>{{$address->address_number}}</td>
                             <td>{{$address->city}}</td>
                             <td>{{$address->zip}}</td>
-
-                            <td class="form-inline" style="padding-right: 0; text-align: right;">
-                                <a  href="{{ route('admin.addresses.edit', $address->id) }}" class="btn btn-info text-white float-left"
-                                    style="margin-right: 5px;">
-                                    <span data-feather="edit"></span>
-                                </a>
-                                <form action="{{ route('admin.addresses.destroy', $address->id) }}" method="post" class="float-right">
-                                    @csrf
-                                    @method('delete')
-                                    <button class="btn btn-danger" type="submit"><span data-feather="trash-2"></span></button>
-                                </form>
+                            <td style="padding-right: 0;">
+                                <div id="container">
+                                    <div style="float: right; margin-left: 10px;">
+                                        <form action="{{ route('admin.addresses.destroy', $address->id) }}" method="post" class="float-right">
+                                            @csrf
+                                            @method('delete')
+                                            <button class="btn btn-danger" type="submit"><span data-feather="trash-2"></span></button>
+                                        </form>
+                                    </div>
+                                    <div style="float: right; margin-right: 0px;">
+                                        <a  href="{{ route('admin.addresses.edit', $address->id) }}" class="btn btn-info text-white float-left">
+                                            <span data-feather="edit"></span>
+                                        </a>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     @endforeach

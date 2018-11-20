@@ -14,8 +14,7 @@ class AddUsersFk extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreign('real_estate_office_id')->references('id')->on('real_estate_offices')
-                ->onDelete('cascade');
+            $table->foreign('real_estate_office_id')->references('id')->on('real_estate_offices')->onDelete('cascade');
         });
     }
 

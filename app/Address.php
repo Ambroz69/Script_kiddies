@@ -25,6 +25,11 @@ class Address extends Model
         return $this->hasMany(RealEstateOffice::class);
     }
 
+    public function ads()
+    {
+        return $this->hasMany(Ad::class);
+    }
+
     public function getFullAddressAttribute() {
         return $this->address_name . ' ' . $this->address_number . ', ' . $this->zip . ' ' . $this->city;
     }

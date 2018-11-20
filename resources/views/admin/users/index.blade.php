@@ -47,9 +47,9 @@
                             <td>
                                 @php
                                     if ($user->isAdmin == 0) {
-                                        echo 'nie';
+                                        echo ' <span data-feather="x"></span>';
                                     } else {
-                                        echo 'áno';
+                                        echo '<span data-feather="check"></span>';
                                     }
                                 @endphp
                             </td>

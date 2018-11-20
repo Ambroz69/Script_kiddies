@@ -32,10 +32,9 @@
             <div class="form-group col-md-4">
                 <label for="admin">Admin:</label>
                 <select name="admin" id="admin" class="form-control">
-                    <option value="1">Áno</option>
-                    <option value="0">Nie</option>
+                    <option value="1" @php if($user->isAdmin == 1) echo 'selected';@endphp>Áno</option>
+                    <option value="0" @php if($user->isAdmin == 0) echo 'selected';@endphp>Nie</option>
                 </select>
-
             </div>
         </div>
         <div class="row">

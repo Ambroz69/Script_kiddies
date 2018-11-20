@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Apartment;
+use App\PropertyDetail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -31,8 +32,8 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        //
-        return view('admin.apartments.create');
+        $property_detail = PropertyDetail::pluck('id', 'id');
+        return view('admin.apartments.create', compact('property_detail'));
     }
 
     /**
@@ -43,10 +44,10 @@ class ApartmentController extends Controller
      */
     public function store(Request $request, Apartment $apartment)
     {
-        //
         $apartment = new \App\Apartment();
         $apartment->room_count = $request->get('room_count');
         $apartment->floor = $request->get('floor');
+        $apartment->property_details_id = $request->get('property_details_id');
         $apartment->save();
 
         return redirect(route('admin.apartments.index'))->with('success', 'Záznam bol pridaný.');
@@ -71,8 +72,13 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
-        //
-        return view('admin.apartments.edit', compact('apartment'));
+        $property_detail = PropertyDetail::pluck('id','id');
+        $selected_property_detail_id = null;
+
+        if ($apartment->propertyDetails) {
+            $selected_property_detail_id = $apartment->propertyDetails->id;
+        }
+        return view('admin.apartments.edit', compact('apartment','property_detail','selected_property_detail_id'));
     }
 
     /**
@@ -84,9 +90,9 @@ class ApartmentController extends Controller
      */
     public function update(Request $request, Apartment $apartment)
     {
-        //
         $apartment->room_count = $request->get('room_count');
         $apartment->floor = $request->get('floor');
+        $apartment->property_details_id = $request->get('property_details_id');
         $apartment->save();
 
         return redirect(route('admin.apartments.index'));
