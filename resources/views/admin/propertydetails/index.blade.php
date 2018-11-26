@@ -32,7 +32,7 @@
                         <th>Kúrenie</th>
                         <th>Internet</th>
                         <th></th>
-                        <th></th>
+                        <th style="width: 12%"></th>
                     </tr>
                     </thead>
                     <tbody>

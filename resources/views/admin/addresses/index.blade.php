@@ -24,7 +24,7 @@
                         <th>Číslo</th>
                         <th>Mesto</th>
                         <th>PSČ</th>
-                       <th> </th>
+                        <th> </th>
 
                     </tr>
                     </thead>

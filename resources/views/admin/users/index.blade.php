@@ -18,7 +18,7 @@
                     </div>
                     <div class="col-md-2 float-right pr-0">
                         <a role="button" class="btn btn-secondary btn-block" href="{{ route('admin.users.create') }}">
-                           Pridať
+                            Pridať
                         </a>
                     </div>
                 </div>

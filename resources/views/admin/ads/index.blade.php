@@ -27,7 +27,7 @@
                         <th>Typ</th>
                         <th>ID nehnuteľnosti</th>
                         <th></th>
-                        <th></th>
+                        <th style="width: 12%"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -54,13 +54,13 @@
                             </td>
                             <td>
                                 @isset($ad->house)
-                                        dom
+                                    dom
                                 @endisset
                                 @isset($ad->apartment)
-                                        byt
+                                    byt
                                 @endisset
                                 @isset($ad->estate)
-                                        pozemok
+                                    pozemok
                                 @endisset
                             </td>
                             <td>
