@@ -1,92 +1,122 @@
 @extends('auth.layouts.app')
-
 @section('content')
-{{--<div class="container">--}}
-    {{--<div class="row justify-content-center">--}}
-        {{--<div class="col-md-8">--}}
-            {{--<div class="card">--}}
-                {{--<div class="card-header">{{ __('Registrácia') }}</div>--}}
+    <div class="" style="padding-top: 25%">
+        <div class="mb-3">
+            <h1 style="font-family: 'Open Sans', sans-serif; font-size: 35px; color: #43425D; letter-spacing: 5px;">
+                <strong>{{ __('DO-BY-PO') }}</strong></h1>
+            <h2 style="font-family: 'Open Sans', sans-serif; font-size: 18px; color: #B3B4B9;">
+                Prosím pokračujte pre vytvorenie účtu.</h2>
+        </div>
 
-                {{--<div class="card-body">--}}
-                    {{--<form method="POST" action="{{ route('register') }}">--}}
-                        {{--@csrf--}}
+        <div class="">
+            <div class="card-body" style="padding-bottom:0 !important;">
+                <form method="POST" action="{{ route('register') }}">
+                    <div class="row mx-0">
+                        <div class="col-md-6 float-left" style=" padding-left: 0; padding-right: 15px; ">
+                            @csrf
+                            <div class="form-group">
+                                <input id="surname" type="text"
+                                       class="form-control{{ $errors->has('surname') ? ' is-invalid' : '' }}"
+                                       name="surname"
+                                       placeholder="Meno"
+                                       value="{{ old('surname') }}" required autofocus
+                                       style="border: 0; outline: 0; background: transparent; border-bottom: 1.5px solid #E9E9F0;">
 
-                        {{--<div class="form-group row">--}}
-                            {{--<label for="surname" class="col-md-4 col-form-label text-md-right">{{ __('Meno:') }}</label>--}}
+                                @if ($errors->has('surname'))
+                                    <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('surname') }}</strong>
+                                        </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-md-6 float-right"
+                             style=" padding-left: 15px; padding-right: 0; ">
+                            <div class="form-group">
+                                <input id="lastname" type="text"
+                                       class="form-control{{ $errors->has('lastname') ? ' is-invalid' : '' }}"
+                                       name="lastname"
+                                       placeholder="Priezvisko"
+                                       value="{{ old('lastname') }}" required autofocus
+                                       style="border: 0; outline: 0; background: transparent; border-bottom: 1.5px solid #E9E9F0;">
 
-                            {{--<div class="col-md-6">--}}
-                                {{--<input id="surname" type="text" class="form-control{{ $errors->has('surname') ? ' is-invalid' : '' }}" name="surname" value="{{ old('surname') }}" required autofocus>--}}
+                                @if ($errors->has('lastname'))
+                                    <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('lastname') }}</strong>
+                                        </span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input id="email" type="email"
+                               class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
+                               name="email"
+                               placeholder="E-mail"
+                               value="{{ old('email') }}" required autofocus
+                               style="border: 0; outline: 0; background: transparent; border-bottom: 1.5px solid #E9E9F0;">
 
-                                {{--@if ($errors->has('surname'))--}}
-                                    {{--<span class="invalid-feedback" role="alert">--}}
-                                        {{--<strong>{{ $errors->first('surname') }}</strong>--}}
-                                    {{--</span>--}}
-                                {{--@endif--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
+                        @if ($errors->has('email'))
+                            <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('email') }}</strong>
+                                        </span>
+                        @endif
+                    </div>
+                    <div class="form-group">
+                        <input id="password" type="password"
+                               class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
+                               name="password"
+                               placeholder="Heslo"
+                               style="border: 0; outline: 0; background: transparent; border-bottom: 1.5px solid #E9E9F0;"
+                               required>
 
-                        {{--<div class="form-group row">--}}
-                            {{--<label for="lastname" class="col-md-4 col-form-label text-md-right">{{ __('Priezvisko:') }}</label>--}}
+                        @if ($errors->has('password'))
+                            <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('password') }}</strong>
+                                        </span>
+                        @endif
+                    </div>
+                    <div class="form-group">
+                        <input id="password-confirm" type="password"
+                               class="form-control{{ $errors->has('password-confirm') ? ' is-invalid' : '' }}"
+                               name="password_confirmation"
+                               placeholder="Zopakujte heslo"
+                               style="border: 0; outline: 0; background: transparent; border-bottom: 1.5px solid #E9E9F0;"
+                               required>
 
-                            {{--<div class="col-md-6">--}}
-                                {{--<input id="lastname" type="text" class="form-control{{ $errors->has('lastname') ? ' is-invalid' : '' }}" name="lastname" value="{{ old('lastname') }}" required autofocus>--}}
+                    </div>
+                    <div class="row mt-4 mx-0">
+                        <div class="form-check" style="margin-left:20px; padding-left: 0;">
+                            <input class="form-check-input" type="checkbox" name="checkbox"
+                                   id="option" {{ old('option') ? 'checked' : '' }}>
 
-                                {{--@if ($errors->has('lastname'))--}}
-                                    {{--<span class="invalid-feedback" role="alert">--}}
-                                        {{--<strong>{{ $errors->first('lastname') }}</strong>--}}
-                                    {{--</span>--}}
-                                {{--@endif--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
+                            <label class="form-check-label" for="option">
+                                {{ __('Súhlasím so zmluvnými podmienkami') }}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-4 mb-1">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6" align="center">
+                            <button type="submit" class="btn btn-block btn-secondary">
+                                {{ __('Registrovať') }}
+                            </button>
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+                    <div class="form-group row mr-1">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6" align="center">
+                            <a class="btn btn-link" style=" padding: 0;"
+                               href="{{ route('login') }}">
+                                {{ __('Už máte účet? Prihláste sa!') }}
+                            </a>
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
 
-                        {{--<div class="form-group row">--}}
-                            {{--<label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail:') }}</label>--}}
 
-                            {{--<div class="col-md-6">--}}
-                                {{--<input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>--}}
-
-                                {{--@if ($errors->has('email'))--}}
-                                    {{--<span class="invalid-feedback" role="alert">--}}
-                                        {{--<strong>{{ $errors->first('email') }}</strong>--}}
-                                    {{--</span>--}}
-                                {{--@endif--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-
-                        {{--<div class="form-group row">--}}
-                            {{--<label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Heslo:') }}</label>--}}
-
-                            {{--<div class="col-md-6">--}}
-                                {{--<input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>--}}
-
-                                {{--@if ($errors->has('password'))--}}
-                                    {{--<span class="invalid-feedback" role="alert">--}}
-                                        {{--<strong>{{ $errors->first('password') }}</strong>--}}
-                                    {{--</span>--}}
-                                {{--@endif--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-
-                        {{--<div class="form-group row">--}}
-                            {{--<label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Zopakovať heslo:') }}</label>--}}
-
-                            {{--<div class="col-md-6">--}}
-                                {{--<input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-
-                        {{--<div class="form-group row mb-0">--}}
-                            {{--<div class="col-md-6 offset-md-4" align="right" >--}}
-                                {{--<button type="submit" class="btn btn-primary">--}}
-                                    {{--{{ __('Registrovať') }}--}}
-                                {{--</button>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</form>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</div>--}}
-{{--</div>--}}
-    <h1>registracia</h1>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection

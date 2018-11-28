@@ -4,26 +4,26 @@
     @php $i = 0; $remains = count($ad); @endphp
     <div class="container-fluid pt-5">
         <div class="row">
-            <div class="col-md-9"> <!-- zobrazenie inzeratov -->
+            <div class="col-md-9 container-fluid"> <!-- zobrazenie inzeratov -->
                 @while($remains > 0)
                     @if($i == 0)    <!--prvy inzerat sa vykresli s fancy logom-->
                     <div class="row ml-0 mb-3">
                         <div class="card mt-3 float-left" style="width: 30%; max-width: 340px; height: 400px">
-                            <div class="col-md-12 p-0">
-                                <div style="height: 55%">
+                            <div class="col-md-12 p-0" style="display: flex; flex-direction: column;">
+                                <div style="max-height: 55%">
                                     <img class="card-img-top" src="{{URL::asset('/image/1.jpg')}}"
                                          alt="fotka nehnutelnosti"
                                          style="background-size: cover">
                                 </div>
-                                <div style="height: 30%">
-                                    <div class="card-body">
+                                <div style="max-height: 30%">
+                                    <div class="card-body py-3">
                                         <h5 class="card-title" style="color: #53526B;">{{ $ad[$i]['description'] }}</h5>
-                                        <p class="card-text" style="color:#BCBCCB;">{{ $ad[$i]['notes'] }}</p>
+                                        <p class="card-text" style="color:#BCBCCB; line-height: 1.2em; max-height: 3.6em; overflow:hidden; text-overflow:ellipsis;">{{ $ad[$i]['notes'] }}</p>
                                     </div>
                                 </div>
-                                <div style="height: 15%">
+                                <div style="max-height: 15%; margin-top: auto; margin-bottom: 1rem">
                                     <div class="card-body">
-                                        <div id="container" class="col-md-12 p-0">
+                                        <div id="container" class=" card-body col-md-12 p-0">
                                             <div style="float: left;">
                                                 <a>
                                                     <span data-feather="heart"></span>
@@ -54,21 +54,22 @@
                         <div class="row ml-0 mb-3">
                             @for($j = 0; $j < 3; $j++)
                                 <div class="card mr-3" style="width: 30%; max-width: 340px; height: 400px">
-                                    <div class="col-md-12 p-0">
-                                        <div style="height: 55%">
+                                    <div class="col-md-12 p-0" style="display: flex; flex-direction: column;">
+                                        <div style="max-height: 55%">
                                             <img class="card-img-top" src="{{URL::asset('/image/1.jpg')}}"
                                                  alt="fotka nehnutelnosti"
                                                  style="background-size: cover">
                                         </div>
-                                        <div style="height: 30%">
+                                        <div style="max-height: 30%">
                                             <div class="card-body">
                                                 <h5 class="card-title"
                                                     style="color: #53526B;">{{ $ad[$i+$j]['description'] }}</h5>
-                                                <p class="card-text"
-                                                   style="color:#BCBCCB;">{{ $ad[$i+$j]['notes'] }}</p>
+                                                <p class="card-text" style="color:#BCBCCB; line-height: 1.2em; max-height: 3.6em; overflow:hidden; text-overflow:ellipsis;">
+                                                    {{ $ad[$i+$j]['notes'] }}
+                                                </p>
                                             </div>
                                         </div>
-                                        <div style="height: 15%">
+                                        <div style="max-height: 15%; margin-top: auto; margin-bottom: 1rem">
                                             <div class="card-body">
                                                 <div id="container" class="col-md-12 p-0">
                                                     <div style="float: left;">
@@ -96,21 +97,22 @@
                         <div class="row ml-0 mb-3">
                             @for($j = 0; $j < 2; $j++)
                                 <div class="card mr-3" style="width: 30%; max-width: 340px; height: 400px">
-                                    <div class="col-md-12 p-0">
-                                        <div style="height: 55%">
+                                    <div class="col-md-12 p-0" style="display: flex; flex-direction: column;">
+                                        <div style="max-height: 55%">
                                             <img class="card-img-top" src="{{URL::asset('/image/1.jpg')}}"
                                                  alt="fotka nehnutelnosti"
                                                  style="background-size: cover">
                                         </div>
-                                        <div style="height: 30%">
+                                        <div style="max-height: 30%">
                                             <div class="card-body">
                                                 <h5 class="card-title"
                                                     style="color: #53526B;">{{ $ad[$i+$j]['description'] }}</h5>
-                                                <p class="card-text"
-                                                   style="color:#BCBCCB;">{{ $ad[$i+$j]['notes'] }}</p>
+                                                <p class="card-text" style="color:#BCBCCB; line-height: 1.2em; max-height: 3.6em; overflow:hidden; text-overflow:ellipsis;">
+                                                    {{ $ad[$i+$j]['notes'] }}
+                                                </p>
                                             </div>
                                         </div>
-                                        <div style="height: 15%">
+                                        <div style="max-height: 15%; margin-top: auto; margin-bottom: 1rem">
                                             <div class="card-body">
                                                 <div id="container" class="col-md-12 p-0">
                                                     <div style="float: left;">
@@ -137,20 +139,22 @@
                         @case(1)    <!--ostava posledny-->
                         <div class="row ml-0 mb-3">
                             <div class="card mr-3" style="width: 30%; max-width: 340px; height: 400px">
-                                <div class="col-md-12 p-0">
-                                    <div style="height: 55%">
+                                <div class="col-md-12 p-0" style="display: flex; flex-direction: column;">
+                                    <div style="max-height: 55%">
                                         <img class="card-img-top" src="{{URL::asset('/image/1.jpg')}}"
                                              alt="fotka nehnutelnosti"
                                              style="background-size: cover">
                                     </div>
-                                    <div style="height: 30%">
+                                    <div style="max-height: 30%">
                                         <div class="card-body">
                                             <h5 class="card-title"
                                                 style="color: #53526B;">{{ $ad[$i+$j]['description'] }}</h5>
-                                            <p class="card-text" style="color:#BCBCCB;">{{ $ad[$i+$j]['notes'] }}</p>
+                                            <p class="card-text" style="color:#BCBCCB; line-height: 1.2em; max-height: 3.6em; overflow:hidden; text-overflow:ellipsis;">
+                                                {{ $ad[$i+$j]['notes'] }}
+                                            </p>
                                         </div>
                                     </div>
-                                    <div style="height: 15%">
+                                    <div style="max-height: 15%; margin-top: auto; margin-bottom: 1rem">
                                         <div class="card-body">
                                             <div id="container" class="col-md-12 p-0">
                                                 <div style="float: left;">
@@ -169,6 +173,7 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
                             @php $i++; $remains--; @endphp
                         </div>
                         @break
@@ -180,33 +185,8 @@
                     @endif
                 @endwhile
             </div>
-            <div class="col-md-3"> <!-- filter -->
-                <form method="post" action="{{ route('filter') }}">
-                    @csrf
-                    <div class="row">
-                        <div class="form-group col-md-12">
-                            <label for="description">Názov:</label>
-                            <input id="description"type="text" class="form-control" name="description">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-12">
-                            <label for="price">Cena:</label>
-                            <input id="price" type="text" class="form-control" name="price">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-12">
-                            <label for="notes">Popis:</label>
-                            <textarea rows="5" class="form-control" name="notes" id="notes"></textarea>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-12">
-                            <button type="submit" class="btn btn-primary text-white float-right">Filtrovať</button>
-                        </div>
-                    </div>
-                </form>
+            <div class="col-md-3 container-fluid"> <!-- filter -->
+                @include('partials.filter')
             </div>
         </div>
     </div>

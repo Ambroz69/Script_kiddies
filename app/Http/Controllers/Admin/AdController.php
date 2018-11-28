@@ -72,6 +72,7 @@ class AdController extends Controller
         $rules = [
             'description' => 'required|string|max:500',
             'price' => 'required|integer',
+            'category' => 'required',
             'notes' => 'required|string|max:5000',
             'address_id' => 'required',
             'user_id' => 'required',
@@ -86,6 +87,7 @@ class AdController extends Controller
         $attributes = [
             'description' => 'Názov',
             'price' => 'Cena',
+            'category' => 'Kategória',
             'notes' => 'Popis',
             'address_id' => 'Adresa',
             'user_id' => 'Autor',
@@ -97,6 +99,7 @@ class AdController extends Controller
 
         $ad = new \App\Ad();
         $ad->price = $request->get('price');
+        $ad->category = $request->get('category');
         $ad->description = $request->get('description');
         $ad->notes = $request->get('notes');
         $ad->address_id = $request->get('address_id');
@@ -182,6 +185,7 @@ class AdController extends Controller
     public function update(Request $request, Ad $ad)
     {
         $ad->price = $request->get('price');
+        $ad->category = $request->get('category');
         $ad->description = $request->get('description');
         $ad->notes = $request->get('notes');
         $ad->address_id = $request->get('address_id');

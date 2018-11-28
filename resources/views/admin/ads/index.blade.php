@@ -21,6 +21,7 @@
                         <th>#</th>
                         <th style="width: 18%">Názov</th>
                         <th>Cena</th>
+                        <th>Kategória</th>
                         <th style="width: 18%">Popis</th>
                         <th style="width: 18%">Adresa</th>
                         <th>Autor</th>
@@ -36,6 +37,7 @@
                             <td>{{$ad->id}}</td>
                             <td>{{$ad->description}}</td>
                             <td>{{$ad->price}}</td>
+                            <td>{{$ad->category}}</td>
                             <td>{{$ad->notes}}</td>
                             <td>
                                 @isset($ad->address)

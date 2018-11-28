@@ -23,6 +23,16 @@
         <div class="row">
             <div class="col-md-4"></div>
             <div class="form-group col-md-4">
+                <label for="category">Admin:</label>
+                <select name="category" id="category" class="form-control">
+                     <option value="predaj" @php if(strcmp($ad->category,'predaj') == 0) echo 'selected';@endphp>Predaj</option>
+                    <option value="prenájom" @php if(strcmp($ad->category,'prenájom') == 0) echo 'selected';@endphp>Prenájom</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
                 <label for="notes">Popis:</label>
                 <textarea rows="5" class="form-control" name="notes" id="notes">{{$ad->notes}}</textarea>
             </div>

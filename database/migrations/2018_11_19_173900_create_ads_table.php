@@ -17,6 +17,7 @@ class CreateAdsTable extends Migration
             $table->increments('id');
             $table->integer('price');
             $table->string('description',500);
+            $table->string('category',50);
             $table->string('image_name')->nullable();
             $table->string('notes',5000);
             $table->timestamps();
