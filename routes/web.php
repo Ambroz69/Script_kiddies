@@ -3,7 +3,8 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
-
+Route::get('/show/{id}', 'HomeController@showAd')->name('show');
+Route::post('/filter','HomeController@filter')->name('filter');
 
 Route::name('admin.')->group(function () {
     Route::get('admin', 'Admin\HomeController@index')->name('home');

@@ -4,13 +4,23 @@
 @section('content')
 
     <br>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form method="post" action="{{ route('admin.ads.store') }}">
         @csrf
         <div class="row">
             <div class="col-md-4"></div>
             <div class="form-group col-md-4">
                 <label for="description">Názov:</label>
-                <input id="description" type="text" class="form-control" name="description">
+                <input id="description"type="text" class="form-control" name="description">
             </div>
         </div>
         <div class="row">
@@ -66,7 +76,8 @@
             <div class="col-md-4"></div>
             <div class="form-group col-md-4">
                 <button type="submit" class="btn btn-primary text-white float-right">Pridať</button>
-                <a role="button" href="{{ route('admin.ads.index') }}" class="btn btn-secondary text-white float-lg-left">Zrušiť</a>
+                <a role="button" href="{{ route('admin.ads.index') }}"
+                   class="btn btn-secondary text-white float-lg-left">Zrušiť</a>
             </div>
         </div>
     </form>

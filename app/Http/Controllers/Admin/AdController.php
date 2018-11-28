@@ -6,8 +6,11 @@ use App\Ad;
 use App\Apartment;
 use App\House;
 use App\Address;
+use App\Rules\OnlyOneId;
 use App\User;
 use App\Estate;
+
+use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -15,6 +18,11 @@ class AdController extends Controller
 {
     public function __construct()
     {
+        Validator::extend('only_one', function ($value1, $value2) {
+            if (($value1 == null) && ($value2 == null)) return true;
+            else return false;
+        });
+
         $this->middleware('admin');
     }
 
@@ -37,6 +45,7 @@ class AdController extends Controller
      */
     public function create()
     {
+
         $null_value = array (0 => null);
         $address = Address::get()->pluck('full_address', 'id');
         $user = User::get()->pluck('full_name', 'id');
@@ -59,6 +68,33 @@ class AdController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->get('apartment_id'), $request->get('estate_id'), $request->get('house_id'));
+        $rules = [
+            'description' => 'required|string|max:500',
+            'price' => 'required|integer',
+            'notes' => 'required|string|max:5000',
+            'address_id' => 'required',
+            'user_id' => 'required',
+            'house_id' => new OnlyOneId($request->get('house_id'), $request->get('apartment_id'), $request->get('estate_id'))
+        ];
+        $messages = [
+            'required' => 'Vyplňte ":attribute".',
+            'integer' => '":attribute" musí byť celé číslo.',
+            'string' => 'Neznáme znaky v poli ":attribute".',
+            'max' => 'Maximálny počet znakov v poli ":attribute" je :max.'
+        ];
+        $attributes = [
+            'description' => 'Názov',
+            'price' => 'Cena',
+            'notes' => 'Popis',
+            'address_id' => 'Adresa',
+            'user_id' => 'Autor',
+            'house_id' => 'Dom ID',
+            'apartment_id' => 'Byt ID',
+            'estate_id' => 'Pozemok ID',
+        ];
+        Validator::make($request->all(), $rules, $messages, $attributes)->validate();
+
         $ad = new \App\Ad();
         $ad->price = $request->get('price');
         $ad->description = $request->get('description');
@@ -71,6 +107,7 @@ class AdController extends Controller
         if ($ad->house_id == 0) {$ad->house_id = null;}
         if ($ad->apartment_id == 0) {$ad->apartment_id = null;}
         if ($ad->estate_id == 0) {$ad->estate_id = null;}
+
         $ad->save();
 
         return redirect(route('admin.ads.index'))->with('success', 'Záznam bol pridaný.');

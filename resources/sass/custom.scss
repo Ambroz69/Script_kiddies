@@ -1,0 +1,164 @@
+body {
+  font-size: .875rem;
+}
+
+.feather {
+  width: 16px;
+  height: 16px;
+  vertical-align: text-bottom;
+
+}
+
+#fialova .feather {
+  color: #9290E2;
+}
+
+/*
+ * Sidebar
+ */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100; /* Behind the navbar */
+  padding: 48px 0 0; /* Height of navbar */
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+.sidebar-sticky {
+  position: relative;
+  top: 0;
+  height: calc(100vh - 48px);
+  padding-top: .5rem;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+@supports ((position: -webkit-sticky) or (position: sticky)) {
+  .sidebar-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    background-color: #43425D;
+  }
+}
+
+.sidebar .nav-link {
+  font-weight: 500;
+  color: #fff;
+
+}
+
+.sidebar .nav-link .feather .collapsible .content {
+  margin-right: 4px;
+  color: #BCBCCB;
+
+}
+
+.sidebar .nav-link.active {
+  color: #fff;
+  background-color: #9290E2;
+}
+
+.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.active .feather {
+  color: #BCBCCB;
+}
+
+.sidebar-heading {
+  font-size: .75rem;
+  text-transform: uppercase;
+  //background-color: #43425D ;
+}
+
+/*
+ * Content
+ */
+
+[role="main"] {
+  padding-top: 48px; /* Space for fixed navbar */
+}
+
+/*
+ * Navbar
+ */
+
+.navbar-brand {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  font-size: 1rem;
+  background-color: #3B3B53;
+  color: #3B3B53;
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+}
+
+.navbar .form-control {
+  padding: .75rem 1rem;
+  border-width: 0;
+  border-radius: 0;
+  background-color: #3B3B53;
+}
+
+.form-control-dark {
+  color: #3B3B53;
+  background-color: #3B3B53;
+  border-color: #3B3B53;
+}
+
+.form-control-dark:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+/* Style the button that is used to open and close the collapsible content */
+.collapsible {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  display: block;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: .875rem;
+  font-family: Nunito, sans-serif;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .collapsible:hover {
+  background-color: #eeeeee;
+
+}
+
+/* Style the collapsible content. Note: hidden by default */
+.content {
+  display: block;
+  overflow: hidden;
+  background-color: #f1f1f1;
+  box-sizing: border-box;
+  width: 300px;
+}
+
+.table thead th {
+  background-color: #8461A0;
+  color: white;
+
+}
+
+a, a:hover {
+  color: #8461A0;
+}
+
+#fialova {
+  background-color: #3B3B53;
+}
+
+#fialova a.nav-link {
+  border-left: 5px solid;
+  border-left-color: #9290E2;
+}
+a.nav-link {
+  border-left: 5px solid transparent;
+
+}
