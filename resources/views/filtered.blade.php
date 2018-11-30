@@ -26,10 +26,17 @@
                                         <div class="card-body">
                                             <div id="container" class="col-md-12 p-0">
                                                 <div style="float: left;">
-                                                    <a>
-                                                        <span data-feather="heart"></span>
-                                                        &nbsp {{ $ads_filtered[$i]['price'] }} EUR
-                                                    </a>
+                                                    @if( strcmp($ads_filtered[$i]['category'],'prenájom') == 0)
+                                                        <a>
+                                                            <span data-feather="heart"></span>
+                                                            &nbsp {{ $ads_filtered[$i]['price'] }} €/mesiac
+                                                        </a>
+                                                    @else
+                                                        <a>
+                                                            <span data-feather="heart"></span>
+                                                            &nbsp {{ $ads_filtered[$i]['price'] }} €
+                                                        </a>
+                                                    @endif
                                                 </div>
                                                 <div style="float: right;">
                                                     <a href="{{ route('show', $ads_filtered[$i]['id']) }}"
@@ -47,7 +54,7 @@
                 @endwhile
             </div>
             <div class="col-md-3"> <!-- filter -->
-                @include('partials.filter')
+                @include('partials.filter_advanced')
             </div>
         </div>
     </div>

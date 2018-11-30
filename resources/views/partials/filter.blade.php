@@ -1,4 +1,4 @@
-<form method="post" action="{{ route('filter') }}">
+<form method="post" id="my_form" action="{{ route('filter') }}">
     @csrf
     <div class="row">
         <div class="form-group col-md-12">
@@ -44,8 +44,13 @@
         </div>
     </div>
     <div class="row">
-        <div class="form-group col-md-12">
+        <div class="form-group col-md-12 mb-1">
             <button type="submit" class="btn btn-primary btn-block text-white float-right">Filtrovať</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-12 text-center">
+            <a href="javascript:{}" onclick="document.getElementById('my_form').submit();">Zobraziť rozšírené možnosti filtrovania</a>
         </div>
     </div>
 </form>
