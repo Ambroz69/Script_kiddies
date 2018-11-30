@@ -3,6 +3,7 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/show/{id}', 'HomeController@showAd')->name('show');
 
 
 Route::name('admin.')->group(function () {

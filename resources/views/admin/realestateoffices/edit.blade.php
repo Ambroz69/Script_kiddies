@@ -2,7 +2,16 @@
 @section('title', 'Real estate offices')
 
 @section('content')
-    <h2></h2>
+    <br>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <form method="post" action="{{ route('admin.realestateoffices.update', $realestateoffice->id) }}">
         @csrf
         <input name="_method" type="hidden" value="PATCH">

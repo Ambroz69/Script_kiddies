@@ -8,7 +8,7 @@
             <div class="col-md-12 py-5">
                 <div class="col-md-12 px-0 pb-5">
                     <div class=" col-md-10 float-left">
-                        <h2>Byty</h2>
+                        <h3 style="font-family: 'Open Sans', sans-serif; letter-spacing: 2px;"><strong>BYTY</strong></h3>
                     </div>
                     <div class="col-md-2 float-right pr-0">
                         <a role="button" class="btn btn-secondary btn-block" href="{{ route('admin.apartments.create') }}">
@@ -23,7 +23,6 @@
                         <th>Počet izieb</th>
                         <th>Poschodie</th>
                         <th>Detaily</th>
-                        <th></th>
                         <th></th>
                     </tr>
                     </thead>
@@ -40,7 +39,7 @@
                                     </a>
                                 @endisset
                             </td>
-                            <td></td>
+
                             <td style="padding-right: 0;">
                                 <div id="container">
                                     <div style="float: right; margin-left: 10px;">
@@ -50,7 +49,7 @@
                                             <button class="btn btn-danger" type="submit"><span data-feather="trash-2"></span></button>
                                         </form>
                                     </div>
-                                    <div style="float: right; margin-right: 0px;">
+                                    <div style="float: right; margin-right: 0;">
                                         <a  href="{{ route('admin.apartments.edit', $apartment->id) }}" class="btn btn-info text-white float-left">
                                             <span data-feather="edit"></span>
                                         </a>

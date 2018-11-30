@@ -2,7 +2,16 @@
 @section('title', 'Estates')
 
 @section('content')
-
+    <br>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <form method="post" action="{{ route('admin.estates.update', $estate->id) }}">
         @csrf
         <input name="_method" type="hidden" value="PATCH">
@@ -10,7 +19,16 @@
             <div class="col-md-4"></div>
             <div class="form-group col-md-4">
                 <label for="type">Typ:</label>
-                <input id="type" type="text" class="form-control" name="type" value="{{$estate->type}}">
+                <select name="type" id="type" class="form-control">
+                    <option value="záhrada" @php if(strcmp($estate->type,'záhrada') == 0) echo 'selected';@endphp>záhrada</option>
+                    <option value="orná pôda" @php if(strcmp($estate->type,'orná pôda') == 0) echo 'selected';@endphp>orná pôda</option>
+                    <option value="sad/chmelnica/vinica" @php if(strcmp($estate->type,'sad/chmelnica/vinica') == 0) echo 'selected';@endphp>sad/chmelnica/vinica</option>
+                    <option value="lesná pôda" @php if(strcmp($estate->type,'lesná pôda') == 0) echo 'selected';@endphp>lesná pôda</option>
+                    <option value="lúka/pasienok" @php if(strcmp($estate->type,'lúka/pasienok') == 0) echo 'selected';@endphp>lúka/pasienok</option>
+                    <option value="rekreačný pozemok" @php if(strcmp($estate->type,'rekreačný pozemok') == 0) echo 'selected';@endphp>rekreačný pozemok</option>
+                    <option value="priemyselná zóna" @php if(strcmp($estate->type,'priemyselná zóna') == 0) echo 'selected';@endphp>priemyselná zóna</option>
+                    <option value="stavebný pozemok" @php if(strcmp($estate->type,'stavebný pozemok') == 0) echo 'selected';@endphp>stavebný pozemok</option>
+                </select>
             </div>
         </div>
         <div class="row">

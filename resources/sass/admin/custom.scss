@@ -52,7 +52,7 @@ body {
 
 .sidebar .nav-link .feather .collapsible .content {
   margin-right: 4px;
-  color: #BCBCCB;
+  color: #fff;
 
 }
 
@@ -63,7 +63,7 @@ body {
 
 .sidebar .nav-link:hover .feather,
 .sidebar .nav-link.active .feather {
-  color: #BCBCCB;
+  color: #fff;
 }
 
 .sidebar-heading {
@@ -104,6 +104,10 @@ body {
   color: #3B3B53;
   background-color: #3B3B53;
   border-color: #3B3B53;
+}
+.navbar-dark .navbar-nav .nav-link {
+  color: #ffffff;
+
 }
 
 .form-control-dark:focus {

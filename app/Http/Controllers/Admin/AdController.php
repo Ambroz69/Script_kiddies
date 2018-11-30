@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Validator;
+use App\Rules\OnlyOneId;
 use App\Ad;
 use App\Apartment;
 use App\House;
@@ -59,10 +61,39 @@ class AdController extends Controller
      */
     public function store(Request $request)
     {
+        $rules = [
+            'description' => 'required|string|max:500',
+            'price' => 'required|integer',
+            'notes' => 'required|string|max:5000',
+            'category' => 'required|string|max:50',
+            'address_id' => 'required',
+            'user_id' => 'required',
+            'house_id' => new OnlyOneId($request->get('house_id'), $request->get('apartment_id'), $request->get('estate_id'))
+        ];
+        $messages = [
+            'required' => 'Vyplňte prázdne pole ":attribute".',
+            'integer' => '":attribute" musí byť celé číslo.',
+            'string' => 'Neznáme znaky v poli ":attribute".',
+            'max' => 'Maximálny počet znakov v poli ":attribute" je :max.'
+        ];
+        $attributes = [
+            'description' => 'Názov',
+            'price' => 'Cena',
+            'notes' => 'Popis',
+            'category' => 'Kategória',
+            'address_id' => 'Adresa',
+            'user_id' => 'Autor',
+            'house_id' => 'Dom ID',
+            'apartment_id' => 'Byt ID',
+            'estate_id' => 'Pozemok ID',
+        ];
+        Validator::make($request->all(), $rules, $messages, $attributes)->validate();
+
         $ad = new \App\Ad();
         $ad->price = $request->get('price');
         $ad->description = $request->get('description');
         $ad->notes = $request->get('notes');
+        $ad->category = $request->get('category');
         $ad->address_id = $request->get('address_id');
         $ad->user_id = $request->get('user_id');
         $ad->house_id = $request->get('house_id');
@@ -144,9 +175,38 @@ class AdController extends Controller
      */
     public function update(Request $request, Ad $ad)
     {
+        $rules = [
+            'description' => 'required|string|max:500',
+            'price' => 'required|integer',
+            'notes' => 'required|string|max:5000',
+            'category' => 'required|string|max:50',
+            'address_id' => 'required',
+            'user_id' => 'required',
+            'house_id' => new OnlyOneId($request->get('house_id'), $request->get('apartment_id'), $request->get('estate_id'))
+        ];
+        $messages = [
+            'required' => 'Vyplňte prázdne pole ":attribute".',
+            'integer' => '":attribute" musí byť celé číslo.',
+            'string' => 'Neznáme znaky v poli ":attribute".',
+            'max' => 'Maximálny počet znakov v poli ":attribute" je :max.'
+        ];
+        $attributes = [
+            'description' => 'Názov',
+            'price' => 'Cena',
+            'notes' => 'Popis',
+            'category' => 'Kategória',
+            'address_id' => 'Adresa',
+            'user_id' => 'Autor',
+            'house_id' => 'Dom ID',
+            'apartment_id' => 'Byt ID',
+            'estate_id' => 'Pozemok ID',
+        ];
+        Validator::make($request->all(), $rules, $messages, $attributes)->validate();
+
         $ad->price = $request->get('price');
         $ad->description = $request->get('description');
         $ad->notes = $request->get('notes');
+        $ad->category = $request->get('category');
         $ad->address_id = $request->get('address_id');
         $ad->user_id = $request->get('user_id');
         $ad->house_id = $request->get('house_id');

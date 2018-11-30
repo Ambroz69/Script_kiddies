@@ -7,7 +7,7 @@
             <div class="col-md-12 py-5">
                 <div class="col-md-12 px-0 pb-5">
                     <div class=" col-md-10 float-left">
-                        <h2>Adresy</h2>
+                        <h3 style="font-family: 'Open Sans', sans-serif; letter-spacing: 2px;"><strong>INZERÁTY</strong></h3>
                     </div>
                     <div class="col-md-2 float-right pr-0">
                         <a role="button" class="btn btn-secondary btn-block" href="{{ route('admin.ads.create') }}">
@@ -25,7 +25,8 @@
                         <th style="width: 18%">Adresa</th>
                         <th>Autor</th>
                         <th>Typ</th>
-                        <th>ID nehnuteľnosti</th>
+                        <th>Kategória</th>
+                        <th>ID DBP</th>
                         <th></th>
                         <th style="width: 12%"></th>
                     </tr>
@@ -41,7 +42,7 @@
                                 @isset($ad->address)
                                     <a href="{{ route('admin.addresses.edit', $ad->address->id) }}">
                                         {{$ad->address->address_name}} {{$ad->address->address_number}}
-                                        , {{$ad->address->zip}} {{$ad->address->city}}
+                                        , {{$ad->address->zip}} {{$ad->address->city}} {{$ad->address->region}}
                                     </a>
                                 @endisset
                             </td>
@@ -63,6 +64,7 @@
                                     pozemok
                                 @endisset
                             </td>
+                            <td>{{$ad->category}}</td>
                             <td>
                                 @isset($ad->house)
                                     <a href="{{ route('admin.houses.edit', $ad->house->id) }}">

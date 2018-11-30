@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -14,6 +15,8 @@ class HomeController extends Controller
 
     public function index()
     {
-        return view('admin.home');
+        $admins = User::whereRaw('isAdmin LIKE 1')->get();
+        //return dd($admins);
+        return view('admin.home', compact('admins'));
     }
 }

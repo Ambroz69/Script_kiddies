@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Ad extends Model
 {
     protected $fillable = [
-        'price', 'description', 'notes',
+        'price', 'description', 'notes', 'category',
     ];
 
     public function isAdmin()

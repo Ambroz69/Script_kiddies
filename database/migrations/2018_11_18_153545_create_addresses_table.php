@@ -18,6 +18,7 @@ class CreateAddressesTable extends Migration
             $table->string('address_name');
             $table->integer('address_number');
             $table->string('city');
+            $table->string('region');
             $table->string('zip');
             $table->timestamps();
         });

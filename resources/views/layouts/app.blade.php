@@ -6,14 +6,14 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <title>@yield('title')</title>
-    <link href="{{ asset('css/anonym/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
+<body style="background-color: #F1F8FF;">
 @include('partials.header')
 <div class="container-fluid">
     <div class="row">
         {{--@include('anonym.partials.nav')--}}
-        <main class="col-md-9 ml-sm-auto col-lg-10 px-4 py-5">
+        <main class="col-md-12 p-5">
             @yield('content')
         </main>
     </div>

@@ -4,6 +4,15 @@
 @section('content')
 
     <br>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <form method="post" action="{{ route('admin.ads.store') }}">
         @csrf
         <div class="row">
@@ -60,6 +69,16 @@
             <div class="form-group col-md-4">
                 {!! Form::Label('estate_id', 'Pozemok ID:') !!}
                 {!! Form::select('estate_id', $estate, null, ['class' => 'form-control']) !!}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                <label for="category">Kategória:</label>
+                <select name="category" id="category" class="form-control">
+                    <option value="predaj">Predaj</option>
+                    <option value="podnájom">Podnájom</option>
+                </select>
             </div>
         </div>
         <div class="row">

@@ -3,7 +3,7 @@
         <ul class="nav flex-column">
             <li class="nav-item">
                 <a class="nav-link{{ isActiveRoute('admin.home') }}"  href="{{ route('admin.home') }}">
-                    <span data-feather="home"></span> &nbsp Domov </a>
+                    <span data-feather="lock"></span> &nbsp Domov </a>
             </li>
 
         <li class="nav-item">
@@ -36,28 +36,28 @@
 
             <li class="nav-item">
                 <a class="nav-link{{ isActiveRoute('admin.houses.index') }}" href="{{ route('admin.houses.index') }}" style="margin-left: 12px">
-                    <span data-feather="circle"></span>
+                    <span data-feather="home"></span>
                     &nbsp Domy
                 </a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link{{ isActiveRoute('admin.apartments.index') }}" href="{{ route('admin.apartments.index') }}" style="margin-left: 12px">
-                    <span data-feather="circle"></span>
+                    <span data-feather="home"></span>
                     &nbsp Byty
                 </a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link{{ isActiveRoute('admin.estates.index') }}" href="{{ route('admin.estates.index') }}" style="margin-left: 12px">
-                    <span data-feather="disc"></span>
+                    <span data-feather="home"></span>
                     &nbsp Pozemky
                 </a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link{{ isActiveRoute('admin.propertydetails.index') }}" href="{{ route('admin.propertydetails.index') }}" style="margin-left: 12px">
-                    <span data-feather="box"></span>
+                    <span data-feather="info"></span>
                     &nbsp Detaily nehnuteľností
                 </a>
             </li>

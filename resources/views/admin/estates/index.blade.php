@@ -8,7 +8,7 @@
             <div class="col-md-12 py-5">
                 <div class="col-md-12 px-0 pb-5">
                     <div class=" col-md-10 float-left">
-                        <h2>Pozemky</h2>
+                        <h3 style="font-family: 'Open Sans', sans-serif; letter-spacing: 2px;"><strong>POZEMKY</strong></h3>
                     </div>
                     <div class="col-md-2 float-right pr-0">
                         <a role="button" class="btn btn-secondary btn-block" href="{{ route('admin.estates.create') }}">
@@ -24,7 +24,7 @@
                         <th>Ár</th>
                         <th>Cena za ár</th>
                         <th> </th>
-                        <th> </th>
+
 
                     </tr>
                     </thead>
@@ -35,7 +35,7 @@
                             <td>{{$estate->type}}</td>
                             <td>{{$estate->area_ares}}</td>
                             <td>{{$estate->price_per_ares}}</td>
-                            <td></td>
+
                             <td style="padding-right: 0;">
                                 <div id="container">
                                     <div style="float: right; margin-left: 10px;">

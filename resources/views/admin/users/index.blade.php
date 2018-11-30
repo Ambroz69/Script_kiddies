@@ -2,19 +2,13 @@
 @section('title', 'Users')
 
 @section('content')
-    {{--<h1 class="h2 my-3"></h1>--}}
-    <!--<a class="btn btn-md btn-success my-3" href="}}{{ route('admin.users.create') }}"><span data-feather="plus-square"></span></a>-->
-
-    {{--@component('admin.components.alert', ['type' => 'success'])--}}
-    {{--pomoc--}}
-    {{--@endcomponent--}}
     <div class="container-fluid">
         <div class="row">
 
             <div class="col-md-12 py-5">
                 <div class="col-md-12 px-0 pb-5">
                     <div class=" col-md-10 float-left">
-                        <h2>Používatelia</h2>
+                        <h3 style="font-family: 'Open Sans', sans-serif; letter-spacing: 2px;"><strong>POUŽÍVATELIA</strong></h3>
                     </div>
                     <div class="col-md-2 float-right pr-0">
                         <a role="button" class="btn btn-secondary btn-block" href="{{ route('admin.users.create') }}">
@@ -71,14 +65,12 @@
                                             <button class="btn btn-danger" type="submit"><span data-feather="trash-2"></span></button>
                                         </form>
                                     </div>
-                                    <div style="float: right; margin-right: 0px;">
+                                    <div style="float: right; margin-right: 0;">
                                         <a  href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-info text-white float-left">
                                             <span data-feather="edit"></span>
                                         </a>
                                     </div>
                                 </div>
-
-
                             </td>
                         </tr>
                     @endforeach

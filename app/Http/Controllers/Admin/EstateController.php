@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Estate;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Validator;
+use App\Rules\OnlyOneId;
 
 class EstateController extends Controller
 {
@@ -43,6 +45,26 @@ class EstateController extends Controller
      */
     public function store(Request $request, Estate $estate)
     {
+        $rules = [
+            'type' => 'required|string|max:255',
+            'area_ares' => 'required|string|max:255',
+            'price_per_ares' => 'required|string|max:255',
+
+
+        ];
+        $messages = [
+            'required' => 'Vyplňte prázdne pole ":attribute".',
+            'integer' => '":attribute" musí byť celé číslo.',
+            'string' => 'Neznáme znaky v poli ":attribute".',
+            'max' => 'Maximálny počet znakov v poli ":attribute" je :max.'
+        ];
+        $attributes = [
+            'type' => 'Typ',
+            'area_ares' => 'Ár',
+            'price_per_ares' => 'Cena za ár',
+
+        ];
+        Validator::make($request->all(), $rules, $messages, $attributes)->validate();
         //
         $estate = new \App\Estate();
         $estate->type = $request->get('type');
@@ -85,6 +107,26 @@ class EstateController extends Controller
      */
     public function update(Request $request, Estate $estate)
     {
+        $rules = [
+            'type' => 'required|string|max:255',
+            'area_ares' => 'required|string|max:255',
+            'price_per_ares' => 'required|string|max:255',
+
+
+        ];
+        $messages = [
+            'required' => 'Vyplňte prázdne pole ":attribute".',
+            'integer' => '":attribute" musí byť celé číslo.',
+            'string' => 'Neznáme znaky v poli ":attribute".',
+            'max' => 'Maximálny počet znakov v poli ":attribute" je :max.'
+        ];
+        $attributes = [
+            'type' => 'Typ',
+            'area_ares' => 'Ár',
+            'price_per_ares' => 'Cena za ár',
+
+        ];
+        Validator::make($request->all(), $rules, $messages, $attributes)->validate();
         //
         $estate->type = $request->get('type');
         $estate->area_ares = $request->get('area_ares');

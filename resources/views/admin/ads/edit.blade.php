@@ -3,6 +3,15 @@
 
 @section('content')
     <h2></h2>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <form method="post" action="{{ route('admin.ads.update', $ad->id) }}">
         @csrf
         <input name="_method" type="hidden" value="PATCH">
@@ -39,6 +48,16 @@
             <div class="form-group col-md-4">
                 {!! Form::Label('user_id', 'Autor:') !!}
                 {!! Form::select('user_id', $user, $selected_user_id, ['class' => 'form-control']) !!}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                <label for="category">Kategória:</label>
+                <select name="category" id="category" class="form-control">
+                    <option value="predaj" @php if($ad->category == 'predaj') echo 'selected';@endphp>Predaj</option>
+                    <option value="podnájom" @php if($ad->category == 'podnájom') echo 'selected';@endphp>Podnájom</option>
+                </select>
             </div>
         </div>
         <div class="row">

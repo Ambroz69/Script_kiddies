@@ -4,13 +4,31 @@
 @section('content')
 
     <br>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <form method="post" action="{{ route('admin.estates.store') }}">
         @csrf
         <div class="row">
             <div class="col-md-4"></div>
             <div class="form-group col-md-4">
                 <label for="type">Typ:</label>
-                <input id="type" type="text" class="form-control" name="type">
+                <select name="type" id="type" class="form-control">
+                    <option value="záhrada">záhrada</option>
+                    <option value="orná pôda">orná pôda</option>
+                    <option value="sad/chmelnica/vinica">sad/chmelnica/vinica</option>
+                    <option value="lesná pôda">lesná pôda</option>
+                    <option value="lúka/pasienok">lúka/pasienok</option>
+                    <option value="rekreačný pozemok">rekreačný pozemok</option>
+                    <option value="priemyselná zóna">priemyselná zóna</option>
+                    <option value="stavebný pozemok">stavebný pozemok</option>
+                </select>
             </div>
         </div>
         <div class="row">
