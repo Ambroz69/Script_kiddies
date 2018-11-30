@@ -2,7 +2,7 @@
 @section('title', 'Ads')
 
 @section('content')
-    <h2></h2>
+    <br>
     <form method="post" action="{{ route('admin.ads.update', $ad->id) }}">
         @csrf
         <input name="_method" type="hidden" value="PATCH">

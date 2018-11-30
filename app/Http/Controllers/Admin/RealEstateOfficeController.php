@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\RealEstateOffice;
+use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Address;
@@ -46,6 +47,28 @@ class RealEstateOfficeController extends Controller
      */
     public function store(Request $request, RealEstateOffice $realestateoffice)
     {
+        $rules = [
+            'name' => 'required|string|max:255',
+            'web' => 'required|string|max:255',
+            'phone' => 'required|string|max:255',
+
+
+        ];
+        $messages = [
+            'required' => 'Vyplňte prázdne pole ":attribute".',
+            'integer' => '":attribute" musí byť celé číslo.',
+            'string' => 'Neznáme znaky v poli ":attribute".',
+            'max' => 'Maximálny počet znakov v poli ":attribute" je :max.'
+        ];
+        $attributes = [
+            'name' => 'Názov',
+            'web' => 'Webová stránka',
+            'phone' => 'Telefónne číslo',
+
+
+        ];
+        Validator::make($request->all(), $rules, $messages, $attributes)->validate();
+
         $realestateoffice = new \App\RealEstateOffice();
         $realestateoffice->name = $request->get('name');
         $realestateoffice->web = $request->get('web');
@@ -91,7 +114,28 @@ class RealEstateOfficeController extends Controller
      */
     public function update(Request $request, RealEstateOffice $realestateoffice)
     {
-        //
+        $rules = [
+            'name' => 'required|string|max:255',
+            'web' => 'required|string|max:255',
+            'phone' => 'required|string|max:255',
+
+
+        ];
+        $messages = [
+            'required' => 'Vyplňte prázdne pole ":attribute".',
+            'integer' => '":attribute" musí byť celé číslo.',
+            'string' => 'Neznáme znaky v poli ":attribute".',
+            'max' => 'Maximálny počet znakov v poli ":attribute" je :max.'
+        ];
+        $attributes = [
+            'name' => 'Názov',
+            'web' => 'Webová stránka',
+            'phone' => 'Telefónne číslo',
+
+
+        ];
+        Validator::make($request->all(), $rules, $messages, $attributes)->validate();
+
         $realestateoffice->name = $request->get('name');
         $realestateoffice->web = $request->get('web');
         $realestateoffice->phone = $request->get('phone');

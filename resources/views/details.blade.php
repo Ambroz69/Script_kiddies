@@ -29,19 +29,19 @@
                             </tr>
                             <tr>
                                 <th>Rozloha</th>
-                                <td>{{ $ad->houseInfo->propertyDetails->area_square_meters }}</td>
+                                <td>{{ $ad->house->propertyDetails->area_square_meters }}</td>
                             </tr>
                             <tr>
                                 <th>Typ</th>
-                                <td>{{ $ad->houseInfo->propertyDetails->type }}</td>
+                                <td>{{ $ad->house->propertyDetails->type }}</td>
                             </tr>
                             <tr>
                                 <th>Okná</th>
-                                <td>{{ $ad->houseInfo->propertyDetails->window_type }}</td>
+                                <td>{{ $ad->house->propertyDetails->window_type }}</td>
                             </tr>
                             <tr>
                                 <th>Orientácia</th>
-                                <td>{{ $ad->houseInfo->propertyDetails->direction }}</td>
+                                <td>{{ $ad->house->propertyDetails->direction }}</td>
                             </tr>
                             <tr>
                                 <th>Záhrada</th>
@@ -53,27 +53,27 @@
                             </tr>
                             <tr>
                                 <th>Balkón</th>
-                                <td>{{ $ad->houseInfo->propertyDetails->balcony }}</td>
+                                <td>{{ $ad->house->propertyDetails->balcony }}</td>
                             </tr>
                             <tr>
                                 <th>Pivnica</th>
-                                <td>{{ $ad->houseInfo->propertyDetails->cellar }}</td>
+                                <td>{{ $ad->house->propertyDetails->cellar }}</td>
                             </tr>
                             <tr>
                                 <th>Garáž</th>
-                                <td>{{ $ad->houseInfo->propertyDetails->garage }}</td>
+                                <td>{{ $ad->house->propertyDetails->garage }}</td>
                             </tr>
                             <tr>
                                 <th>Zateplený objekt</th>
-                                <td>{{ $ad->houseInfo->propertyDetails->insulated }}</td>
+                                <td>{{ $ad->house->propertyDetails->insulated }}</td>
                             </tr>
                             <tr>
                                 <th>Vykurovanie</th>
-                                <td>{{ $ad->houseInfo->propertyDetails->heating }}</td>
+                                <td>{{ $ad->house->propertyDetails->heating }}</td>
                             </tr>
                             <tr>
                                 <th>Internet</th>
-                                <td>{{ $ad->houseInfo->propertyDetails->internet }}</td>
+                                <td>{{ $ad->house->propertyDetails->internet }}</td>
                             </tr>
                         @endisset
 
@@ -88,43 +88,43 @@
                             </tr>
                             <tr>
                                 <th>Rozloha</th>
-                                <td>{{ $ad->apartmentInfo->propertyDetails->area_square_meters }}</td>
+                                <td>{{ $ad->apartment->propertyDetails->area_square_meters }}</td>
                             </tr>
                             <tr>
                                 <th>Typ</th>
-                                <td>{{ $ad->apartmentInfo->propertyDetails->type }}</td>
+                                <td>{{ $ad->apartment->propertyDetails->type }}</td>
                             </tr>
                             <tr>
                                 <th>Okná</th>
-                                <td>{{ $ad->apartmentInfo->propertyDetails->window_type }}</td>
+                                <td>{{ $ad->apartment->propertyDetails->window_type }}</td>
                             </tr>
                             <tr>
                                 <th>Orientácia</th>
-                                <td>{{ $ad->apartmentInfo->propertyDetails->direction }}</td>
+                                <td>{{ $ad->apartment->propertyDetails->direction }}</td>
                             </tr>
                             <tr>
                                 <th>Balkón</th>
-                                <td>{{ $ad->apartmentInfo->propertyDetails->balcony }}</td>
+                                <td>{{ $ad->apartment->propertyDetails->balcony }}</td>
                             </tr>
                             <tr>
                                 <th>Pivnica</th>
-                                <td>{{ $ad->apartmentInfo->propertyDetails->cellar }}</td>
+                                <td>{{ $ad->apartment->propertyDetails->cellar }}</td>
                             </tr>
                             <tr>
                                 <th>Garáž</th>
-                                <td>{{ $ad->apartmentInfo->propertyDetails->garage }}</td>
+                                <td>{{ $ad->apartment->propertyDetails->garage }}</td>
                             </tr>
                             <tr>
                                 <th>Zateplený objekt</th>
-                                <td>{{ $ad->apartmentInfo->propertyDetails->insulated }}</td>
+                                <td>{{ $ad->apartment->propertyDetails->insulated }}</td>
                             </tr>
                             <tr>
                                 <th>Vykurovanie</th>
-                                <td>{{ $ad->apartmentInfo->propertyDetails->heating }}</td>
+                                <td>{{ $ad->apartment->propertyDetails->heating }}</td>
                             </tr>
                             <tr>
                                 <th>Internet</th>
-                                <td>{{ $ad->apartmentInfo->propertyDetails->internet }}</td>
+                                <td>{{ $ad->apartment->propertyDetails->internet }}</td>
                             </tr>
                         @endisset
 
@@ -148,19 +148,19 @@
                     <table class="table table-striped" style="width:90%; align-items: center;">
                         <tr>
                             <th>Autor</th>
-                            <td>{{ $ad->userInfo->surname.' '.$ad->userInfo->lastname }}</td>
+                            <td>{{ $ad->user->surname.' '.$ad->user->lastname }}</td>
                         </tr>
                         <tr>
                             <th>Realitná kancelária</th>
-                            <td>{{ $ad->userInfo->realEstateOffice->name }}</td>
+                            <td> @isset($ad->user->realEstateOffice){{ $ad->user->realEstateOffice->name }} @endisset</td>
                         </tr>
                         <tr>
                             <th>Telefónne číslo</th>
-                            <td>{{ $ad->userInfo->realEstateOffice->phone }}</td>
+                            <td>@isset($ad->user->realEstateOffice){{ $ad->user->realEstateOffice->phone }} @endisset</td>
                         </tr>
                         <tr>
                             <th>Webová stránka</th>
-                            <td>{{ $ad->userInfo->realEstateOffice->web }}</td>
+                            <td>@isset($ad->user->realEstateOffice){{ $ad->user->realEstateOffice->web }} @endisset</td>
                         </tr>
                     </table>
                 </div>

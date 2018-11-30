@@ -2,7 +2,6 @@
 @section('title', 'Real estate offices')
 
 @section('content')
-
     <br>
     @if ($errors->any())
         <div class="alert alert-danger">

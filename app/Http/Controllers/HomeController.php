@@ -9,39 +9,134 @@ use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
+    protected $filter_data_vars = array();
+
     public function index()
     {
-        $ad =  Ad::all()->toArray();
+        $ad = Ad::all()->toArray();
         //return dd($ad, count($ad));
         return view('home', compact('ad'));
     }
 
-    public function showAd ($id) {
-        $ad =  Ad::all()->load('address','userInfo','houseInfo','apartmentInfo','estate')->where('id', $id)->first();
+    public function showAd($id)
+    {
+        $ad = Ad::all()->load('address','user.realEstateOffice', 'user.realEstateOffice.address', 'house.propertyDetails', 'apartment.propertyDetails', 'estate')->where('id', $id)->first();
         //return dd($ad);
         return view('details', compact('ad'));
     }
 
-    protected $city;
-    public function filter(Request $request)
+    public function relation($row) {
+        if (strpos($row, 'a__') !== false) return 'apartment';
+        if (strpos($row, 'ap__') !== false) return 'apartment.propertyDetails';
+        if (strpos($row, 'h__') !== false) return 'house';
+        if (strpos($row, 'hp__') !== false) return 'house.propertyDetails';
+        if (strpos($row, 'e__') !== false) return 'estate';
+        if (strpos($row, 'ad__') !== false) return 'address';
+        return false;
+    }
+
+    public function filterType($row, $int_filters, $bool_filters) {
+        if (strcmp($row, 'property_type') == 0) return 0;      //property_type = specialny pripad
+        if (in_array($row, $int_filters)) return 1;                 //je to cislo
+        if (in_array($row, $bool_filters)) return 2;                //je to boolean
+        return 3;                                                   //je to string
+    }
+
+    public function removeRelationTags($row) {
+        if (strpos($row, 'a__') !== false) return substr($row,3);
+        if (strpos($row, 'ap__') !== false) return substr($row,4);
+        if (strpos($row, 'h__') !== false) return substr($row,3);
+        if (strpos($row, 'hp__') !== false) return substr($row,4);
+        if (strpos($row, 'e__') !== false) return substr($row,3);
+        if (strpos($row, 'ad__') !== false) return substr($row,4);
+    }
+
+    public function removeMinMaxTags($row) {
+        return substr($row,0,-4);
+    }
+
+    public function filter(Request $request)        //here we go
     {
-        //DB::enableQueryLog();
-        $description = $request->input('description');
-        $price_min = (int) $request->input('price_min');
-        $price_max = (int) $request->input('price_max');
-        $property_type = $request->input('property_type');
-        $category = $request->input('category');
-        $city = $request->input('city');
-        $this->city = $city;
-        $filter_data = [                        //array pre zapamatanie vybranych vstupov zo zakladneho filtra
-            'description' => $description,
-            'price_min' => $price_min,
-            'price_max' => $price_max,
-            'property_type' => $property_type,
-            'category' => $category,
-            'city' => $city
-            ];
-        $select_data = array(
+        DB::enableQueryLog();
+
+        $filter_data = $request->all();
+        $token = array_shift($filter_data);
+
+//        $string = 'ad__city';
+//        if ($this->relation($string)) $b = true;
+//        else $b = false;
+//        return dd($this->removeRelationTags($string), $b, $this->relation($string));
+
+        $int_filters = array('price_min', 'price_max', 'ap__area_square_meters_min', 'ap__area_square_meters_max', 'hp__area_square_meters_min',
+            'hp__area_square_meters_max', 'e__area_ares_min', 'e__area_ares_max', 'e__price_per_ares_min', 'e__price_per_ares_max');
+        $bool_filters = array('ap__balcony', 'ap__cellar', 'ap__garage', 'ap__insulated', 'hp__balcony', 'hp__cellar', 'hp__garage',
+            'hp__insulated', 'h__garden', 'h__terrace');
+        $ads = Ad::with('address', 'user.realEstateOffice.address', 'house.propertyDetails', 'apartment.propertyDetails', 'estate');
+
+        foreach ($filter_data as $filter_key => $filter_value) {
+            if ($filter_value != null) {//ak je hodnota null, filter nebol pouzity a netreba ho riesit
+                switch ($this->filterType($filter_key, $int_filters, $bool_filters)){
+                    case 0:                                 //ak je filter: typ nehnutelnosti
+                        if (strcmp($filter_value, 'byt') == 0)
+                            $ads = $ads->where('apartment_ID', 'NOT LIKE', null);
+                        if (strcmp($filter_value, 'dom') == 0)
+                            $ads = $ads->where('house_ID', 'NOT LIKE', null);
+                        if (strcmp($filter_value, 'pozemok') == 0)
+                            $ads = $ads->where('estate_ID', 'NOT LIKE', null);
+                        break;
+
+                    case 1:                                 //ak je filter cislo od:do
+                        if (strpos($filter_key, 'min') !== false) {     //ak obsahuje substring 'min'
+                            $value = (int)$filter_value;
+                            if ($this->relation($filter_key)) {         //ak je riadok v inej tabulke, je potrebne pouzit whereHas, inak staci where
+                                $tableRow = $this->removeMinMaxTags($this->removeRelationTags($filter_key));
+                                $ads = $ads->whereHas($this->relation($filter_key), function ($q) use ($filter_value, $tableRow) {
+                                    $q->where($tableRow, '>=', $filter_value);
+                                });
+                            } else {
+                                $ads = $ads->where($this->removeMinMaxTags($filter_key), '>=', $value);
+                            }
+                        }
+                        if (strpos($filter_key, 'max') !== false) {     //ak obsahuje substring 'max'
+                            $value = (int)$filter_value;
+                            if ($this->relation($filter_key)) {
+                                $tableRow = $this->removeMinMaxTags($this->removeRelationTags($filter_key));
+                                $ads = $ads->whereHas($this->relation($filter_key), function ($q) use ($filter_value, $tableRow) {
+                                    $q->where($tableRow, '<=', $filter_value);
+                                });
+                            } else {
+                                $ads = $ads->where($this->removeMinMaxTags($filter_key), '<=', $value);
+                            }
+                        }
+                        break;
+
+                    case 2:                                 //ak je filter true/falee
+                        $value = (int)$filter_value;
+                        if ($this->relation($filter_key)) {
+                            $tableRow = $this->removeRelationTags($filter_key);
+                            $ads = $ads->whereHas($this->relation($filter_key), function ($q) use ($filter_value, $tableRow) {
+                                $q->where($tableRow, 'LIKE', $filter_value);
+                            });
+                        } else {
+                            $ads = $ads->where($filter_key, 'LIKE', $value);
+                        }
+                        break;
+
+                    case 3:
+                        //return dd($filter_data, $this->relation($filter_key));//ostatne filtre = stringy
+                        if ($this->relation($filter_key)) {
+                            $tableRow = $this->removeRelationTags($filter_key);
+                            $ads = $ads->whereHas($this->relation($filter_key), function ($q) use ($filter_value, $tableRow) {
+                                $q->where($tableRow, 'LIKE', "%" . $filter_value . "%");
+                            });
+                        } else {
+                            $ads = $ads->where($filter_key, 'LIKE', "%" . $filter_value . "%");
+                        }
+                        break;
+                }
+            }
+        }
+        $select_data = array(           //moznosti pri filtrovani
             'type' => [
                 'novostavba',
                 'prerobený',
@@ -80,41 +175,22 @@ class HomeController extends Controller
                 'káblové pripojenie',
                 'optický kábel',
                 'bez internetu'
+            ],
+            'estate_type' => [
+                'záhrada',
+                'orná pôda',
+                'sad/chmelnica/vinica',
+                'lesná pôda',
+                'lúka/pasienok',
+                'rekreačný pozemok',
+                'priemyselná zóna',
+                'stavebný pozemok'
             ]);
 
-        $ads = Ad::with('address','userInfo','houseInfo','apartmentInfo','estate');
-
-        if ($description != null) {
-            $ads = $ads->where('description','LIKE',"%".$description."%");
-        }
-        if (($price_min != null) && ($price_max == null)) {
-            $ads = $ads->where('price','>=',$price_min);
-        } else if (($price_min == null) && ($price_max != null)) {
-            $ads = $ads->where('price','<=',$price_max);
-        } else if (($price_min != null) && ($price_max != null)) {
-            $ads = $ads->where('price','>=',$price_min)->where('price','<=',$price_max);
-        }
-        if ($property_type != null) {
-            if (strcmp($property_type,'byt') == 0)
-                $ads = $ads->where('apartment_ID','NOT LIKE',null);
-            if (strcmp($property_type,'dom') == 0)
-                $ads = $ads->where('house_ID','NOT LIKE',null);
-            if (strcmp($property_type,'pozemok') == 0)
-                $ads = $ads->where('estate_ID','NOT LIKE',null);
-        }
-        if ($category != null) {
-            $ads = $ads->where('category','LIKE',"%".$category."%");
-        }
-        if ($city != null) {
-            $ads = $ads->whereHas('address',function ($q) {
-                $q->where('city','LIKE',"%".$this->city."%");
-            });
-        }
-
         $ads_filtered = $ads->get()->toArray();
-        //$query = DB::getQueryLog();
-        //return dd($select_data, $select_data['type'][0]);
-        return view('filtered', compact('ads_filtered','filter_data','select_data'));
+        $query = DB::getQueryLog();
+        //return dd($filter_data);
+        return view('filtered', compact('ads_filtered', 'filter_data', 'select_data'));
 
     }
 }

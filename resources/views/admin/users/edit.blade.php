@@ -2,7 +2,7 @@
 @section('title', 'Users')
 
 @section('content')
-    <h2></h2>
+    <br>
     <form method="post" action="{{ route('admin.users.update', $user->id) }}">
         @csrf
         <input name="_method" type="hidden" value="PATCH">

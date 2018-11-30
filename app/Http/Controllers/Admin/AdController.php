@@ -184,6 +184,34 @@ class AdController extends Controller
      */
     public function update(Request $request, Ad $ad)
     {
+        $rules = [
+            'description' => 'required|string|max:500',
+            'price' => 'required|integer',
+            'category' => 'required',
+            'notes' => 'required|string|max:5000',
+            'address_id' => 'required',
+            'user_id' => 'required',
+            'house_id' => new OnlyOneId($request->get('house_id'), $request->get('apartment_id'), $request->get('estate_id'))
+        ];
+        $messages = [
+            'required' => 'Vyplňte ":attribute".',
+            'integer' => '":attribute" musí byť celé číslo.',
+            'string' => 'Neznáme znaky v poli ":attribute".',
+            'max' => 'Maximálny počet znakov v poli ":attribute" je :max.'
+        ];
+        $attributes = [
+            'description' => 'Názov',
+            'price' => 'Cena',
+            'category' => 'Kategória',
+            'notes' => 'Popis',
+            'address_id' => 'Adresa',
+            'user_id' => 'Autor',
+            'house_id' => 'Dom ID',
+            'apartment_id' => 'Byt ID',
+            'estate_id' => 'Pozemok ID',
+        ];
+        Validator::make($request->all(), $rules, $messages, $attributes)->validate();
+
         $ad->price = $request->get('price');
         $ad->category = $request->get('category');
         $ad->description = $request->get('description');

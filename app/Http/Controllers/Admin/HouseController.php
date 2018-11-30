@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\House;
+use Validator;
 use App\PropertyDetail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -44,6 +45,25 @@ class HouseController extends Controller
      */
     public function store(Request $request, House $house)
     {
+        $rules = [
+            'floor_count' => 'required|integer',
+            'garden' => 'required|string|max:255',
+
+
+        ];
+        $messages = [
+            'required' => 'Vyplňte prázdne pole ":attribute".',
+            'integer' => '":attribute" musí byť celé číslo.',
+            'string' => 'Neznáme znaky v poli ":attribute".',
+            'max' => 'Maximálny počet znakov v poli ":attribute" je :max.'
+        ];
+        $attributes = [
+            'floor_count' => 'Počet poschodí',
+            'garden' => 'Záhrada',
+
+
+        ];
+        Validator::make($request->all(), $rules, $messages, $attributes)->validate();
 
         $house = new \App\House();
         $house->floor_count = $request->get('floor_count');
@@ -94,6 +114,26 @@ class HouseController extends Controller
      */
     public function update(Request $request, House $house)
     {
+        $rules = [
+            'floor_count' => 'required|integer',
+            'garden' => 'required|string|max:255',
+
+
+        ];
+        $messages = [
+            'required' => 'Vyplňte prázdne pole ":attribute".',
+            'integer' => '":attribute" musí byť celé číslo.',
+            'string' => 'Neznáme znaky v poli ":attribute".',
+            'max' => 'Maximálny počet znakov v poli ":attribute" je :max.'
+        ];
+        $attributes = [
+            'floor_count' => 'Počet poschodí',
+            'garden' => 'Záhrada',
+
+
+        ];
+        Validator::make($request->all(), $rules, $messages, $attributes)->validate();
+
         $house->floor_count = $request->get('floor_count');
         $house->terrace = $request->get('terrace');
         $house->garden = $request->get('garden');

@@ -15,8 +15,6 @@ class Ad extends Model
         return false;
     }
 
-
-
     public function address()
     {
         return $this->belongsTo(Address::class);
@@ -42,16 +40,5 @@ class Ad extends Model
         return $this->belongsTo(Estate::class);
     }
 
-    public function houseInfo() {
-        return $this->house()->with('propertyDetails');
-    }
-
-    public function apartmentInfo() {
-        return $this->apartment()->with('propertyDetails');
-    }
-
-    public function userInfo() {
-        return $this->user()->with('realEstateOffice');
-    }
 
 }

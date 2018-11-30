@@ -9,7 +9,7 @@
             <div class="col-md-12 py-5">
                 <div class="col-md-12 px-0 pb-5">
                     <div class=" col-md-10 float-left">
-                        <h2>Detaily nehnuteľností</h2>
+                        <h3 style="font-family: 'Open Sans', sans-serif; letter-spacing: 2px;"><strong>DETAILY NEHNUTEĽNOSTÍ</strong></h3>
                     </div>
                     <div class="col-md-2 float-right pr-0">
                         <a role="button" class="btn btn-secondary btn-block" href="{{ route('admin.propertydetails.create') }}">

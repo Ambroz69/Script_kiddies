@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use Validator;
 use App\Http\Controllers\Controller;
 use App\PropertyDetail;
 
@@ -43,7 +44,32 @@ class PropertyDetailController extends Controller
      */
     public function store(Request $request, PropertyDetail $propertydetail)
     {
-        //
+        $rules = [
+            'area_square_meters' => 'required|integer',
+            'type' => 'required|string|max:255',
+            'window_type' => 'required|string|max:255',
+            'direction' => 'required|string|max:255',
+            'heating' => 'required|string|max:255',
+            'internet' => 'required|string|max:255'
+
+        ];
+        $messages = [
+            'required' => 'Vyplňte prázdne pole ":attribute".',
+            'integer' => '":attribute" musí byť celé číslo.',
+            'string' => 'Neznáme znaky v poli ":attribute".',
+            'max' => 'Maximálny počet znakov v poli ":attribute" je :max.'
+        ];
+        $attributes = [
+            'area_square_meters' => 'Veľkosť',
+            'type' => 'Typ',
+            'window_type' => 'Druh okien',
+            'direction' => 'Orientácia',
+            'heating' => 'Kúrenie',
+            'internet' => 'Internet'
+
+        ];
+        Validator::make($request->all(), $rules, $messages, $attributes)->validate();
+
         $propertydetail = new \App\PropertyDetail();
         $propertydetail->area_square_meters = $request->get('area_square_meters');
         $propertydetail->type = $request->get('type');
@@ -91,7 +117,32 @@ class PropertyDetailController extends Controller
      */
     public function update(Request $request, PropertyDetail $propertydetail)
     {
-        //
+        $rules = [
+            'area_square_meters' => 'required|integer',
+            'type' => 'required|string|max:255',
+            'window_type' => 'required|string|max:255',
+            'direction' => 'required|string|max:255',
+            'heating' => 'required|string|max:255',
+            'internet' => 'required|string|max:255'
+
+        ];
+        $messages = [
+            'required' => 'Vyplňte prázdne pole ":attribute".',
+            'integer' => '":attribute" musí byť celé číslo.',
+            'string' => 'Neznáme znaky v poli ":attribute".',
+            'max' => 'Maximálny počet znakov v poli ":attribute" je :max.'
+        ];
+        $attributes = [
+            'area_square_meters' => 'Veľkosť',
+            'type' => 'Typ',
+            'window_type' => 'Druh okien',
+            'direction' => 'Orientácia',
+            'heating' => 'Kúrenie',
+            'internet' => 'Internet'
+
+        ];
+        Validator::make($request->all(), $rules, $messages, $attributes)->validate();
+
         $propertydetail->area_square_meters = $request->get('area_square_meters');
         $propertydetail->type = $request->get('type');
         $propertydetail->window_type = $request->get('window_type');

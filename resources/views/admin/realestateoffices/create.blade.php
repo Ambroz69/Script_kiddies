@@ -2,7 +2,6 @@
 @section('title', 'Real estate offices')
 
 @section('content')
-
     <br>
     <form method="post" action="{{ route('admin.realestateoffices.store') }}">
         @csrf

@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Validator;
 use App\RealEstateOffice;
 use App\User;
 use Illuminate\Http\Request;
@@ -40,6 +41,27 @@ class UserController extends Controller
      */
     public function store(Request $request, User $user)
     {
+        $rules = [
+            'surname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'email' => 'required|string|max:255',
+            'password' => 'required|string|max:255',
+
+        ];
+        $messages = [
+            'required' => 'Vyplňte prázdne pole ":attribute".',
+            'integer' => '":attribute" musí byť celé číslo.',
+            'string' => 'Neznáme znaky v poli ":attribute".',
+            'max' => 'Maximálny počet znakov v poli ":attribute" je :max.'
+        ];
+        $attributes = [
+            'surname' => 'Meno',
+            'lastname' => 'Priezvisko',
+            'email' => 'E-mail',
+            'password' => 'Heslo',
+        ];
+        Validator::make($request->all(), $rules, $messages, $attributes)->validate();
+
         $user = new \App\User;
         $user->surname = $request->get('surname');
         $user->lastname = $request->get('lastname');
@@ -85,6 +107,27 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        $rules = [
+            'surname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'email' => 'required|string|max:255',
+            'password' => 'required|string|max:255',
+
+        ];
+        $messages = [
+            'required' => 'Vyplňte prázdne pole ":attribute".',
+            'integer' => '":attribute" musí byť celé číslo.',
+            'string' => 'Neznáme znaky v poli ":attribute".',
+            'max' => 'Maximálny počet znakov v poli ":attribute" je :max.'
+        ];
+        $attributes = [
+            'surname' => 'Meno',
+            'lastname' => 'Priezvisko',
+            'email' => 'E-mail',
+            'password' => 'Heslo',
+        ];
+        Validator::make($request->all(), $rules, $messages, $attributes)->validate();
+
         $user->surname = $request->get('surname');
         $user->lastname = $request->get('lastname');
         $user->email = $request->get('email');

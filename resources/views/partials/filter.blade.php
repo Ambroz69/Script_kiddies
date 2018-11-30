@@ -17,8 +17,8 @@
     </div>
     <div class="row">
         <div class="form-group col-md-12">
-            <label for="type">Druh nehnuteľnosti:</label>
-            <select name="type" id="type" class="form-control">
+            <label for="property_type">Druh nehnuteľnosti:</label>
+            <select name="property_type" id="property_type" class="form-control">
                 <option value="" selected></option>
                 <option value="byt">Byt</option>
                 <option value="dom">Dom</option>
@@ -39,8 +39,8 @@
 
     <div class="row">
         <div class="form-group col-md-12">
-            <label for="city">Mesto:</label>
-            <input id="city" type="text" class="form-control" name="city" placeholder="Mesto">
+            <label for="ad__city">Mesto:</label>
+            <input id="ad__city" type="text" class="form-control" name="ad__city" placeholder="Mesto">
         </div>
     </div>
     <div class="row">

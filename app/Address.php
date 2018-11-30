@@ -8,7 +8,7 @@ class Address extends Model
 {
     //
     protected $fillable = [
-        'address_name', 'address_number', 'city', 'zip',
+        'address_name', 'address_number', 'city', 'zip', 'region'
     ];
 
     protected $appends = [
@@ -31,7 +31,7 @@ class Address extends Model
     }
 
     public function getFullAddressAttribute() {
-        return $this->address_name . ' ' . $this->address_number . ', ' . $this->zip . ' ' . $this->city;
+        return $this->address_name . ' ' . $this->address_number . ', ' . $this->zip . ' ' . $this->city. ', '.$this->region.' kraj';
     }
 
 }

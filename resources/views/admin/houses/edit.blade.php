@@ -2,7 +2,7 @@
 @section('title', 'Houses')
 
 @section('content')
-
+    <br>
     <form method="post" action="{{ route('admin.houses.update', $house->id) }}">
         @csrf
         <input name="_method" type="hidden" value="PATCH">

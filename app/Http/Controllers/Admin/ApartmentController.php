@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Apartment;
 use App\PropertyDetail;
+use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -44,6 +45,25 @@ class ApartmentController extends Controller
      */
     public function store(Request $request, Apartment $apartment)
     {
+        $rules = [
+            'room_count' => 'required|integer',
+            'floor' => 'required|integer',
+
+        ];
+        $messages = [
+            'required' => 'Vyplňte prázdne pole ":attribute".',
+            'integer' => '":attribute" musí byť celé číslo.',
+            'string' => 'Neznáme znaky v poli ":attribute".',
+            'max' => 'Maximálny počet znakov v poli ":attribute" je :max.'
+        ];
+        $attributes = [
+            'room_count' => 'Počet izieb',
+            'floor' => 'Poschodie',
+
+
+        ];
+        Validator::make($request->all(), $rules, $messages, $attributes)->validate();
+
         $apartment = new \App\Apartment();
         $apartment->room_count = $request->get('room_count');
         $apartment->floor = $request->get('floor');
@@ -90,6 +110,25 @@ class ApartmentController extends Controller
      */
     public function update(Request $request, Apartment $apartment)
     {
+        $rules = [
+            'room_count' => 'required|integer',
+            'floor' => 'required|integer',
+
+        ];
+        $messages = [
+            'required' => 'Vyplňte prázdne pole ":attribute".',
+            'integer' => '":attribute" musí byť celé číslo.',
+            'string' => 'Neznáme znaky v poli ":attribute".',
+            'max' => 'Maximálny počet znakov v poli ":attribute" je :max.'
+        ];
+        $attributes = [
+            'room_count' => 'Počet izieb',
+            'floor' => 'Poschodie',
+
+
+        ];
+        Validator::make($request->all(), $rules, $messages, $attributes)->validate();
+
         $apartment->room_count = $request->get('room_count');
         $apartment->floor = $request->get('floor');
         $apartment->property_details_id = $request->get('property_details_id');
