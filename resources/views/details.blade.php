@@ -171,7 +171,28 @@
                 </div>
             </div>
             <div class="col-md-5 border-dark border">
-                galeria obrazkov
+                <form method="post" action="{{ route('store_image', $ad->id) }}" enctype="multipart/form-data">
+                    @csrf
+                    <label>Pridať obrázok</label>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <input type="file" name="imagename">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4" >
+                            <button type="submit" class="btn btn-primary text-white">Pridať</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    @foreach ($images as $image)
+                        <div class="col-md-12">
+                            <img src="{{ URL::asset($path.$image->name) }}" alt="{{ URL::asset($path.$image->name) }}"
+                                    @php $image->image_string @endphp>
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>

@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Ad;
-use App\Address;
+use App\Image;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -22,7 +23,55 @@ class HomeController extends Controller
     {
         $ad = Ad::all()->load('address','user.realEstateOffice', 'user.realEstateOffice.address', 'house.propertyDetails', 'apartment.propertyDetails', 'estate')->where('id', $id)->first();
         //return dd($ad);
-        return view('details', compact('ad'));
+        $images = Image::all()->where('ad_id','==',$id);
+        $path = Storage::url('ad_images/');
+        //return dd($path);
+        return view('details', compact('ad','images', 'path'));
+    }
+
+    public function storeImage(Request $request, $ad_id) {
+        $img = $request->file('imagename');
+
+        if (isset($img)) {
+            list($width, $height, $type, $attr) = getimagesize($img);
+
+            switch ($type) {
+                case 1:
+                    $picture_type = 'GIF';
+                    break;
+                case 2:
+                    $picture_type = 'JPG';
+                    break;
+                case 3:
+                    $picture_type = 'PNG';
+                    break;
+                case 6:
+                    $picture_type = 'BMP';
+                    break;
+                default:
+                    return redirect(route('show', $ad_id))->with('danger', 'Je možné nahrávať len súbory s príponou: .gif .jpg .png .bmp');
+                    //vyhodi error ze nepodporujeme taketo srajdy, ma pridat IMG, PNG, JPG alebo BMP
+                    break;
+            }
+            $img = $request->file('imagename')->store('public/ad_images');
+            $image = new Image();
+            $image->name = basename($img);
+            $image->width = $width;
+            $image->height = $height;
+            $image->type = $picture_type;
+            $image->image_string = $attr;
+            $image->ad_id = $ad_id;
+            $image->save();
+            //return dd($image);
+            return redirect(route('show', $ad_id))->with('success', 'Obrázok bol pridaný.');
+        } else {
+            return redirect(route('show', $ad_id))->with('danger', 'Je potrebné vybrať súbor.');
+        }
+
+    }
+
+    public function deleteImage($image) {
+
     }
 
     public function relation($row) {

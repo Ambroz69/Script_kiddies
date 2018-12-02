@@ -40,5 +40,9 @@ class Ad extends Model
         return $this->belongsTo(Estate::class);
     }
 
+    public function images()
+    {
+        return $this->hasMany(Image::class);
+    }
 
 }
