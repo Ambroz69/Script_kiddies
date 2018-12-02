@@ -187,9 +187,15 @@
                 </form>
                 <div class="row">
                     @foreach ($images as $image)
-                        <div class="col-md-12">
+                        <div class="col-md-12 pb-3">
                             <img src="{{ URL::asset($path.$image->name) }}" alt="{{ URL::asset($path.$image->name) }}"
-                                    @php $image->image_string @endphp>
+                                    @php $image->image_string @endphp style="max-width: 85%; max-height: 600px">
+                            <form action="{{ route('delete_image', $image) }}" method="post" class="float-right">
+                                @csrf
+                                <input id="id" name="id" hidden value="{{ $ad->id }}">
+                                @method('delete')
+                                <button class="btn btn-danger" type="submit"><span data-feather="trash-2"></span></button>
+                            </form>
                         </div>
                     @endforeach
                 </div>

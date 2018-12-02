@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Ad;
 use App\Image;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,8 +22,8 @@ class HomeController extends Controller
 
     public function showAd($id)
     {
-        $ad = Ad::all()->load('address','user.realEstateOffice', 'user.realEstateOffice.address', 'house.propertyDetails', 'apartment.propertyDetails', 'estate')->where('id', $id)->first();
-        //return dd($ad);
+        $ad = Ad::all()->load('address','user.realEstateOffice', 'user.realEstateOffice.address',
+            'house.propertyDetails', 'apartment.propertyDetails', 'estate')->where('id', $id)->first();
         $images = Image::all()->where('ad_id','==',$id);
         $path = Storage::url('ad_images/');
         //return dd($path);
@@ -50,7 +51,6 @@ class HomeController extends Controller
                     break;
                 default:
                     return redirect(route('show', $ad_id))->with('danger', 'Je možné nahrávať len súbory s príponou: .gif .jpg .png .bmp');
-                    //vyhodi error ze nepodporujeme taketo srajdy, ma pridat IMG, PNG, JPG alebo BMP
                     break;
             }
             $img = $request->file('imagename')->store('public/ad_images');
@@ -70,8 +70,15 @@ class HomeController extends Controller
 
     }
 
-    public function deleteImage($image) {
+    public function deleteImage(Request $request, Image $image) {
+        File::delete('storage/ad_images/'.$image->name);
+        //return dd(Storage::disk('local')->delete('ad_images/'.$image->name));
+        try {
+            $image->delete();
+        } catch (\Exception $e) {
 
+        }
+        return redirect(route('show', $request->input('id')))->with('success', 'Obrázok bol vymazaný.');
     }
 
     public function relation($row) {

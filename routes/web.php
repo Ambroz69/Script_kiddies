@@ -6,6 +6,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/show/{id}', 'HomeController@showAd')->name('show');
 Route::post('/add_image/{id}','HomeController@storeImage')->name('store_image');
 Route::post('/filter','HomeController@filter')->name('filter');
+Route::delete('/delete_image/{image}','HomeController@deleteImage')->name('delete_image');
 
 Route::name('admin.')->group(function () {
     Route::get('admin', 'Admin\HomeController@index')->name('home');

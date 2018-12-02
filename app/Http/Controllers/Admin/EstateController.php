@@ -143,7 +143,6 @@ class EstateController extends Controller
      */
     public function destroy(Estate $estate)
     {
-        //
         try {
             $estate->delete();
         } catch (\Exception $e) {
