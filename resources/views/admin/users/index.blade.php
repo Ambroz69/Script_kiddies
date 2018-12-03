@@ -30,6 +30,7 @@
                         <th>Priezvisko</th>
                         <th>E-mail</th>
                         <th>Admin</th>
+                        <th>Status</th>
                         <th>ID RK</th>
                         <!--<th>Vytvorené</th>
                         <th>Upravené</th>-->
@@ -53,6 +54,7 @@
                                     }
                                 @endphp
                             </td>
+                            <td> {{ $user->status }}</td>
                             <td>
                                 @isset($user->realEstateOffice)
                                     <a href="{{ route('admin.realestateoffices.edit', $user->realEstateOffice->id) }}">{{$user->realEstateOffice->name}}</a>

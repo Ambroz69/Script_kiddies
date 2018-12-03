@@ -3,6 +3,15 @@
 
 @section('content')
     <br>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <form method="post" action="{{ route('admin.users.update', $user->id) }}">
         @csrf
         <input name="_method" type="hidden" value="PATCH">
@@ -34,6 +43,18 @@
                 <select name="admin" id="admin" class="form-control">
                     <option value="1" @php if($user->isAdmin == 1) echo 'selected';@endphp>Áno</option>
                     <option value="0" @php if($user->isAdmin == 0) echo 'selected';@endphp>Nie</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                <label for="status">Status: </label>
+                <select id="status" name="status" class="form-control">
+                    <option value=""></option>
+                    <option value="správca" @php if(strcmp($user->status,'správca') == 0) echo 'selected';@endphp>správca</option>
+                    <option value="čakajúci" @php if(strcmp($user->status,'čakajúci') == 0) echo 'selected';@endphp>čakajúci</option>
+                    <option value="prijatý" @php if(strcmp($user->status,'prijatý') == 0) echo 'selected';@endphp>prijatý</option>
                 </select>
             </div>
         </div>

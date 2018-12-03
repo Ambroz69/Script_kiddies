@@ -69,6 +69,7 @@ class UserController extends Controller
         $user->password = $request->get('password');
         $user->password = Hash::make('password');
         $user->isAdmin = $request->get('admin');
+        $user->status = $request->get('status');
         $user->save();
         return redirect(route('admin.users.index'))->with('success', 'Záznam bol pridaný.');
     }
@@ -110,9 +111,7 @@ class UserController extends Controller
         $rules = [
             'surname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
-            'email' => 'required|string|max:255',
-            'password' => 'required|string|max:255',
-
+            'email' => 'required|string|max:255'
         ];
         $messages = [
             'required' => 'Vyplňte prázdne pole ":attribute".',
@@ -123,8 +122,7 @@ class UserController extends Controller
         $attributes = [
             'surname' => 'Meno',
             'lastname' => 'Priezvisko',
-            'email' => 'E-mail',
-            'password' => 'Heslo',
+            'email' => 'E-mail'
         ];
         Validator::make($request->all(), $rules, $messages, $attributes)->validate();
 
@@ -133,6 +131,7 @@ class UserController extends Controller
         $user->email = $request->get('email');
         $user->isAdmin = $request->get('admin');
         $user->real_estate_office_id = $request->get('real_estate_office_id');
+        $user->status = $request->get('status');
         $user->save();
         return redirect(route('admin.users.index'));
     }

@@ -36,6 +36,11 @@
             </li>
         @endguest
         @auth
+           <li class="nav-item text-nowrap pr-3">
+               <a class="nav-link" href="{{ route('user.home') }}">
+                   {{ __('Môj profil') }}
+               </a>
+           </li>
             <li class="nav-item text-nowrap pr-3">
                 <a onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="nav-link"
                    href="{{ route('logout') }}">

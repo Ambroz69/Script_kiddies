@@ -21,6 +21,12 @@ Route::name('admin.')->group(function () {
     Route::resource('admin/ads','Admin\AdController');
     Route::resource('admin/images', 'Admin\ImageController');
 });
+Route::name('user.')->group(function() {
+   Route::get('user', 'User\HomeController@index')->name('home');
+    Route::get('user/office', 'User\HomeController@showOffice')->name('office');
+    Route::get('user/office/find', 'User\HomeController@findOffice')->name('office.find');
+    Route::patch('user/office/{user}', 'User\HomeController@requestAdd')->name('office.request_add');
+});
 
 
 
