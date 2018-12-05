@@ -40,9 +40,9 @@
                                     <td>{{ $user->realEstateOffice->address->region }}</td>
                                 </tr>
                             </table>
-                            @if(strcmp($user->status,'správca'))
+                            @if(strcmp($user->status,'správca') == 0)
                                 <div class="col-md-12 float-right pr-0">
-                                    <a role="button" class="btn btn-secondary btn-block" href="#">
+                                    <a role="button" class="btn btn-secondary btn-block" href="{{ route('user.office.edit', $user->id) }}">
                                         Upraviť údaje
                                     </a>
                                 </div>
@@ -51,13 +51,13 @@
                     @elseif(isset($office_id) && (strcmp($user->status,'čakajúci') == 0))
                         <label>Realitná kancelária <strong>{{ $user->realEstateOffice->name }}</strong> obdržala Vašu žiadosť,
                             počkajte prosím na schválenie.</label>
-                        <a role="button" class="btn btn-secondary btn-block" href="#">
+                        <a role="button" class="btn btn-secondary btn-block" href="{{ route('user.office.cancel_request') }}">
                             Zrušiť žiadosť
                         </a>
                     @else
                         <div class="col-md-3 float-right pr-0">
                             <label>Nemáte priradenú realitnú kanceláriu.</label>
-                            <a role="button" class="btn btn-primary btn-block" href="#">
+                            <a role="button" class="btn btn-primary btn-block" href="{{ route('user.office.create') }}">
                                 Vytvoriť realitnú kanceláriu
                             </a>
                             <a role="button" class="btn btn-secondary btn-block" href=" {{ route('user.office.find') }}">

@@ -10,7 +10,7 @@
                     <span data-feather="folder"></span> &nbsp Moje inzeráty </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('user.office') }}">
+                <a class="nav-link {{ isActiveRoute('user.office') }}" href="{{ route('user.office') }}">
                     <span data-feather="coffee"></span>
                     &nbsp Realitná kancelária
                 </a>
@@ -22,7 +22,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('user.home') }}" style="margin-left: 12px">
+                <a class="nav-link {{ isActiveRoute('user.office.employees') }}" href="{{ route('user.office.employees') }}" style="margin-left: 12px">
                     <span data-feather="users"></span>
                     &nbsp Zamestnanci
                 </a>
@@ -30,7 +30,7 @@
             @auth
                 @if(strcmp(Auth::user()->status,'správca') == 0)
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('user.home') }}" style="margin-left: 12px">
+                        <a class="nav-link {{ isActiveRoute('user.office.requests') }}" href="{{ route('user.office.requests') }}" style="margin-left: 12px">
                             <span data-feather="file-plus"></span>
                             &nbsp Žiadosti
                         </a>

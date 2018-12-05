@@ -5,6 +5,11 @@
     <div class="container-fluid pt-5">
         <div class="row">
             <div class="col-md-9"> <!-- zobrazenie inzeratov -->
+                @if ($remains == 0)
+                    <div class="row my-3">
+                        <label>Kritériám nevyhovujú žiadne inzeráty.</label>
+                    </div>
+                @endif
                 @while($remains > 0)
                     <div class="row my-3">
                         <div class="card mt-3 float-left">

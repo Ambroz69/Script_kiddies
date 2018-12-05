@@ -23,9 +23,22 @@ Route::name('admin.')->group(function () {
 });
 Route::name('user.')->group(function() {
    Route::get('user', 'User\HomeController@index')->name('home');
+//   Route::name('office.')->group(function() {
+//
+//   });
     Route::get('user/office', 'User\HomeController@showOffice')->name('office');
     Route::get('user/office/find', 'User\HomeController@findOffice')->name('office.find');
-    Route::patch('user/office/{user}', 'User\HomeController@requestAdd')->name('office.request_add');
+    Route::get('user/office/create', 'User\HomeController@createOffice')->name('office.create');
+    Route::post('user/office/store', 'User\HomeController@storeOffice')->name('office.store');
+    Route::get('user/office/edit/{user}', 'User\HomeController@editOffice')->name('office.edit');
+    Route::patch('user/office/update/{user}', 'User\HomeController@updateOffice')->name('office.update');
+    Route::patch('user/office/{user}', 'User\HomeController@addRequest')->name('office.add_request');
+    Route::get('user/office/cancel', 'User\HomeController@cancelRequest')->name('office.cancel_request');
+    Route::get('user/office/requests', 'User\HomeController@requests')->name('office.requests');
+    Route::get('user/office/requests/accept/{user}', 'User\HomeController@acceptRequest')->name('office.requests.accept');
+    Route::get('user/office/requests/reject/{user}', 'User\HomeController@rejectRequest')->name('office.requests.reject');
+    Route::get('user/office/employees', 'User\HomeController@employees')->name('office.employees');
+    Route::get('user/office/employees/remove/{user}', 'User\HomeController@removeEmployee')->name('office.employees.remove');
 });
 
 

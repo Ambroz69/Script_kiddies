@@ -15,10 +15,17 @@
             <div class="card-body">
                 <div id="container" class=" card-body col-md-12 p-0">
                     <div style="float: left;">
-                        <a>
-                            <span data-feather="heart"></span>
-                            &nbsp {{ $ad[$i+$j]['price'] }} EUR
-                        </a>
+                        @if( strcmp($ad[$i+$j]['category'],'prenájom') == 0)
+                            <a>
+                                <span data-feather="heart"></span>
+                                &nbsp {{ $ad[$i+$j]['price'] }} €/mesiac
+                            </a>
+                        @else
+                            <a>
+                                <span data-feather="heart"></span>
+                                &nbsp {{ $ad[$i+$j]['price'] }} €
+                            </a>
+                        @endif
                     </div>
                     <div style="float: right; ">
                         <a href="{{ route('show', $ad[$i+$j]['id']) }}"

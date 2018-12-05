@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-12 py-5">
                 <div class="row px-0 pb-5">
-                    <form action="{{ route('user.office.request_add', $user->id) }}" method="post">
+                    <form action="{{ route('user.office.add_request', $user->id) }}" method="post">
                         @csrf
                         <input name="_method" type="hidden" value="PATCH">
                         <label for="office"></label>
