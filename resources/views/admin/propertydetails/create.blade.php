@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-md-4"></div>
             <div class="form-group col-md-4">
-                <label for="area_square_meters">Veľkosť:</label>
+                <label for="area_square_meters">Výmera:</label>
                 <input id="area_square_meters" type="text" class="form-control" name="area_square_meters">
             </div>
         </div>

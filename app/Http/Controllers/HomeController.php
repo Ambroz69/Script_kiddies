@@ -30,57 +30,6 @@ class HomeController extends Controller
         return view('details', compact('ad','images', 'path'));
     }
 
-    public function storeImage(Request $request, $ad_id) {
-        $img = $request->file('imagename');
-
-        if (isset($img)) {
-            list($width, $height, $type, $attr) = getimagesize($img);
-
-            switch ($type) {
-                case 1:
-                    $picture_type = 'GIF';
-                    break;
-                case 2:
-                    $picture_type = 'JPG';
-                    break;
-                case 3:
-                    $picture_type = 'PNG';
-                    break;
-                case 6:
-                    $picture_type = 'BMP';
-                    break;
-                default:
-                    return redirect(route('show', $ad_id))->with('danger', 'Je možné nahrávať len súbory s príponou: .gif .jpg .png .bmp');
-                    break;
-            }
-            $img = $request->file('imagename')->store('public/ad_images');
-            $image = new Image();
-            $image->name = basename($img);
-            $image->width = $width;
-            $image->height = $height;
-            $image->type = $picture_type;
-            $image->image_string = $attr;
-            $image->ad_id = $ad_id;
-            $image->save();
-            //return dd($image);
-            return redirect(route('show', $ad_id))->with('success', 'Obrázok bol pridaný.');
-        } else {
-            return redirect(route('show', $ad_id))->with('danger', 'Je potrebné vybrať súbor.');
-        }
-
-    }
-
-    public function deleteImage(Request $request, Image $image) {
-        File::delete('storage/ad_images/'.$image->name);
-        //return dd(Storage::disk('local')->delete('ad_images/'.$image->name));
-        try {
-            $image->delete();
-        } catch (\Exception $e) {
-
-        }
-        return redirect(route('show', $request->input('id')))->with('success', 'Obrázok bol vymazaný.');
-    }
-
     public function relation($row) {
         if (strpos($row, 'a__') !== false) return 'apartment';
         if (strpos($row, 'ap__') !== false) return 'apartment.propertyDetails';

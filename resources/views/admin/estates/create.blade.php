@@ -33,7 +33,7 @@
         <div class="row">
             <div class="col-md-4"></div>
             <div class="form-group col-md-4">
-                <label for="area_ares">Ár:</label>
+                <label for="area_ares">Rozloha:</label>
                 <input id="area_ares" type="text" class="form-control" name="area_ares">
             </div>
         </div>

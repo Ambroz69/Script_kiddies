@@ -8,13 +8,21 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Ad;
 use App\Address;
+use App\Apartment;
+use App\Estate;
+use App\House;
 use App\Http\Controllers\Controller;
+use App\Image;
+use App\PropertyDetail;
 use Illuminate\Support\Facades\Auth;
 use App\RealEstateOffice;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -125,7 +133,7 @@ class HomeController extends Controller
         $statement2 = DB::select("show table status like 'real_estate_offices'");
         $office_id = $statement2[0]->Auto_increment;
         $user = Auth::user();
-        //return dd($request->all(), $address_id, $office_id);
+
         $address = new Address();
         $office = new RealEstateOffice();
 
@@ -175,5 +183,193 @@ class HomeController extends Controller
         $office->save();
 
         return redirect(route('user.office'));
+    }
+
+    public function showMyAds()     //zobrazenie vsetkych inzeratov prihlaseneho pouzivatela
+    {
+        $user = Auth::user();
+        $ads = Ad::all()->load('address','user.realEstateOffice', 'user.realEstateOffice.address',
+            'house.propertyDetails', 'apartment.propertyDetails', 'estate')->where('user_id', $user->id);
+
+        return view('user.ads.index', compact('ads'));
+    }
+
+    public function showAd(Ad $ad)      //nahlad na konkretny inzerat
+    {
+        $ad = $ad->load('address','user.realEstateOffice', 'user.realEstateOffice.address',
+            'house.propertyDetails', 'apartment.propertyDetails', 'estate');
+        $images = Image::all()->where('ad_id','==',$ad->id);
+        $path = Storage::url('ad_images/');
+        return view('user.ads.show', compact('ad','path','images'));
+    }
+
+    public function storeImage(Request $request, $ad_id) {      //pridanie obrazku k inzeratu
+        $img = $request->file('imagename');
+
+        if (isset($img)) {
+            list($width, $height, $type, $attr) = getimagesize($img);
+
+            switch ($type) {
+                case 1:
+                    $picture_type = 'GIF';
+                    break;
+                case 2:
+                    $picture_type = 'JPG';
+                    break;
+                case 3:
+                    $picture_type = 'PNG';
+                    break;
+                case 6:
+                    $picture_type = 'BMP';
+                    break;
+                default:
+                    return redirect(route('user.ads.show', $ad_id))->with('danger', 'Je možné nahrávať len súbory s príponou: .gif .jpg .png .bmp');
+                    break;
+            }
+            $img = $request->file('imagename')->store('public/ad_images');
+            $image = new Image();
+            $image->name = basename($img);
+            $image->width = $width;
+            $image->height = $height;
+            $image->type = $picture_type;
+            $image->image_string = $attr;
+            $image->ad_id = $ad_id;
+            $image->save();
+            return redirect(route('user.ads.show', $ad_id))->with('success', 'Obrázok bol pridaný.');
+        } else {
+            return redirect(route('user.ads.show', $ad_id))->with('danger', 'Je potrebné vybrať súbor.');
+        }
+
+    }
+
+    public function deleteImage(Request $request, Image $image) {       //vymazanie obrazku z inzeratu
+        File::delete('storage/ad_images/'.$image->name);
+        try {
+            $image->delete();
+        } catch (\Exception $e) {
+
+        }
+        return redirect(route('user.ads.show', $request->input('id')))->with('success', 'Obrázok bol vymazaný.');
+    }
+
+    public function createAd()      //vytvorenie noveho inzeratu part1
+    {
+        return view('user.ads.create');
+    }
+
+    public function storeAd(Request $request)       //vytvorenie noveho inzeratu part2
+    {
+        $statement = DB::select("show table status like 'addresses'");
+        $address_id = $statement[0]->Auto_increment;
+
+        $user_id = Auth::user()->id;
+        $address = new Address();
+        $ad = new Ad();
+
+        $address->address_name = $request->get('address_name');
+        $address->address_number = $request->get('address_number');
+        $address->city = $request->get('city');
+        $address->zip = $request->get('zip');
+        $address->region = $request->get('region');
+        $address->save();
+
+        switch($request->get('property_type')) {
+            case("byt"):
+                $statement2 = DB::select("show table status like 'property_details'");
+                $property_details_id = $statement2[0]->Auto_increment;
+                $statement3 = DB::select("show table status like 'apartments'");
+                $apartment_id = $statement3[0]->Auto_increment;
+
+                $property_details = new PropertyDetail();
+                $property_details->area_square_meters = $request->get('a_area_square_meters');
+                $property_details->type = $request->get('a_type');
+                $property_details->window_type = $request->get('a_window_type');
+                $property_details->direction = $request->get('a_direction');
+                $property_details->balcony = $request->get('a_balcony');
+                $property_details->cellar = $request->get('a_cellar');
+                $property_details->garage = $request->get('a_garage');
+                $property_details->insulated = $request->get('a_insulated');
+                $property_details->heating = $request->get('a_heating');
+                $property_details->internet = $request->get('a_internet');
+                $property_details->save();
+
+                $apartments = new Apartment();
+                $apartments->room_count = $request->get('a_room_count');
+                $apartments->floor = $request->get('a_floor');
+                $apartments->property_details_id = $property_details_id;
+                $apartments->save();
+
+                $ad->apartment_id = $apartment_id;
+                break;
+
+            case("dom"):
+                $statement2 = DB::select("show table status like 'property_details'");
+                $property_details_id = $statement2[0]->Auto_increment;
+                $statement4 = DB::select("show table status like 'houses'");
+                $house_id = $statement4[0]->Auto_increment;
+
+                $property_details = new PropertyDetail();
+                $property_details->area_square_meters = $request->get('h_area_square_meters');
+                $property_details->type = $request->get('h_type');
+                $property_details->window_type = $request->get('h_window_type');
+                $property_details->direction = $request->get('h_direction');
+                $property_details->balcony = $request->get('h_balcony');
+                $property_details->cellar = $request->get('h_cellar');
+                $property_details->garage = $request->get('h_garage');
+                $property_details->insulated = $request->get('h_insulated');
+                $property_details->heating = $request->get('h_heating');
+                $property_details->internet = $request->get('h_internet');
+                $property_details->save();
+
+                $house = new House();
+                $house->floor_count = $request->get('h_floor_count');
+                $house->terrace = $request->get('h_terrace');
+                $house->garden = $request->get('h_gardedn');
+                $house->property_details_id = $property_details_id;
+                $house->save();
+
+                $ad->house_id = $house_id;
+
+                break;
+
+            case("pozemok"):
+                $statement5 = DB::select("show table status like 'estates'");
+                $estate_id = $statement5[0]->Auto_increment;
+
+                $estate = new Estate();
+                $estate->type = $request->get('e_type');
+                $estate->area_ares = $request->get('e_area_ares');
+                $estate->price_per_ares = $request->get('e_price_per_ares');
+                $estate->save();
+
+                $ad->estate_id = $estate_id;
+                break;
+        }
+
+        $ad->price = $request->get('price');
+        $ad->description = $request->get('description');
+        $ad->category = $request->get('category');
+        $ad->notes = $request->get('notes');
+        $ad->address_id = $address_id;
+        $ad->user_id = $user_id;
+        $ad->save();
+
+        //return dd($request->all());
+        return redirect(route('user.ads'));
+    }
+
+    public function editAd()        //uprava inzeratu part1
+    {
+
+    }
+
+    public function updateAd()      //uprava inzeratu part2
+    {
+
+    }
+
+    public function deleteAd()      //vymazanie inzeratu
+    {
+
     }
 }

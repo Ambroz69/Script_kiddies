@@ -2,11 +2,11 @@
     <div class="sidebar-sticky">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link{{ isActiveRoute('user.home') }}"  href="{{ route('user.home') }}">
+                <a class="nav-link {{ isActiveRoute('user.home') }}"  href="{{ route('user.home') }}">
                     <span data-feather="lock"></span> &nbsp Domov </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link"  href="{{ route('user.home') }}">
+                <a class="nav-link {{ isActiveRoute('user.ads') }} {{ isActiveRoute('user.ads') }}"  href="{{ route('user.ads') }}">
                     <span data-feather="folder"></span> &nbsp Moje inzeráty </a>
             </li>
             <li class="nav-item">

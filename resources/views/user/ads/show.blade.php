@@ -1,7 +1,26 @@
-@extends('layouts.app')
-@section('title', 'Konkretny inzerat')
+@extends('user.layouts.app')
+@section('title', 'Moj inzerat')
 @section('content')
     <div class="container-fluid pt-5">
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <div style="float: left; margin-right: 0.5em">
+                    <a href="{{ route('user.ads') }}" class="btn btn-primary">
+                        <span data-feather="arrow-left-circle"></span>
+                    </a>
+                </div>
+                <div style="float: right">
+                    <a href="#" class="btn btn-danger float-right">
+                        <span data-feather="trash-2"></span>
+                    </a>
+                </div>
+                <div style="float: right; margin-right: 0.5em">
+                    <a href="#" class="btn btn-info float-right">
+                        <span data-feather="edit"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-7">
                 <div class="row my-3">
@@ -160,8 +179,8 @@
                         </tr>
                         <tr>
                             <th>Webová stránka</th>
-                            <td>@isset($ad->user->realEstateOffice) <a href="http://{{ $ad->user->realEstateOffice->web }}">
-                                    {{ $ad->user->realEstateOffice->web }}
+                            <td><a href="http://{{ $ad->user->realEstateOffice->web }}">
+                                    @isset($ad->user->realEstateOffice){{ $ad->user->realEstateOffice->web }}
                                 </a> @endisset
                             </td>
                         </tr>
@@ -175,10 +194,32 @@
             </div>
             <div class="col-md-5 border-dark border">
                 <div class="row">
+                    <form method="post" action="{{ route('user.ads.store_image', $ad->id) }}" enctype="multipart/form-data">
+                        @csrf
+                        <label>Pridať obrázok</label>
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <input type="file" name="imagename">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-4" >
+                                <button type="submit" class="btn btn-primary text-white">Pridať</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
                     @foreach ($images as $image)
                         <div class="col-md-12 pb-3">
                             <img src="{{ URL::asset($path.$image->name) }}" alt="{{ URL::asset($path.$image->name) }}"
-                                    @php $image->image_string @endphp style="max-width: 85%; max-height: 600px">
+                                 @php $image->image_string @endphp style="max-width: 85%; max-height: 600px">
+                            <form action="{{ route('user.ads.delete_image', $image) }}" method="post" class="float-right">
+                                @csrf
+                                <input id="id" name="id" hidden value="{{ $ad->id }}">
+                                @method('delete')
+                                <button class="btn btn-danger" type="submit"><span data-feather="trash-2"></span></button>
+                            </form>
                         </div>
                     @endforeach
                 </div>
