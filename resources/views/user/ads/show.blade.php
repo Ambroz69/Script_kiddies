@@ -5,20 +5,22 @@
         <div class="row">
             <div class="col-md-12 mb-3">
                 <div style="float: left; margin-right: 0.5em">
-                    <a href="{{ route('user.ads') }}" class="btn btn-primary">
+                    <button onclick="window.history.back()" class="btn btn-primary">
                         <span data-feather="arrow-left-circle"></span>
-                    </a>
+                    </button>
                 </div>
-                <div style="float: right">
-                    <a href="#" class="btn btn-danger float-right">
-                        <span data-feather="trash-2"></span>
-                    </a>
-                </div>
-                <div style="float: right; margin-right: 0.5em">
-                    <a href="#" class="btn btn-info float-right">
-                        <span data-feather="edit"></span>
-                    </a>
-                </div>
+                @if(($user->id == $ad->user_id) || (strcmp($user->status,'správca') == 0))
+                    <div style="float: right">
+                        <a href="#" class="btn btn-danger float-right">
+                            <span data-feather="trash-2"></span>
+                        </a>
+                    </div>
+                    <div style="float: right; margin-right: 0.5em">
+                        <a href="#" class="btn btn-info float-right">
+                            <span data-feather="edit"></span>
+                        </a>
+                    </div>
+                @endif
             </div>
         </div>
         <div class="row">
@@ -193,33 +195,40 @@
                 </div>
             </div>
             <div class="col-md-5 border-dark border">
-                <div class="row">
-                    <form method="post" action="{{ route('user.ads.store_image', $ad->id) }}" enctype="multipart/form-data">
-                        @csrf
-                        <label>Pridať obrázok</label>
-                        <div class="row">
-                            <div class="form-group col-md-4">
-                                <input type="file" name="imagename">
+                @if(($user->id == $ad->user_id) || (strcmp($user->status,'správca') == 0))
+                    <div class="row">
+                        <form method="post" action="{{ route('user.ads.store_image', $ad->id) }}"
+                              enctype="multipart/form-data">
+                            @csrf
+                            <label>Pridať obrázok</label>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <input type="file" name="imagename">
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-4" >
-                                <button type="submit" class="btn btn-primary text-white">Pridať</button>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <button type="submit" class="btn btn-primary text-white">Pridať</button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
-                </div>
+                        </form>
+                    </div>
+                @endif
                 <div class="row">
                     @foreach ($images as $image)
                         <div class="col-md-12 pb-3">
                             <img src="{{ URL::asset($path.$image->name) }}" alt="{{ URL::asset($path.$image->name) }}"
                                  @php $image->image_string @endphp style="max-width: 85%; max-height: 600px">
-                            <form action="{{ route('user.ads.delete_image', $image) }}" method="post" class="float-right">
-                                @csrf
-                                <input id="id" name="id" hidden value="{{ $ad->id }}">
-                                @method('delete')
-                                <button class="btn btn-danger" type="submit"><span data-feather="trash-2"></span></button>
-                            </form>
+                            @if(($user->id == $ad->user_id) || (strcmp($user->status,'správca') == 0))
+                                <form action="{{ route('user.ads.delete_image', $image) }}" method="post"
+                                      class="float-right">
+                                    @csrf
+                                    <input id="id" name="id" hidden value="{{ $ad->id }}">
+                                    @method('delete')
+                                    <button class="btn btn-danger" type="submit"><span data-feather="trash-2"></span>
+                                    </button>
+                                </form>
+                            @endif
                         </div>
                     @endforeach
                 </div>

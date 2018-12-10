@@ -1,23 +1,19 @@
 @extends('user.layouts.app')
-@section('title', 'Moje inzeraty')
+@section('title', 'Inzeraty RK')
 @section('content')
     @php $i = 0; $remains = count($ads); @endphp
     <div class="container-fluid pt-5">
         <div class="row">
-            <div class="col-md-12">
-                <a href="{{ route('user.ads.create') }}" class="btn btn-primary float-right">+ Pridať inzerát +</a>
-            </div>
-        </div>
-        <div class="row">
             <div class="col-md-12"> <!-- zobrazenie inzeratov -->
                 @if ($remains == 0)
                     <div class="row my-3">
-                        <label>Nemáte žiadne inzeráty.</label>
+                        <label>RK nemá žiadne inzeráty.</label>
                     </div>
                 @endif
                 @while($remains > 0)
                     <div class="row my-3">
-                        <div class="card mt-3 float-left">
+                        <label for="ad"> Autor: <strong>@php echo $ads[$i]['user']['surname'].' '.$ads[$i]['user']['lastname']; @endphp</strong></label>
+                        <div class="card float-left" id="ad">
                             <div class="row p-0">
                                 <div class="col-md-6">
                                     <img class="card-img-top" src="{{URL::asset('/image/1.jpg')}}"
@@ -26,21 +22,20 @@
                                 </div>
                                 <div class="col-md-6 my-3">
                                     <div style="height: 15%">
-                                        <div class="col-md-12">
-                                            <div style="float: right">
-                                                <form action="{{ route('user.ads.delete', $ads[$i]['id']) }}" method="post">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button class="btn btn-danger" type="submit"><span data-feather="trash-2"></span>
-                                                    </button>
-                                                </form>
+                                        @if(strcmp($user->status,'správca') == 0)
+                                            <div class="col-md-12">
+                                                <div style="float: right">
+                                                    <a href="#" class="btn btn-danger float-right">
+                                                        <span data-feather="trash-2"></span>
+                                                    </a>
+                                                </div>
+                                                <div style="float: right; margin-right: 0.5em">
+                                                    <a href=" {{ route('user.ads.edit', $ads[$i]['id']) }}" class="btn btn-info float-right">
+                                                        <span data-feather="edit"></span>
+                                                    </a>
+                                                </div>
                                             </div>
-                                            <div style="float: right; margin-right: 0.5em">
-                                                <a href=" {{ route('user.ads.edit', $ads[$i]['id']) }}" class="btn btn-info float-right">
-                                                    <span data-feather="edit"></span>
-                                                </a>
-                                            </div>
-                                        </div>
+                                        @endif
                                     </div>
                                     <div style="height: 65%">
                                         <div class="card-body">

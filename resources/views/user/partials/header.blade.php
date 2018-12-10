@@ -4,6 +4,11 @@
         <strong>DO-BY-PO</strong>
     </a>
     <ul class="navbar-nav pr-3" style="flex-direction: row;">
+        <li class="nav-item text-nowrap">
+                <label style="color: white">
+                    {{ \Illuminate\Support\Facades\Auth::user()->email }}
+                </label>
+        </li>
         <li class="nav-item px-3">
             <a class="nav-link" href="#">
                 <span data-feather="message-square"></span>

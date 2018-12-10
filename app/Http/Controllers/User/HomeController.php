@@ -188,19 +188,21 @@ class HomeController extends Controller
     public function showMyAds()     //zobrazenie vsetkych inzeratov prihlaseneho pouzivatela
     {
         $user = Auth::user();
-        $ads = Ad::all()->load('address','user.realEstateOffice', 'user.realEstateOffice.address',
-            'house.propertyDetails', 'apartment.propertyDetails', 'estate')->where('user_id', $user->id);
+        $ads = array_values(Ad::all()->load('address','user.realEstateOffice', 'user.realEstateOffice.address',
+            'house.propertyDetails', 'apartment.propertyDetails', 'estate')->where('user_id', $user->id)->toArray());
 
-        return view('user.ads.index', compact('ads'));
+        //return dd($ads);
+        return view('user.ads.index', compact('ads','user'));
     }
 
     public function showAd(Ad $ad)      //nahlad na konkretny inzerat
     {
+        $user = Auth::user();
         $ad = $ad->load('address','user.realEstateOffice', 'user.realEstateOffice.address',
             'house.propertyDetails', 'apartment.propertyDetails', 'estate');
         $images = Image::all()->where('ad_id','==',$ad->id);
         $path = Storage::url('ad_images/');
-        return view('user.ads.show', compact('ad','path','images'));
+        return view('user.ads.show', compact('ad','path','images','user'));
     }
 
     public function storeImage(Request $request, $ad_id) {      //pridanie obrazku k inzeratu
@@ -254,7 +256,67 @@ class HomeController extends Controller
 
     public function createAd()      //vytvorenie noveho inzeratu part1
     {
-        return view('user.ads.create');
+        $select_data = array(   //moznosti pri filtrovani
+            'region' => [
+                'Bratislavský',
+                'Trnavský',
+                'Trenčiansky',
+                'Nitriansky',
+                'Žilinský',
+                'Banskobystrický',
+                'Prešovský',
+                'Košický'
+            ],
+            'type' => [
+                'novostavba',
+                'prerobený',
+                'čiastočne prerobený',
+                'v pôvodnom stave'
+            ],
+            'window_type' => [
+                'plastové',
+                'drevené',
+                'dreveno-hliníkové',
+                'hliníkové',
+                'oceľové',
+                'bezrámové'
+            ],
+            'direction' => [
+                'sever',
+                'juh',
+                'východ',
+                'západ',
+                'severo-východ',
+                'severo-západ',
+                'juho-východ',
+                'juho-západ'
+            ],
+            'heating' => [
+                'plynom',
+                'drevom',
+                'elektrickou energiou',
+                'kotol',
+                'solárne systémy',
+                'tepelné čerpadlá',
+                'hybridné'
+            ],
+            'internet' => [
+                'bezdrôtové pripojenie',
+                'káblové pripojenie',
+                'optický kábel',
+                'bez internetu'
+            ],
+            'estate_type' => [
+                'záhrada',
+                'orná pôda',
+                'sad/chmelnica/vinica',
+                'lesná pôda',
+                'lúka/pasienok',
+                'rekreačný pozemok',
+                'priemyselná zóna',
+                'stavebný pozemok'
+            ]);
+        return view('user.ads.create', compact('select_data'));
     }
 
     public function storeAd(Request $request)       //vytvorenie noveho inzeratu part2
@@ -358,18 +420,172 @@ class HomeController extends Controller
         return redirect(route('user.ads'));
     }
 
-    public function editAd()        //uprava inzeratu part1
+    public function editAd(Ad $ad)        //uprava inzeratu part1
     {
+        $select_data = array(   //moznosti pri filtrovani
+            'region' => [
+                'Bratislavský',
+                'Trnavský',
+                'Trenčiansky',
+                'Nitriansky',
+                'Žilinský',
+                'Banskobystrický',
+                'Prešovský',
+                'Košický'
+            ],
+            'type' => [
+                'novostavba',
+                'prerobený',
+                'čiastočne prerobený',
+                'v pôvodnom stave'
+            ],
+            'window_type' => [
+                'plastové',
+                'drevené',
+                'dreveno-hliníkové',
+                'hliníkové',
+                'oceľové',
+                'bezrámové'
+            ],
+            'direction' => [
+                'sever',
+                'juh',
+                'východ',
+                'západ',
+                'severo-východ',
+                'severo-západ',
+                'juho-východ',
+                'juho-západ'
+            ],
+            'heating' => [
+                'plynom',
+                'drevom',
+                'elektrickou energiou',
+                'kotol',
+                'solárne systémy',
+                'tepelné čerpadlá',
+                'hybridné'
+            ],
+            'internet' => [
+                'bezdrôtové pripojenie',
+                'káblové pripojenie',
+                'optický kábel',
+                'bez internetu'
+            ],
+            'estate_type' => [
+                'záhrada',
+                'orná pôda',
+                'sad/chmelnica/vinica',
+                'lesná pôda',
+                'lúka/pasienok',
+                'rekreačný pozemok',
+                'priemyselná zóna',
+                'stavebný pozemok'
+            ]);
 
+        $ad_id = $ad->id;
+        $ad = Ad::all()->load('address', 'user', 'house.propertyDetails', 'apartment.propertyDetails', 'estate')->where('id', $ad_id)->first();
+        //return dd($ad);
+        return view('user.ads.edit', compact('ad', 'select_data'));
     }
 
-    public function updateAd()      //uprava inzeratu part2
+    public function updateAd(Request $request, Ad $ad)      //uprava inzeratu part2
     {
 
+        $ad_id = $ad->id;
+        $ad = Ad::where('id', $ad_id)->first()->load('address', 'user', 'house.propertyDetails', 'apartment.propertyDetails', 'estate');
+
+        $address = $ad->address;
+        $address->address_name = $request->get('address_name');
+        $address->address_number = $request->get('address_number');
+        $address->city = $request->get('city');
+        $address->zip = $request->get('zip');
+        $address->region = $request->get('region');
+        $address->save();
+
+        switch($request->get('property_type')) {
+            case("byt"):
+                $property_details = $ad->apartment->propertyDetails;
+                $property_details->area_square_meters = $request->get('a_area_square_meters');
+                $property_details->type = $request->get('a_type');
+                $property_details->window_type = $request->get('a_window_type');
+                $property_details->direction = $request->get('a_direction');
+                $property_details->balcony = $request->get('a_balcony');
+                $property_details->cellar = $request->get('a_cellar');
+                $property_details->garage = $request->get('a_garage');
+                $property_details->insulated = $request->get('a_insulated');
+                $property_details->heating = $request->get('a_heating');
+                $property_details->internet = $request->get('a_internet');
+                $property_details->save();
+
+                $apartments = $ad->apartment;
+                $apartments->room_count = $request->get('a_room_count');
+                $apartments->floor = $request->get('a_floor');
+                $apartments->save();
+
+                break;
+
+            case("dom"):
+                $property_details = $ad->house->propertyDetails;
+                $property_details->area_square_meters = $request->get('h_area_square_meters');
+                $property_details->type = $request->get('h_type');
+                $property_details->window_type = $request->get('h_window_type');
+                $property_details->direction = $request->get('h_direction');
+                $property_details->balcony = $request->get('h_balcony');
+                $property_details->cellar = $request->get('h_cellar');
+                $property_details->garage = $request->get('h_garage');
+                $property_details->insulated = $request->get('h_insulated');
+                $property_details->heating = $request->get('h_heating');
+                $property_details->internet = $request->get('h_internet');
+                $property_details->save();
+
+                $house = $ad->house;
+                $house->floor_count = $request->get('h_floor_count');
+                $house->terrace = $request->get('h_terrace');
+                $house->garden = $request->get('h_gardedn');
+                $house->save();
+
+                break;
+
+            case("pozemok"):
+                $estate = $ad->estate;
+                $estate->type = $request->get('e_type');
+                $estate->area_ares = $request->get('e_area_ares');
+                $estate->price_per_ares = $request->get('e_price_per_ares');
+                $estate->save();
+
+                break;
+        }
+
+        $ad->price = $request->get('price');
+        $ad->description = $request->get('description');
+        $ad->category = $request->get('category');
+        $ad->notes = $request->get('notes');
+        $ad->save();
+
+        return redirect(route('user.ads'));
     }
 
-    public function deleteAd()      //vymazanie inzeratu
+    public function deleteAd(Ad $ad)      //vymazanie inzeratu
     {
+        try {
+            $ad->delete();
+        } catch (\Exception $e) {
 
+        }
+        return redirect(route('user.ads'))->with('success', 'Záznam bol vymazaný.');
+    }
+
+    public function showOfficeAds()       //zobrazuje inzeraty vsetkych clenov RK
+    {
+        $user = Auth::user();
+        $office_id = Auth::user()->real_estate_office_id;
+        $ads = Ad::with('address', 'user', 'house.propertyDetails', 'apartment.propertyDetails', 'estate')
+            ->whereHas('user', function ($q) use($office_id) {
+            $q->where('real_estate_office_id', $office_id);
+            })->get()->toArray();
+        $employees = User::where('real_estate_office_id', $office_id)->get();
+        //return dd($ads);
+        return view('user.office.ads', compact('ads', 'employees', 'user'));
     }
 }

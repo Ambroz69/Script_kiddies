@@ -16,7 +16,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('user.home') }}" style="margin-left: 12px">
+                <a class="nav-link {{ isActiveRoute('user.office.ads') }}" href="{{ route('user.office.ads') }}" style="margin-left: 12px">
                     <span data-feather="archive"></span>
                     &nbsp Inzeráty
                 </a>

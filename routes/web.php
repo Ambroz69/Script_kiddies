@@ -40,6 +40,8 @@ Route::name('user.')->group(function() {
     Route::get('user/office/employees', 'User\HomeController@employees')->name('office.employees');
     Route::get('user/office/employees/remove/{user}', 'User\HomeController@removeEmployee')->name('office.employees.remove');
 
+    Route::get('user/office/ads', 'User\HomeController@showOfficeAds')->name('office.ads');
+
     Route::get('user/ads', 'User\HomeController@showMyAds')->name('ads');
     Route::get('user/ads/show/{ad}', 'User\HomeController@showAd')->name('ads.show');
     Route::post('user/ads/add_image/{id}','User\HomeController@storeImage')->name('ads.store_image');
@@ -50,7 +52,6 @@ Route::name('user.')->group(function() {
     Route::get('user/ads/edit/{ad}', 'User\HomeController@editAd')->name('ads.edit');
     Route::patch('user/ads/update/{ad}', 'User\HomeController@updateAd')->name('ads.update');
     Route::delete('user/ads/delete/{ad}','User\HomeController@deleteAd')->name('ads.delete');
-
 });
 
 

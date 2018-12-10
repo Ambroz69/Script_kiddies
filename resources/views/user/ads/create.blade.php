@@ -51,14 +51,9 @@
                         <div class="form-group col-md-12">
                             <label for="region">Kraj:</label>
                             <select name="region" id="region" class="form-control">
-                                <option value="Bratislavský">Bratislavský</option>
-                                <option value="Trnavský">Trnavský</option>
-                                <option value="Trenčiansky">Trenčiansky</option>
-                                <option value="Nitriansky">Nitriansky</option>
-                                <option value="Žilinský">Žilinský</option>
-                                <option value="Banskobystrický">Banskobystrický</option>
-                                <option value="Prešovský">Prešovský</option>
-                                <option value="Košický">Košický</option>
+                                @foreach($select_data['region'] as $option)
+                                    <option value="{{ $option }}">{{ $option }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -123,10 +118,9 @@
                             <div class="form-group col-md-12">
                                 <label for="a_type">Typ:</label>
                                 <select name="a_type" id="a_type" class="form-control">
-                                    <option value="novostavba">novostavba</option>
-                                    <option value="prerobený">prerobený</option>
-                                    <option value="čiastočne prerobený">čiastočne prerobený</option>
-                                    <option value="v pôvodnom stave">v pôvodnom stave</option>
+                                    @foreach($select_data['type'] as $option)
+                                        <option value="{{ $option }}">{{ $option }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -134,12 +128,9 @@
                             <div class="form-group col-md-12">
                                 <label for="a_window_type">Druh okien:</label>
                                 <select name="a_window_type" id="a_window_type" class="form-control">
-                                    <option value="plastové">plastové</option>
-                                    <option value="drevené">drevené</option>
-                                    <option value="dreveno-hliníkové">dreveno-hliníkové</option>
-                                    <option value="hliníkové">hliníkové</option>
-                                    <option value="oceľové">oceľové</option>
-                                    <option value="bezrámové">bezrámové</option>
+                                    @foreach($select_data['window_type'] as $option)
+                                        <option value="{{ $option }}">{{ $option }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -147,14 +138,9 @@
                             <div class="form-group col-md-12">
                                 <label for="a_direction">Orientácia:</label>
                                 <select name="a_direction" id="a_direction" class="form-control">
-                                    <option value="sever">sever</option>
-                                    <option value="juh">juh</option>
-                                    <option value="východ">východ</option>
-                                    <option value="západ">západ</option>
-                                    <option value="severo-východ">severo-východ</option>
-                                    <option value="severo-západ">severo-západ</option>
-                                    <option value="juho-východ">juho-východ</option>
-                                    <option value="juho-západ">juho-západ</option>
+                                    @foreach($select_data['direction'] as $option)
+                                        <option value="{{ $option }}">{{ $option }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -198,13 +184,9 @@
                             <div class="form-group col-md-12">
                                 <label for="a_heating">Kúrenie:</label>
                                 <select name="a_heating" id="a_heating" class="form-control">
-                                    <option value="plynom">plynom</option>
-                                    <option value="drevom">drevom</option>
-                                    <option value="elektrickou energiou">elektrickou energiou</option>
-                                    <option value="kotol">kotol</option>
-                                    <option value="solárne systémy">solárne systémy</option>
-                                    <option value="tepelné čerpadlá">tepelné čerpadlá</option>
-                                    <option value="hybridné">hybridné</option>
+                                    @foreach($select_data['heating'] as $option)
+                                        <option value="{{ $option }}">{{ $option }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -212,10 +194,9 @@
                             <div class="form-group col-md-12">
                                 <label for="a_internet">Internet:</label>
                                 <select name="a_internet" id="a_internet" class="form-control">
-                                    <option value="bezdrôtové spojenie">bezdrôtové spojenie</option>
-                                    <option value="káblové pripojenie">káblové pripojenie</option>
-                                    <option value="optický kábel">optický kábel</option>
-                                    <option value="bez internetu">bez internetu</option>
+                                    @foreach($select_data['internet'] as $option)
+                                        <option value="{{ $option }}">{{ $option }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -245,10 +226,9 @@
                             <div class="form-group col-md-12">
                                 <label for="h_type">Typ:</label>
                                 <select name="h_type" id="h_type" class="form-control">
-                                    <option value="novostavba">novostavba</option>
-                                    <option value="prerobený">prerobený</option>
-                                    <option value="čiastočne prerobený">čiastočne prerobený</option>
-                                    <option value="v pôvodnom stave">v pôvodnom stave</option>
+                                    @foreach($select_data['type'] as $option)
+                                        <option value="{{ $option }}">{{ $option }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -256,12 +236,9 @@
                             <div class="form-group col-md-12">
                                 <label for="h_window_type">Druh okien:</label>
                                 <select name="h_window_type" id="h_window_type" class="form-control">
-                                    <option value="plastové">plastové</option>
-                                    <option value="drevené">drevené</option>
-                                    <option value="dreveno-hliníkové">dreveno-hliníkové</option>
-                                    <option value="hliníkové">hliníkové</option>
-                                    <option value="oceľové">oceľové</option>
-                                    <option value="bezrámové">bezrámové</option>
+                                    @foreach($select_data['window_type'] as $option)
+                                        <option value="{{ $option }}">{{ $option }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -269,14 +246,9 @@
                             <div class="form-group col-md-12">
                                 <label for="h_direction">Orientácia:</label>
                                 <select name="h_direction" id="h_direction" class="form-control">
-                                    <option value="sever">sever</option>
-                                    <option value="juh">juh</option>
-                                    <option value="východ">východ</option>
-                                    <option value="západ">západ</option>
-                                    <option value="severo-východ">severo-východ</option>
-                                    <option value="severo-západ">severo-západ</option>
-                                    <option value="juho-východ">juho-východ</option>
-                                    <option value="juho-západ">juho-západ</option>
+                                    @foreach($select_data['direction'] as $option)
+                                        <option value="{{ $option }}">{{ $option }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -330,13 +302,9 @@
                             <div class="form-group col-md-12">
                                 <label for="h_heating">Kúrenie:</label>
                                 <select name="h_heating" id="h_heating" class="form-control">
-                                    <option value="plynom">plynom</option>
-                                    <option value="drevom">drevom</option>
-                                    <option value="elektrickou energiou">elektrickou energiou</option>
-                                    <option value="kotol">kotol</option>
-                                    <option value="solárne systémy">solárne systémy</option>
-                                    <option value="tepelné čerpadlá">tepelné čerpadlá</option>
-                                    <option value="hybridné">hybridné</option>
+                                    @foreach($select_data['heating'] as $option)
+                                        <option value="{{ $option }}">{{ $option }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -344,10 +312,9 @@
                             <div class="form-group col-md-12">
                                 <label for="h_internet">Internet:</label>
                                 <select name="h_internet" id="h_internet" class="form-control">
-                                    <option value="bezdrôtové spojenie">bezdrôtové spojenie</option>
-                                    <option value="káblové pripojenie">káblové pripojenie</option>
-                                    <option value="optický kábel">optický kábel</option>
-                                    <option value="bez internetu">bez internetu</option>
+                                    @foreach($select_data['internet'] as $option)
+                                        <option value="{{ $option }}">{{ $option }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -358,14 +325,9 @@
                             <div class="form-group col-md-12">
                                 <label for="e_type">Typ:</label>
                                 <select name="e_type" id="e_type" class="form-control">
-                                    <option value="záhrada">záhrada</option>
-                                    <option value="orná pôda">orná pôda</option>
-                                    <option value="sad/chmelnica/vinica">sad/chmelnica/vinica</option>
-                                    <option value="lesná pôda">lesná pôda</option>
-                                    <option value="lúka/pasienok">lúka/pasienok</option>
-                                    <option value="rekreačný pozemok">rekreačný pozemok</option>
-                                    <option value="priemyselná zóna">priemyselná zóna</option>
-                                    <option value="stavebný pozemok">stavebný pozemok</option>
+                                    @foreach($select_data['estate_type'] as $option)
+                                        <option value="{{ $option }}">{{ $option }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
