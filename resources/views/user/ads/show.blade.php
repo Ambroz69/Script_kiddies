@@ -2,6 +2,13 @@
 @section('title', 'Moj inzerat')
 @section('content')
     <div class="container-fluid pt-5">
+        @if (\Session::has('msg'))
+            <div class="alert alert-success">
+                <ul>
+                    <li>{!! \Session::get('msg') !!}</li>
+                </ul>
+            </div>
+        @endif
         <div class="row">
             <div class="col-md-12 mb-3">
                 <div style="float: left; margin-right: 0.5em">
@@ -203,7 +210,7 @@
                             <label>Pridať obrázok</label>
                             <div class="row">
                                 <div class="form-group col-md-4">
-                                    <input type="file" name="imagename">
+                                    <input type="file" name="photos[]" multiple>
                                 </div>
                             </div>
                             <div class="row">

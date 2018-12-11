@@ -205,43 +205,44 @@ class HomeController extends Controller
         return view('user.ads.show', compact('ad','path','images','user'));
     }
 
-    public function storeImage(Request $request, $ad_id) {      //pridanie obrazku k inzeratu
-        $img = $request->file('imagename');
+    public function storeImage(Request $request, $ad_id) {      //pridanie obrazkov k inzeratu
+        $photos = $request->photos;
+        //return dd($photos);
+        if (isset($photos)) {
+            foreach($photos as $photo) {
+                list($width, $height, $type, $attr) = getimagesize($photo);
 
-        if (isset($img)) {
-            list($width, $height, $type, $attr) = getimagesize($img);
-
-            switch ($type) {
-                case 1:
-                    $picture_type = 'GIF';
-                    break;
-                case 2:
-                    $picture_type = 'JPG';
-                    break;
-                case 3:
-                    $picture_type = 'PNG';
-                    break;
-                case 6:
-                    $picture_type = 'BMP';
-                    break;
-                default:
-                    return redirect(route('user.ads.show', $ad_id))->with('danger', 'Je možné nahrávať len súbory s príponou: .gif .jpg .png .bmp');
-                    break;
+                switch ($type) {
+                    case 1:
+                        $picture_type = 'GIF';
+                        break;
+                    case 2:
+                        $picture_type = 'JPG';
+                        break;
+                    case 3:
+                        $picture_type = 'PNG';
+                        break;
+                    case 6:
+                        $picture_type = 'BMP';
+                        break;
+                    default:
+                        return redirect(route('user.ads.show', $ad_id))->with('msg', 'Je možné nahrávať len súbory s príponou: .gif .jpg .png .bmp');
+                        break;
+                }
+                $photo_name = $photo->store('public/ad_images');
+                $image = new Image();
+                $image->name = basename($photo_name);
+                $image->width = $width;
+                $image->height = $height;
+                $image->type = $picture_type;
+                $image->image_string = $attr;
+                $image->ad_id = $ad_id;
+                $image->save();
             }
-            $img = $request->file('imagename')->store('public/ad_images');
-            $image = new Image();
-            $image->name = basename($img);
-            $image->width = $width;
-            $image->height = $height;
-            $image->type = $picture_type;
-            $image->image_string = $attr;
-            $image->ad_id = $ad_id;
-            $image->save();
-            return redirect(route('user.ads.show', $ad_id))->with('success', 'Obrázok bol pridaný.');
+            return redirect(route('user.ads.show', $ad_id))->with('msg', 'Fotky boli pridané.');
         } else {
-            return redirect(route('user.ads.show', $ad_id))->with('danger', 'Je potrebné vybrať súbor.');
+            return redirect(route('user.ads.show', $ad_id))->with('msg', 'Je potrebné vybrať súbor.');
         }
-
     }
 
     public function deleteImage(Request $request, Image $image) {       //vymazanie obrazku z inzeratu
@@ -251,7 +252,7 @@ class HomeController extends Controller
         } catch (\Exception $e) {
 
         }
-        return redirect(route('user.ads.show', $request->input('id')))->with('success', 'Obrázok bol vymazaný.');
+        return redirect(route('user.ads.show', $request->input('id')))->with('msg', 'Fotka bola vymazaná.');
     }
 
     public function createAd()      //vytvorenie noveho inzeratu part1
