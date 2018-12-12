@@ -37,6 +37,12 @@
         @endguest
         @auth
            <li class="nav-item text-nowrap pr-3">
+               <label style="color: white; margin-top: 0.5em">
+                   <strong>{{ \Illuminate\Support\Facades\Auth::user()->surname }} {{ \Illuminate\Support\Facades\Auth::user()->lastname }}</strong>
+                   ({{ \Illuminate\Support\Facades\Auth::user()->email }})
+               </label>
+           </li>
+           <li class="nav-item text-nowrap pr-3">
                <a class="nav-link" href="{{ route('user.home') }}">
                    {{ __('Môj profil') }}
                </a>

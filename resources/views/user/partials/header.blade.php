@@ -5,8 +5,9 @@
     </a>
     <ul class="navbar-nav pr-3" style="flex-direction: row;">
         <li class="nav-item text-nowrap">
-                <label style="color: white">
-                    {{ \Illuminate\Support\Facades\Auth::user()->email }}
+                <label style="color: white; margin-top: 0.4em">
+                    <strong>{{ \Illuminate\Support\Facades\Auth::user()->surname }} {{ \Illuminate\Support\Facades\Auth::user()->lastname }}</strong>
+                     ({{ \Illuminate\Support\Facades\Auth::user()->email }})
                 </label>
         </li>
         <li class="nav-item px-3">

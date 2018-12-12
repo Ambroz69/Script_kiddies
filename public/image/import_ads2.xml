@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<api>
+    <ad>
+        <property_type>byt</property_type>
+        <description>Novy bytik na prenajom</description>
+        <price>800</price>
+        <address_name>Trubisovska</address_name>
+        <address_number>6</address_number>
+        <city>Trubisovo</city>
+        <region>Nitrianský</region>
+        <zip>12345</zip>
+        <category>prenájom</category>
+        <notes>Popis prenajmu tohto noveho bytiku v trubisove, na trubisovskej, blizko centra, celkom pekne to tu maju, az na tych trubisov vsade :)</notes>
+        <room_count>3</room_count>
+        <floor>1</floor>
+        <floor_count></floor_count>
+        <garden></garden>
+        <terrace></terrace>
+        <area_square_meters>69</area_square_meters>
+        <type>novostavba</type>
+        <window_type>plastové</window_type>
+        <direction>západ</direction>
+        <balcony>1</balcony>
+        <cellar>0</cellar>
+        <garage>1</garage>
+        <insulated>1</insulated>
+        <heating>plynom</heating>
+        <internet>bezdrôtové pripojenie</internet>
+        <estate_type></estate_type>
+        <area_ares></area_ares>
+        <price_per_ares></price_per_ares>
+    </ad>
+    <ad>
+        <property_type>dom</property_type>
+        <description>Novy domcek na predaj, celkom drahy</description>
+        <price>126000</price>
+        <address_name>Eksemelovska</address_name>
+        <address_number>1</address_number>
+        <city>Importová Nová Ves</city>
+        <region>Košický</region>
+        <zip>54321</zip>
+        <category>predaj</category>
+        <notes>Tu bude napísaný popis domčeka, ktorý sa snažím predať.</notes>
+        <room_count></room_count>
+        <floor></floor>
+        <floor_count>1</floor_count>
+        <garden>80</garden>
+        <terrace>1</terrace>
+        <area_square_meters>115</area_square_meters>
+        <type>čiastočne prerobený</type>
+        <window_type>plastové</window_type>
+        <direction>juh</direction>
+        <balcony>0</balcony>
+        <cellar>1</cellar>
+        <garage>0</garage>
+        <insulated>0</insulated>
+        <heating>kotol</heating>
+        <internet>káblové pripojenie</internet>
+        <estate_type></estate_type>
+        <area_ares></area_ares>
+        <price_per_ares></price_per_ares>
+    </ad>
+    <ad>
+        <property_type>pozemok</property_type>
+        <description>Predávam vinicu, kto kúpi? Víno po celý rok zadarmo!</description>
+        <price>147000</price>
+        <address_name>Vinická</address_name>
+        <address_number>22</address_number>
+        <city>Opilecká nad Topľou</city>
+        <region>Žilinský</region>
+        <zip>12321</zip>
+        <category>predaj</category>
+        <notes>Snažím sa prestať piť a je to dosť problém, ak vlastníte vinice. Ak ich niekto odkúpi, bude mat veselý život, len prosím dávajte pozor na pečeň. Varoval som váas.</notes>
+        <room_count></room_count>
+        <floor></floor>
+        <floor_count></floor_count>
+        <garden></garden>
+        <terrace></terrace>
+        <area_square_meters></area_square_meters>
+        <type></type>
+        <window_type></window_type>
+        <direction></direction>
+        <balcony></balcony>
+        <cellar></cellar>
+        <garage></garage>
+        <insulated></insulated>
+        <heating></heating>
+        <internet></internet>
+        <estate_type>pozemok</estate_type>
+        <area_ares>40000</area_ares>
+        <price_per_ares>3.675</price_per_ares>
+    </ad>
+</api>

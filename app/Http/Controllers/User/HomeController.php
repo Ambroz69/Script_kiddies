@@ -23,6 +23,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
+use Orchestra\Parser\Xml\Facade as XmlParser;
 
 class HomeController extends Controller
 {
@@ -588,5 +590,121 @@ class HomeController extends Controller
         $employees = User::where('real_estate_office_id', $office_id)->get();
         //return dd($ads);
         return view('user.office.ads', compact('ads', 'employees', 'user'));
+    }
+
+    public function imports()
+    {
+        return view('user.ads.imports');
+    }
+
+    public function importXmlAds()
+    {
+        //uploadnut file
+
+        $xml = XmlParser::load('image/import_ads2.xml');
+        $ads = $xml->parse([
+            'ads' => ['uses' => 'ad[property_type,description,price,address_name,address_number,city,region,zip,category,notes,room_count,floor,floor_count,garden,terrace,area_square_meters,type,window_type,direction,balcony,cellar,garage,insulated,heating,internet,estate_type,area_ares,price_per_ares]'],]);
+        $ads = $ads['ads'];
+        //return dd($ads);
+        if (isset($ads)) {
+            foreach ($ads as $a) {
+                $statement = DB::select("show table status like 'addresses'");
+                $address_id = $statement[0]->Auto_increment;
+
+                $user_id = Auth::user()->id;
+                $address = new Address();
+                $ad = new Ad();
+                $address->address_name = $a["address_name"];
+                $address->address_number = $a["address_number"];
+                $address->city = $a["city"];
+                $address->zip = $a["zip"];
+                $address->region = $a["region"];
+                $address->save();
+
+                switch($a['property_type']) {
+                    case("byt"):
+                        $statement2 = DB::select("show table status like 'property_details'");
+                        $property_details_id = $statement2[0]->Auto_increment;
+                        $statement3 = DB::select("show table status like 'apartments'");
+                        $apartment_id = $statement3[0]->Auto_increment;
+
+                        $property_details = new PropertyDetail();
+                        $property_details->area_square_meters = $a["area_square_meters"];
+                        $property_details->type = $a["type"];
+                        $property_details->window_type = $a["window_type"];
+                        $property_details->direction = $a["direction"];
+                        $property_details->balcony = $a["balcony"];
+                        $property_details->cellar = $a["cellar"];
+                        $property_details->garage = $a["garage"];
+                        $property_details->insulated = $a["insulated"];
+                        $property_details->heating = $a["heating"];
+                        $property_details->internet = $a["internet"];
+                        $property_details->save();
+
+                        $apartments = new Apartment();
+                        $apartments->room_count = $a["room_count"];
+                        $apartments->floor = $a["floor"];
+                        $apartments->property_details_id = $property_details_id;
+                        $apartments->save();
+
+                        $ad->apartment_id = $apartment_id;
+                        break;
+
+                    case("dom"):
+                        $statement2 = DB::select("show table status like 'property_details'");
+                        $property_details_id = $statement2[0]->Auto_increment;
+                        $statement4 = DB::select("show table status like 'houses'");
+                        $house_id = $statement4[0]->Auto_increment;
+
+                        $property_details = new PropertyDetail();
+                        $property_details->area_square_meters = $a["area_square_meters"];
+                        $property_details->type = $a["type"];
+                        $property_details->window_type = $a["window_type"];
+                        $property_details->direction = $a["direction"];
+                        $property_details->balcony = $a["balcony"];
+                        $property_details->cellar = $a["cellar"];
+                        $property_details->garage = $a["garage"];
+                        $property_details->insulated = $a["insulated"];
+                        $property_details->heating = $a["heating"];
+                        $property_details->internet = $a["internet"];
+                        $property_details->save();
+
+                        $house = new House();
+                        $house->floor_count = $a["floor_count"];
+                        $house->terrace = $a["terrace"];
+                        $house->garden = $a["garden"];
+                        $house->property_details_id = $property_details_id;
+                        $house->save();
+
+                        $ad->house_id = $house_id;
+
+                        break;
+
+                    case("pozemok"):
+                        $statement5 = DB::select("show table status like 'estates'");
+                        $estate_id = $statement5[0]->Auto_increment;
+
+                        $estate = new Estate();
+                        $estate->type = $a["estate_type"];
+                        $estate->area_ares = $a["area_ares"];
+                        $estate->price_per_ares = $a["price_per_ares"];
+                        $estate->save();
+
+                        $ad->estate_id = $estate_id;
+                        break;
+                }
+
+                $ad->price = $a["price"];
+                $ad->description = $a["description"];
+                $ad->category = $a["category"];
+                $ad->notes = $a["notes"];
+                $ad->address_id = $address_id;
+                $ad->user_id = $user_id;
+                $ad->save();
+            }
+        }
+        return view('user.ads.imports')->with('msg', 'Inzerát/y boli pridané');
+
+        //deletnut file
     }
 }

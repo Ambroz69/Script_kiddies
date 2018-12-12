@@ -10,6 +10,12 @@
                     <span data-feather="folder"></span> &nbsp Moje inzeráty </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link {{ isActiveRoute('user.ads.imports') }}" href="{{ route('user.ads.imports') }}" style="margin-left: 12px">
+                    <span data-feather="upload"></span>
+                    &nbsp XML Import
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link {{ isActiveRoute('user.office') }}" href="{{ route('user.office') }}">
                     <span data-feather="coffee"></span>
                     &nbsp Realitná kancelária
