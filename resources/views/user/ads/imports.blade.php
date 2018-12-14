@@ -10,7 +10,21 @@
             </div>
         @endif
         <div class="row">
-            <a class="btn btn-primary" href="{{ route('user.ads.import') }}">IMPORT</a>
+            <form method="post" action="{{ route('user.ads.import') }}"
+                  enctype="multipart/form-data">
+                @csrf
+                <label>Pridať xml súbor</label>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <input type="file" name="xml_file">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <button type="submit" class="btn btn-primary text-white">IMPORT</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 @endsection

@@ -48,7 +48,7 @@ class HomeController extends Controller
             $office_id = $user->real_estate_office_id;
             $user = $user->load('realEstateOffice.address');
         }
-        return view('user.office.index', compact('user','office_id'));
+        return view('user.office.index', compact('user', 'office_id'));
     }
 
     public function findOffice()        //najde existujuce RK
@@ -61,7 +61,7 @@ class HomeController extends Controller
 
     public function addRequest(Request $request, User $user)        //pouzivatel odosle ziadost o prijatie do RK
     {
-        $office = RealEstateOffice::where('name','LIKE',$request->get('office'))->get();
+        $office = RealEstateOffice::where('name', 'LIKE', $request->get('office'))->get();
         $user->real_estate_office_id = $office[0]['id'];
         $user->status = 'čakajúci';
         $user->save();
@@ -80,8 +80,8 @@ class HomeController extends Controller
     public function requests()      //zoznam ziadosti pre spravcu RK
     {
         $user_office = Auth::user()->real_estate_office_id;
-        $pending_users = array_values(User::all()->where('real_estate_office_id','LIKE',$user_office)
-            ->where('status','LIKE','čakajúci')->toArray());
+        $pending_users = array_values(User::all()->where('real_estate_office_id', 'LIKE', $user_office)
+            ->where('status', 'LIKE', 'čakajúci')->toArray());
         return view('user.office.requests', compact('pending_users'));
     }
 
@@ -104,15 +104,15 @@ class HomeController extends Controller
     {
         $user_office = Auth::user()->real_estate_office_id;
         $user_status = Auth::user()->status;
-        $office_admin = User::all()->where('real_estate_office_id','LIKE',$user_office)
-            ->where('status','LIKE','správca')->first();
-        $employees = User::all()->where('real_estate_office_id','LIKE',$user_office)
-            ->where('status','LIKE','prijatý');
+        $office_admin = User::all()->where('real_estate_office_id', 'LIKE', $user_office)
+            ->where('status', 'LIKE', 'správca')->first();
+        $employees = User::all()->where('real_estate_office_id', 'LIKE', $user_office)
+            ->where('status', 'LIKE', 'prijatý');
 
         if (isset($office_admin)) $office_admin = $office_admin->toArray();
         if (isset($employees)) $employees = array_values($employees->toArray());
         //return dd($user_office, $employees, $office_admin, $user_status);
-        return view('user.office.employees', compact('employees','office_admin','user_office','user_status'));
+        return view('user.office.employees', compact('employees', 'office_admin', 'user_office', 'user_status'));
     }
 
     public function removeEmployee(User $user)      //vymazanie zamestnanca (iba pre spravcu RK)
@@ -161,7 +161,7 @@ class HomeController extends Controller
 
     public function editOffice($id)        //upravenie RK part1 (iba pre spravcu RK)
     {
-        $user = User::where('id','LIKE',$id)->get()->first()->load('realEstateOffice.address');
+        $user = User::where('id', 'LIKE', $id)->get()->first()->load('realEstateOffice.address');
         //return dd($user);
         return view('user.office.edit', compact('user'));
     }
@@ -190,28 +190,29 @@ class HomeController extends Controller
     public function showMyAds()     //zobrazenie vsetkych inzeratov prihlaseneho pouzivatela
     {
         $user = Auth::user();
-        $ads = array_values(Ad::all()->load('address','user.realEstateOffice', 'user.realEstateOffice.address',
+        $ads = array_values(Ad::all()->load('address', 'user.realEstateOffice', 'user.realEstateOffice.address',
             'house.propertyDetails', 'apartment.propertyDetails', 'estate')->where('user_id', $user->id)->toArray());
 
         //return dd($ads);
-        return view('user.ads.index', compact('ads','user'));
+        return view('user.ads.index', compact('ads', 'user'));
     }
 
     public function showAd(Ad $ad)      //nahlad na konkretny inzerat
     {
         $user = Auth::user();
-        $ad = $ad->load('address','user.realEstateOffice', 'user.realEstateOffice.address',
+        $ad = $ad->load('address', 'user.realEstateOffice', 'user.realEstateOffice.address',
             'house.propertyDetails', 'apartment.propertyDetails', 'estate');
-        $images = Image::all()->where('ad_id','==',$ad->id);
+        $images = Image::all()->where('ad_id', '==', $ad->id);
         $path = Storage::url('ad_images/');
-        return view('user.ads.show', compact('ad','path','images','user'));
+        return view('user.ads.show', compact('ad', 'path', 'images', 'user'));
     }
 
-    public function storeImage(Request $request, $ad_id) {      //pridanie obrazkov k inzeratu
+    public function storeImage(Request $request, $ad_id)
+    {      //pridanie obrazkov k inzeratu
         $photos = $request->photos;
         //return dd($photos);
         if (isset($photos)) {
-            foreach($photos as $photo) {
+            foreach ($photos as $photo) {
                 list($width, $height, $type, $attr) = getimagesize($photo);
 
                 switch ($type) {
@@ -247,8 +248,9 @@ class HomeController extends Controller
         }
     }
 
-    public function deleteImage(Request $request, Image $image) {       //vymazanie obrazku z inzeratu
-        File::delete('storage/ad_images/'.$image->name);
+    public function deleteImage(Request $request, Image $image)
+    {       //vymazanie obrazku z inzeratu
+        File::delete('storage/ad_images/' . $image->name);
         try {
             $image->delete();
         } catch (\Exception $e) {
@@ -338,7 +340,7 @@ class HomeController extends Controller
         $address->region = $request->get('region');
         $address->save();
 
-        switch($request->get('property_type')) {
+        switch ($request->get('property_type')) {
             case("byt"):
                 $statement2 = DB::select("show table status like 'property_details'");
                 $property_details_id = $statement2[0]->Auto_increment;
@@ -506,7 +508,7 @@ class HomeController extends Controller
         $address->region = $request->get('region');
         $address->save();
 
-        switch($request->get('property_type')) {
+        switch ($request->get('property_type')) {
             case("byt"):
                 $property_details = $ad->apartment->propertyDetails;
                 $property_details->area_square_meters = $request->get('a_area_square_meters');
@@ -584,8 +586,8 @@ class HomeController extends Controller
         $user = Auth::user();
         $office_id = Auth::user()->real_estate_office_id;
         $ads = Ad::with('address', 'user', 'house.propertyDetails', 'apartment.propertyDetails', 'estate')
-            ->whereHas('user', function ($q) use($office_id) {
-            $q->where('real_estate_office_id', $office_id);
+            ->whereHas('user', function ($q) use ($office_id) {
+                $q->where('real_estate_office_id', $office_id);
             })->get()->toArray();
         $employees = User::where('real_estate_office_id', $office_id)->get();
         //return dd($ads);
@@ -597,114 +599,118 @@ class HomeController extends Controller
         return view('user.ads.imports');
     }
 
-    public function importXmlAds()
+    public function importXmlAds(Request $request)      //nacitava XML file v spravnom formate a nacitava inzeraty do DB
     {
-        //uploadnut file
+        $xml_file = $request->xml_file;
+        if (isset($xml_file)) {
+            $mime_type = \File::mimeType($xml_file);
 
-        $xml = XmlParser::load('image/import_ads2.xml');
-        $ads = $xml->parse([
-            'ads' => ['uses' => 'ad[property_type,description,price,address_name,address_number,city,region,zip,category,notes,room_count,floor,floor_count,garden,terrace,area_square_meters,type,window_type,direction,balcony,cellar,garage,insulated,heating,internet,estate_type,area_ares,price_per_ares]'],]);
-        $ads = $ads['ads'];
-        //return dd($ads);
-        if (isset($ads)) {
-            foreach ($ads as $a) {
-                $statement = DB::select("show table status like 'addresses'");
-                $address_id = $statement[0]->Auto_increment;
+            if (strcmp($mime_type, 'text/xml') == 0) {
+                $xml_filename = $xml_file->storeAs('public', 'import_ads.xml');      //naloadovanie xml suboru
+                $xml = XmlParser::load('storage/import_ads.xml');       //parsovanie
+                $ads = $xml->parse([
+                    'ads' => ['uses' => 'ad[property_type,description,price,address_name,address_number,city,region,zip,category,notes,room_count,floor,floor_count,garden,terrace,area_square_meters,type,window_type,direction,balcony,cellar,garage,insulated,heating,internet,estate_type,area_ares,price_per_ares]'],]);
+                $ads = $ads['ads'];
+                if (isset($ads)) {                      //pridanie inzeratov do DB
+                    foreach ($ads as $a) {
+                        $statement = DB::select("show table status like 'addresses'");
+                        $address_id = $statement[0]->Auto_increment;
 
-                $user_id = Auth::user()->id;
-                $address = new Address();
-                $ad = new Ad();
-                $address->address_name = $a["address_name"];
-                $address->address_number = $a["address_number"];
-                $address->city = $a["city"];
-                $address->zip = $a["zip"];
-                $address->region = $a["region"];
-                $address->save();
+                        $user_id = Auth::user()->id;
+                        $address = new Address();
+                        $ad = new Ad();
+                        $address->address_name = $a["address_name"];
+                        $address->address_number = $a["address_number"];
+                        $address->city = $a["city"];
+                        $address->zip = $a["zip"];
+                        $address->region = $a["region"];
+                        $address->save();
 
-                switch($a['property_type']) {
-                    case("byt"):
-                        $statement2 = DB::select("show table status like 'property_details'");
-                        $property_details_id = $statement2[0]->Auto_increment;
-                        $statement3 = DB::select("show table status like 'apartments'");
-                        $apartment_id = $statement3[0]->Auto_increment;
+                        switch ($a['property_type']) {
+                            case("byt"):
+                                $statement2 = DB::select("show table status like 'property_details'");
+                                $property_details_id = $statement2[0]->Auto_increment;
+                                $statement3 = DB::select("show table status like 'apartments'");
+                                $apartment_id = $statement3[0]->Auto_increment;
 
-                        $property_details = new PropertyDetail();
-                        $property_details->area_square_meters = $a["area_square_meters"];
-                        $property_details->type = $a["type"];
-                        $property_details->window_type = $a["window_type"];
-                        $property_details->direction = $a["direction"];
-                        $property_details->balcony = $a["balcony"];
-                        $property_details->cellar = $a["cellar"];
-                        $property_details->garage = $a["garage"];
-                        $property_details->insulated = $a["insulated"];
-                        $property_details->heating = $a["heating"];
-                        $property_details->internet = $a["internet"];
-                        $property_details->save();
+                                $property_details = new PropertyDetail();
+                                $property_details->area_square_meters = $a["area_square_meters"];
+                                $property_details->type = $a["type"];
+                                $property_details->window_type = $a["window_type"];
+                                $property_details->direction = $a["direction"];
+                                $property_details->balcony = $a["balcony"];
+                                $property_details->cellar = $a["cellar"];
+                                $property_details->garage = $a["garage"];
+                                $property_details->insulated = $a["insulated"];
+                                $property_details->heating = $a["heating"];
+                                $property_details->internet = $a["internet"];
+                                $property_details->save();
 
-                        $apartments = new Apartment();
-                        $apartments->room_count = $a["room_count"];
-                        $apartments->floor = $a["floor"];
-                        $apartments->property_details_id = $property_details_id;
-                        $apartments->save();
+                                $apartments = new Apartment();
+                                $apartments->room_count = $a["room_count"];
+                                $apartments->floor = $a["floor"];
+                                $apartments->property_details_id = $property_details_id;
+                                $apartments->save();
 
-                        $ad->apartment_id = $apartment_id;
-                        break;
+                                $ad->apartment_id = $apartment_id;
+                                break;
 
-                    case("dom"):
-                        $statement2 = DB::select("show table status like 'property_details'");
-                        $property_details_id = $statement2[0]->Auto_increment;
-                        $statement4 = DB::select("show table status like 'houses'");
-                        $house_id = $statement4[0]->Auto_increment;
+                            case("dom"):
+                                $statement2 = DB::select("show table status like 'property_details'");
+                                $property_details_id = $statement2[0]->Auto_increment;
+                                $statement4 = DB::select("show table status like 'houses'");
+                                $house_id = $statement4[0]->Auto_increment;
 
-                        $property_details = new PropertyDetail();
-                        $property_details->area_square_meters = $a["area_square_meters"];
-                        $property_details->type = $a["type"];
-                        $property_details->window_type = $a["window_type"];
-                        $property_details->direction = $a["direction"];
-                        $property_details->balcony = $a["balcony"];
-                        $property_details->cellar = $a["cellar"];
-                        $property_details->garage = $a["garage"];
-                        $property_details->insulated = $a["insulated"];
-                        $property_details->heating = $a["heating"];
-                        $property_details->internet = $a["internet"];
-                        $property_details->save();
+                                $property_details = new PropertyDetail();
+                                $property_details->area_square_meters = $a["area_square_meters"];
+                                $property_details->type = $a["type"];
+                                $property_details->window_type = $a["window_type"];
+                                $property_details->direction = $a["direction"];
+                                $property_details->balcony = $a["balcony"];
+                                $property_details->cellar = $a["cellar"];
+                                $property_details->garage = $a["garage"];
+                                $property_details->insulated = $a["insulated"];
+                                $property_details->heating = $a["heating"];
+                                $property_details->internet = $a["internet"];
+                                $property_details->save();
 
-                        $house = new House();
-                        $house->floor_count = $a["floor_count"];
-                        $house->terrace = $a["terrace"];
-                        $house->garden = $a["garden"];
-                        $house->property_details_id = $property_details_id;
-                        $house->save();
+                                $house = new House();
+                                $house->floor_count = $a["floor_count"];
+                                $house->terrace = $a["terrace"];
+                                $house->garden = $a["garden"];
+                                $house->property_details_id = $property_details_id;
+                                $house->save();
 
-                        $ad->house_id = $house_id;
+                                $ad->house_id = $house_id;
 
-                        break;
+                                break;
 
-                    case("pozemok"):
-                        $statement5 = DB::select("show table status like 'estates'");
-                        $estate_id = $statement5[0]->Auto_increment;
+                            case("pozemok"):
+                                $statement5 = DB::select("show table status like 'estates'");
+                                $estate_id = $statement5[0]->Auto_increment;
 
-                        $estate = new Estate();
-                        $estate->type = $a["estate_type"];
-                        $estate->area_ares = $a["area_ares"];
-                        $estate->price_per_ares = $a["price_per_ares"];
-                        $estate->save();
+                                $estate = new Estate();
+                                $estate->type = $a["estate_type"];
+                                $estate->area_ares = $a["area_ares"];
+                                $estate->price_per_ares = $a["price_per_ares"];
+                                $estate->save();
 
-                        $ad->estate_id = $estate_id;
-                        break;
+                                $ad->estate_id = $estate_id;
+                                break;
+                        }
+
+                        $ad->price = $a["price"];
+                        $ad->description = $a["description"];
+                        $ad->category = $a["category"];
+                        $ad->notes = $a["notes"];
+                        $ad->address_id = $address_id;
+                        $ad->user_id = $user_id;
+                        $ad->save();
+                    }
                 }
-
-                $ad->price = $a["price"];
-                $ad->description = $a["description"];
-                $ad->category = $a["category"];
-                $ad->notes = $a["notes"];
-                $ad->address_id = $address_id;
-                $ad->user_id = $user_id;
-                $ad->save();
+                File::delete('storage/import_ads.xml');
             }
         }
         return view('user.ads.imports')->with('msg', 'Inzerát/y boli pridané');
-
-        //deletnut file
     }
 }

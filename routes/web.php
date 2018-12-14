@@ -54,7 +54,7 @@ Route::name('user.')->group(function() {
     Route::delete('user/ads/delete/{ad}','User\HomeController@deleteAd')->name('ads.delete');
 
     Route::get('user/ads/imports', 'User\HomeController@imports')->name('ads.imports');
-    Route::get('user/ads/imports/import', 'User\HomeController@importXmlAds')->name('ads.import');
+    Route::post('user/ads/imports/import', 'User\HomeController@importXmlAds')->name('ads.import');
 });
 
 
