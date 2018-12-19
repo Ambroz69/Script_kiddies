@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Domov')
 @section('content')
-    @php $i = 0; $remains = count($ad); @endphp
+    @php $i = 0; $remains = count($ad['data']); @endphp
     <div class="container-fluid pt-5">
         <div class="row">
             <div class="col-md-9 container-fluid"> <!-- zobrazenie inzeratov -->
@@ -55,6 +55,10 @@
                         @endswitch
                     @endif
                 @endwhile
+                <div class="col-md-4 offset-5">
+                    @php echo $links; @endphp
+                </div>
+
             </div>
             <div class="col-md-3 container-fluid"> <!-- filter -->
                 @include('partials.filter')

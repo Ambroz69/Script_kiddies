@@ -26,7 +26,7 @@
                         <th style="width: 18%">Adresa</th>
                         <th>Autor</th>
                         <th>Typ</th>
-                        <th>ID nehnuteľnosti</th>
+                        <th style="width: 5%">ID neh.</th>
                         <th></th>
                         <th style="width: 12%"></th>
                     </tr>

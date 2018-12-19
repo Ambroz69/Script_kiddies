@@ -72,7 +72,7 @@
                         <div class="col-md-6 float-right"
                              style=" padding-left: 15px; padding-right: 0; ">
                             <a role="button" class="btn btn-white border-dark btn-block"
-                               style=" height: 40px; color: #43425D"  href="{{ route('register') }}">Registrácia</a>
+                               style="height: 40px; color: #43425D; line-height: 30px"  href="{{ route('register') }}">Registrácia</a>
                         </div>
                     </div>
                 </form>

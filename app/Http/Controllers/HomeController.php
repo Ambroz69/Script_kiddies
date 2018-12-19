@@ -16,23 +16,24 @@ class HomeController extends Controller
     public function index()
     {
         $path = Storage::url('ad_images/');
-
+        $all_ads_paginated = Ad::paginate(7)->toArray();
         $all_ads = Ad::all()->toArray();
         $images = Image::with('ad')->get()->toArray();
-        $ad = $all_ads;
-        for($i = 0; $i < count($all_ads); $i++) {
+        $ad = $all_ads_paginated;
+        for($i = 0; $i < count($all_ads_paginated['data']); $i++) {
             $count = 0;
             for($j = 0; $j < count($images); $j++) {
-                if ($all_ads[$i]['id'] == $images[$j]['ad_id']) {
-                    $ad[$i]['image_name'] = $images[$j]['name'];
+                if ($all_ads_paginated['data'][$i]['id'] == $images[$j]['ad_id']) {
+                    $ad['data'][$i]['image_name'] = $images[$j]['name'];
                     $count++;
                     break;
                 }
             }
-            if ($count == 0) $ad[$i]['image_name'] = "default";
+            if ($count == 0) $ad['data'][$i]['image_name'] = "default";
         }
-        //return dd($ad, $path);
-        return view('home', compact('ad','path'));
+        $links = Ad::paginate(7)->links();
+        //return dd($links);
+        return view('home', compact('ad','path','links'));
     }
 
     public function showAd($id)

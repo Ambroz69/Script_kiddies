@@ -1,0 +1,32 @@
+.sidebar .nav-link {
+  font-weight: 500;
+  color: #fff;
+
+}
+
+.sidebar .nav-link .feather .collapsible .content {
+  margin-right: 4px;
+  color: #fff;
+
+}
+
+.sidebar .nav-link.active {
+  color: #fff;
+  background-color: #9290E2;
+}
+
+.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.active .feather {
+  color: #fff;
+}
+
+.navbar-dark .navbar-nav .nav-link {   //hore ADMINISTRACIA ODHLASENIE SLEPUCHA
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.page-item.active .page-link {
+  color: #fff;
+  background-color: #43425D;
+  border-color: #43425D;
+}

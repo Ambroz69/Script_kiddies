@@ -12,18 +12,22 @@
         <div class="row">
             <div class="col-md-12 mb-3">
                 <div style="float: left; margin-right: 0.5em">
-                    <button onclick="window.history.back()" class="btn btn-primary">
-                        <span data-feather="arrow-left-circle"></span>
-                    </button>
+                    <a href="{{ route('user.ads') }}" class="btn"
+                    style="background-color: #f8fafc; color: #3B3B53; border-color: #3B3B53; width: 6em;">
+                        Späť
+                    </a>
                 </div>
                 @if(($user->id == $ad->user_id) || (strcmp($user->status,'správca') == 0))
                     <div style="float: right">
-                        <a href="#" class="btn btn-danger float-right">
-                            <span data-feather="trash-2"></span>
-                        </a>
+                        <form action="{{ route('user.ads.delete', $ad->id) }}" method="post">
+                            @csrf
+                            @method('delete')
+                            <button class="btn btn-danger" type="submit"><span data-feather="trash-2"></span>
+                            </button>
+                        </form>
                     </div>
                     <div style="float: right; margin-right: 0.5em">
-                        <a href="#" class="btn btn-info float-right">
+                        <a href=" {{ route('user.ads.edit', $ad->id) }}" class="btn btn-info float-right">
                             <span data-feather="edit"></span>
                         </a>
                     </div>

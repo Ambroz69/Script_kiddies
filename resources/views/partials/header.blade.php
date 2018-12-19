@@ -43,14 +43,14 @@
                </label>
            </li>
            <li class="nav-item text-nowrap pr-3">
-               <a class="nav-link" href="{{ route('user.home') }}">
-                   {{ __('Môj profil') }}
+               <a class="nav-link" href="{{ route('user.home') }}" style="color: white;">
+                   <strong>{{ __('Môj profil') }}</strong>
                </a>
            </li>
             <li class="nav-item text-nowrap pr-3">
                 <a onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="nav-link"
-                   href="{{ route('logout') }}">
-                    {{ __('ODHLÁSIŤ SA') }}
+                   href="{{ route('logout') }}" style="color: white;">
+                    <strong>{{ __('ODHLÁSIŤ SA') }}</strong>
                 </a>
             </li>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

@@ -4,7 +4,6 @@
 
     <div class="container-fluid">
         <div class="row">
-
             <div class="col-md-12 py-5">
                 <div class="row px-0 pb-5">
                     <div class=" col-md-10 float-left">
@@ -16,6 +15,10 @@
                         </a>
                     </div>
                 </div>
+                <div id="chart-div" style="width: 400px; height: 400px;"></div>
+                {!! $lava->render('PieChart', 'piechart', 'chart-div') !!}
+                <div id="chart-div" style="width: 400px; height: 400px;"></div>
+                {!! $lava->render('PieChart', 'piechart', 'chart-div') !!}
             </div>
         </div>
     </div>

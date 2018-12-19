@@ -24,7 +24,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
+use Khill\Lavacharts\Laravel\LavachartsServiceProvider;
 use Orchestra\Parser\Xml\Facade as XmlParser;
+use Khill\Lavacharts\Lavacharts;
 
 class HomeController extends Controller
 {
@@ -36,7 +38,25 @@ class HomeController extends Controller
 
     public function index()
     {
-        return view('user.home');
+        $piechart_data = DB::table('ads')->leftJoin('addresses','address_id','=','addresses.id')
+        ->select(DB::raw('region, count(*) as ads_count '))->groupBy('region')->get();
+
+        $lava = new Lavacharts;
+        $data = $lava->DataTable();
+        $data->addStringColumn('Regions')
+            ->addNumberColumn('Ads count');
+
+        for($i = 0; $i < count($piechart_data); $i++) {
+            $data->addRow([$piechart_data[$i]->region, $piechart_data[$i]->ads_count]);
+        }
+
+        $piechart = $lava->PieChart('piechart', $data, [
+            'title' => 'Počet inzerátov v jednotlivých krajoch',
+            'chartArea' => ['width' => '100%', 'height' => '80%'],
+            'legend' => ['position' => 'bottom']
+        ]);
+
+        return view('user.home', compact('lava'));
     }
 
     public function showOffice()        //zobrazi RK pouzivatela, ak nejaku ma, inak mu ponukne moznost vytvorit novu/pridat sa k existujucej
@@ -264,8 +284,8 @@ class HomeController extends Controller
         }
     }
 
-    public function deleteImage(Request $request, Image $image)
-    {       //vymazanie obrazku z inzeratu
+    public function deleteImage(Request $request, Image $image)     //vymazanie obrazku z inzeratu
+    {
         File::delete('storage/ad_images/' . $image->name);
         try {
             $image->delete();
@@ -601,13 +621,30 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         $office_id = Auth::user()->real_estate_office_id;
-        $ads = Ad::with('address', 'user', 'house.propertyDetails', 'apartment.propertyDetails', 'estate')
+        $ads_selected = Ad::with('address', 'user', 'house.propertyDetails', 'apartment.propertyDetails', 'estate')
             ->whereHas('user', function ($q) use ($office_id) {
                 $q->where('real_estate_office_id', $office_id);
             })->get()->toArray();
-        $employees = User::where('real_estate_office_id', $office_id)->get();
-        //return dd($ads);
-        return view('user.office.ads', compact('ads', 'employees', 'user'));
+        $employees = User::where('real_estate_office_id', $office_id)->where('real_estate_office_id','NOT LIKE', null)->get();
+
+        $path = Storage::url('ad_images/');
+
+        $all_ads = $ads_selected;
+        $images = Image::with('ad')->get()->toArray();
+        $ads = $all_ads;
+        for($i = 0; $i < count($all_ads); $i++) {
+            $count = 0;
+            for($j = 0; $j < count($images); $j++) {
+                if ($all_ads[$i]['id'] == $images[$j]['ad_id']) {
+                    $ads[$i]['image_name'] = $images[$j]['name'];
+                    $count++;
+                    break;
+                }
+            }
+            if ($count == 0) $ads[$i]['image_name'] = "default";
+        }
+        //return dd($ads, $ads->links());
+        return view('user.office.ads', compact('ads', 'employees', 'user','path'));
     }
 
     public function imports()
