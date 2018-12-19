@@ -11,8 +11,8 @@
                             @for($j = 0; $j < 1; $j++)
                                 @include('partials.home_ad_card')
                             @endfor
-                            <div class="card float-right mt-3" style="width: 65%; max-width: 652px; height: 400px;
-                                    background-image: url('{{URL::asset('/image/rosa_pig.jpg')}}');
+                            <div class="card float-right mt-3" style="width: 65%; max-width: 652px; height: 350px;
+                                    background-image: url('{{URL::asset('/image/home_image.jpeg')}}');
                                     background-size: cover;
                                     background-repeat: no-repeat;
                                     background-position: 50% 50%;">

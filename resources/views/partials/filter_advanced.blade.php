@@ -347,12 +347,12 @@
 
     <div class="row">
         <div class="form-group col-md-12">
-            <button type="submit" class="btn btn-primary btn-block text-white float-right">Filtrovať</button>
+            <button type="submit" class="btn btn-secondary btn-block text-white float-right">Filtrovať</button>
         </div>
     </div>
     <div class="row">
         <div class="form-group col-md-12">
-            <a class="btn btn-secondary btn-block float-right" href="#" onclick="clearSelected()">Reset filtra</a>
+            <a class="btn btn-block float-right" href="#" onclick="clearSelected()" style="color: white;background-color: #9290E2 !important">Reset filtra</a>
         </div>
     </div>
 </form>

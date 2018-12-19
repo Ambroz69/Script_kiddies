@@ -15,9 +15,24 @@ class HomeController extends Controller
 
     public function index()
     {
-        $ad = Ad::all()->toArray();
-        //return dd($ad, count($ad));
-        return view('home', compact('ad'));
+        $path = Storage::url('ad_images/');
+
+        $all_ads = Ad::all()->toArray();
+        $images = Image::with('ad')->get()->toArray();
+        $ad = $all_ads;
+        for($i = 0; $i < count($all_ads); $i++) {
+            $count = 0;
+            for($j = 0; $j < count($images); $j++) {
+                if ($all_ads[$i]['id'] == $images[$j]['ad_id']) {
+                    $ad[$i]['image_name'] = $images[$j]['name'];
+                    $count++;
+                    break;
+                }
+            }
+            if ($count == 0) $ad[$i]['image_name'] = "default";
+        }
+        //return dd($ad, $path);
+        return view('home', compact('ad','path'));
     }
 
     public function showAd($id)
@@ -66,11 +81,6 @@ class HomeController extends Controller
 
         $filter_data = $request->all();
         $token = array_shift($filter_data);
-
-//        $string = 'ad__city';
-//        if ($this->relation($string)) $b = true;
-//        else $b = false;
-//        return dd($this->removeRelationTags($string), $b, $this->relation($string));
 
         $int_filters = array('price_min', 'price_max', 'ap__area_square_meters_min', 'ap__area_square_meters_max', 'hp__area_square_meters_min',
             'hp__area_square_meters_max', 'e__area_ares_min', 'e__area_ares_max', 'e__price_per_ares_min', 'e__price_per_ares_max');
@@ -193,9 +203,26 @@ class HomeController extends Controller
             ]);
 
         $ads_filtered = $ads->get()->toArray();
+
+        $path = Storage::url('ad_images/');
+
+        $all_ads = $ads_filtered;
+        $images = Image::with('ad')->get()->toArray();
+        $ads_filtered = $all_ads;
+        for($i = 0; $i < count($all_ads); $i++) {
+            $count = 0;
+            for($j = 0; $j < count($images); $j++) {
+                if ($all_ads[$i]['id'] == $images[$j]['ad_id']) {
+                    $ads_filtered[$i]['image_name'] = $images[$j]['name'];
+                    $count++;
+                    break;
+                }
+            }
+            if ($count == 0) $ads_filtered[$i]['image_name'] = "default";
+        }
         $query = DB::getQueryLog();
         //return dd($filter_data);
-        return view('filtered', compact('ads_filtered', 'filter_data', 'select_data'));
+        return view('filtered', compact('ads_filtered', 'filter_data', 'select_data','path'));
 
     }
 }

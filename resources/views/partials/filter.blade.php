@@ -45,7 +45,7 @@
     </div>
     <div class="row">
         <div class="form-group col-md-12 mb-1">
-            <button type="submit" class="btn btn-primary btn-block text-white float-right">Filtrovať</button>
+            <button type="submit" class="btn btn-secondary btn-block text-white float-right">Filtrovať</button>
         </div>
     </div>
     <div class="row">

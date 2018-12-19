@@ -194,7 +194,23 @@ class HomeController extends Controller
             'house.propertyDetails', 'apartment.propertyDetails', 'estate')->where('user_id', $user->id)->toArray());
 
         //return dd($ads);
-        return view('user.ads.index', compact('ads', 'user'));
+        $path = Storage::url('ad_images/');
+
+        $all_ads = $ads;
+        $images = Image::with('ad')->get()->toArray();
+        for($i = 0; $i < count($all_ads); $i++) {
+            $count = 0;
+            for($j = 0; $j < count($images); $j++) {
+                if ($all_ads[$i]['id'] == $images[$j]['ad_id']) {
+                    $ads[$i]['image_name'] = $images[$j]['name'];
+                    $count++;
+                    break;
+                }
+            }
+            if ($count == 0) $ads[$i]['image_name'] = "default";
+        }
+        //return dd($ads);
+        return view('user.ads.index', compact('ads', 'user','path'));
     }
 
     public function showAd(Ad $ad)      //nahlad na konkretny inzerat

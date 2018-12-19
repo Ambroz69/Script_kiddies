@@ -4,8 +4,11 @@
     @php $i = 0; $remains = count($ads); @endphp
     <div class="container-fluid pt-5">
         <div class="row">
-            <div class="col-md-12">
-                <a href="{{ route('user.ads.create') }}" class="btn btn-primary float-right">+ Pridať inzerát +</a>
+            <div class="col-md-10"></div>
+            <div class="col-md-2 pr-0">
+                <a role="button" class="btn btn-secondary btn-block" href="{{ route('admin.ads.create') }}">
+                    Pridať inzerát
+                </a>
             </div>
         </div>
         <div class="row">
@@ -19,12 +22,18 @@
                     <div class="row my-3">
                         <div class="card mt-3 float-left">
                             <div class="row p-0">
-                                <div class="col-md-6">
-                                    <img class="card-img-top" src="{{URL::asset('/image/1.jpg')}}"
-                                         alt="fotka nehnutelnosti"
-                                         style="background-size: cover; max-height: 300px">
+                                <div class="col-md-6 pr-0">
+                                    @if(strcmp($ads[$i]['image_name'],"default") == 0)
+                                        <img src="{{ URL::asset('/image/logo.jpg') }}"
+                                             alt=""
+                                             style="width:100%; height: 100%; object-fit: cover">
+                                    @else
+                                        <img src="{{ URL::asset($path.$ads[$i]['image_name']) }}"
+                                             alt=""
+                                             style="width:100%; height: 100%; object-fit: cover">
+                                    @endif
                                 </div>
-                                <div class="col-md-6 my-3">
+                                <div class="col-md-6 my-3 pl-0">
                                     <div style="height: 15%">
                                         <div class="col-md-12">
                                             <div style="float: right">
@@ -44,9 +53,10 @@
                                     </div>
                                     <div style="height: 65%">
                                         <div class="card-body">
-                                            <h5 class="card-title"
-                                                style="color: #53526B;">{{ $ads[$i]['description'] }}</h5>
-                                            <p class="card-text" style="color:#BCBCCB;">{{ $ads[$i]['notes'] }}</p>
+                                            <h5 class="card-title" style="color: #53526B; font-size: 1.5em;
+                                            line-height: 1.2em; max-height: 2.4em; overflow:hidden; text-overflow:ellipsis;">{{ $ads[$i]['description'] }}</h5>
+                                            <p class="card-text" style="color:#BCBCCB; font-size: 1.1em;
+                                            line-height: 1.5em; max-height: 12em; overflow:hidden; text-overflow:ellipsis;">{{ $ads[$i]['notes'] }}</p>
                                         </div>
                                     </div>
                                     <div style="height: 20%;">
@@ -54,12 +64,12 @@
                                             <div id="container" class="col-md-12 p-0">
                                                 <div style="float: left;">
                                                     @if( strcmp($ads[$i]['category'],'prenájom') == 0)
-                                                        <a>
+                                                        <a  style="font-size: 1.3em">
                                                             <span data-feather="heart"></span>
                                                             &nbsp {{ $ads[$i]['price'] }} €/mesiac
                                                         </a>
                                                     @else
-                                                        <a>
+                                                        <a style="font-size: 1.3em">
                                                             <span data-feather="heart"></span>
                                                             &nbsp {{ $ads[$i]['price'] }} €
                                                         </a>

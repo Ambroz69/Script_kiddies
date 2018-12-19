@@ -4,7 +4,7 @@
     @php $i = 0; $remains = count($ads_filtered); @endphp
     <div class="container-fluid pt-5">
         <div class="row">
-            <div class="col-md-9"> <!-- zobrazenie inzeratov -->
+            <div class="col-md-9" style="padding-right: 7.2rem"> <!-- zobrazenie inzeratov -->
                 @if ($remains == 0)
                     <div class="row my-3">
                         <label>Kritériám nevyhovujú žiadne inzeráty.</label>
@@ -14,17 +14,23 @@
                     <div class="row my-3">
                         <div class="card mt-3 float-left">
                             <div class="row p-0">
-                                <div class="col-md-6">
-                                    <img class="card-img-top" src="{{URL::asset('/image/1.jpg')}}"
-                                         alt="fotka nehnutelnosti"
-                                         style="background-size: cover; max-height: 300px">
+                                <div class="col-md-6 pr-0">
+                                    @if(strcmp($ads_filtered[$i]['image_name'],"default") == 0)
+                                        <img src="{{ URL::asset('/image/logo.jpg') }}"
+                                             alt=""
+                                             style="width:100%; height: 100%; object-fit: cover">
+                                    @else
+                                        <img src="{{ URL::asset($path.$ads_filtered[$i]['image_name']) }}"
+                                             alt=""
+                                             style="width:100%; height: 100%; object-fit: cover">
+                                    @endif
                                 </div>
-                                <div class="col-md-6 my-3">
+                                <div class="col-md-6 my-3 pl-0">
                                     <div style="height: 80%">
                                         <div class="card-body">
                                             <h5 class="card-title"
-                                                style="color: #53526B;">{{ $ads_filtered[$i]['description'] }}</h5>
-                                            <p class="card-text" style="color:#BCBCCB;">{{ $ads_filtered[$i]['notes'] }}</p>
+                                                style="color: #53526B; line-height: 1.2em; max-height: 2.4em; overflow:hidden; text-overflow:ellipsis;">{{ $ads_filtered[$i]['description'] }}</h5>
+                                            <p class="card-text" style="color:#BCBCCB; line-height: 1.5em; max-height: 12em; overflow:hidden; text-overflow:ellipsis;">{{ $ads_filtered[$i]['notes'] }}</p>
                                         </div>
                                     </div>
                                     <div style="height: 20%;">
@@ -32,14 +38,16 @@
                                             <div id="container" class="col-md-12 p-0">
                                                 <div style="float: left;">
                                                     @if( strcmp($ads_filtered[$i]['category'],'prenájom') == 0)
-                                                        <a>
+                                                        <a><strong>
                                                             <span data-feather="heart"></span>
                                                             &nbsp {{ $ads_filtered[$i]['price'] }} €/mesiac
+                                                            </strong>
                                                         </a>
                                                     @else
-                                                        <a>
+                                                        <a><strong>
                                                             <span data-feather="heart"></span>
                                                             &nbsp {{ $ads_filtered[$i]['price'] }} €
+                                                            </strong>
                                                         </a>
                                                     @endif
                                                 </div>

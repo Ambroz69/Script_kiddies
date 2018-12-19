@@ -8,8 +8,7 @@
     <title>@yield('title')</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body style="background-image: linear-gradient(90deg,
-#F1F8FF 71.6%, #dbdcff 71.6%);" >
+<body style="background-color: #F1F8FF" >
 @include('partials.header')
 <div class="container-fluid">
     <div class="row">

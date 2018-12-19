@@ -32,15 +32,23 @@
         </div>
         <div class="row">
             <div class="col-md-7">
-                <div class="row my-3">
+                <div class="row m-0">
                     <table class="table table-striped" style="width:90%; align-items: center;">
+                        <tr>
+                            <th style="background-color: #3B3B53 !important; height: 3rem;"></th>
+                            <td style="background-color: #3B3B53 !important"></td>
+                        </tr>
                         <tr>
                             <th>Názov</th>
                             <td>{{ $ad->description }}</td>
                         </tr>
                         <tr>
                             <th>Cena</th>
-                            <td>{{ $ad->price  }}</td>
+                            @if( strcmp($ad->category,'prenájom') == 0)
+                                <td>{{ $ad->price  }} € mesačne</td>
+                            @else
+                                <td>{{ $ad->price  }} €</td>
+                            @endif
                         </tr>
                         <tr>
                             <th>Ulica</th>
@@ -57,7 +65,7 @@
                             </tr>
                             <tr>
                                 <th>Rozloha</th>
-                                <td>{{ $ad->house->propertyDetails->area_square_meters }}</td>
+                                <td>{{ $ad->house->propertyDetails->area_square_meters }} m<sup>2</sup></td>
                             </tr>
                             <tr>
                                 <th>Typ</th>
@@ -73,27 +81,63 @@
                             </tr>
                             <tr>
                                 <th>Záhrada</th>
-                                <td>{{ $ad->house->garden  }}</td>
+                                <td>
+                                    @if(strcmp($ad->house->garden,'0') == 0)
+                                        <span data-feather="x"></span>
+                                    @else
+                                        {{ $ad->house->garden  }} m<sup>2</sup>
+                                    @endif
+                                </td>
                             </tr>
                             <tr>
                                 <th>Terasa</th>
-                                <td>{{ $ad->house->terrace  }}</td>
+                                <td>
+                                    @if($ad->house->terrace == 1)
+                                        <span data-feather="check"></span>
+                                    @else
+                                        <span data-feather="x"></span>
+                                    @endif
+                                </td>
                             </tr>
                             <tr>
                                 <th>Balkón</th>
-                                <td>{{ $ad->house->propertyDetails->balcony }}</td>
+                                <td>
+                                    @if($ad->house->propertyDetails->balcony == 1)
+                                        <span data-feather="check"></span>
+                                    @else
+                                        <span data-feather="x"></span>
+                                    @endif
+                                </td>
                             </tr>
                             <tr>
                                 <th>Pivnica</th>
-                                <td>{{ $ad->house->propertyDetails->cellar }}</td>
+                                <td>
+                                    @if($ad->house->propertyDetails->cellar == 1)
+                                        <span data-feather="check"></span>
+                                    @else
+                                        <span data-feather="x"></span>
+                                    @endif
+                                </td>
                             </tr>
                             <tr>
                                 <th>Garáž</th>
-                                <td>{{ $ad->house->propertyDetails->garage }}</td>
+                                <td>
+                                    @if($ad->house->propertyDetails->garage == 1)
+                                        <span data-feather="check"></span>
+                                    @else
+                                        <span data-feather="x"></span>
+                                    @endif
+                                </td>
                             </tr>
                             <tr>
                                 <th>Zateplený objekt</th>
-                                <td>{{ $ad->house->propertyDetails->insulated }}</td>
+                                <td>
+                                    @if($ad->house->propertyDetails->insulated == 1)
+                                        <span data-feather="check"></span>
+                                    @else
+                                        <span data-feather="x"></span>
+                                    @endif
+                                </td>
                             </tr>
                             <tr>
                                 <th>Vykurovanie</th>
@@ -112,11 +156,15 @@
                             </tr>
                             <tr>
                                 <th>Poschodie</th>
-                                <td>{{ $ad->apartment->floor }}</td>
+                                @if ($ad->apartment->floor == 0)
+                                    <td> prízemie</td>
+                                @else
+                                    <td>{{ $ad->apartment->floor }}</td>
+                                @endif
                             </tr>
                             <tr>
                                 <th>Rozloha</th>
-                                <td>{{ $ad->apartment->propertyDetails->area_square_meters }}</td>
+                                <td>{{ $ad->apartment->propertyDetails->area_square_meters }} m<sup>2</sup></td>
                             </tr>
                             <tr>
                                 <th>Typ</th>
@@ -132,19 +180,40 @@
                             </tr>
                             <tr>
                                 <th>Balkón</th>
-                                <td>{{ $ad->apartment->propertyDetails->balcony }}</td>
+                                <td>
+                                    @if($ad->apartment->propertyDetails->balcony == 1)
+                                        <span data-feather="check"></span>
+                                    @else
+                                        <span data-feather="x"></span>
+                                    @endif
+                                </td>
                             </tr>
                             <tr>
                                 <th>Pivnica</th>
-                                <td>{{ $ad->apartment->propertyDetails->cellar }}</td>
+                                <td>@if($ad->apartment->propertyDetails->cellar == 1)
+                                        <span data-feather="check"></span>
+                                    @else
+                                        <span data-feather="x"></span>
+                                    @endif
+                                </td>
                             </tr>
                             <tr>
                                 <th>Garáž</th>
-                                <td>{{ $ad->apartment->propertyDetails->garage }}</td>
+                                <td>@if($ad->apartment->propertyDetails->garage == 1)
+                                        <span data-feather="check"></span>
+                                    @else
+                                        <span data-feather="x"></span>
+                                    @endif
+                                </td>
                             </tr>
                             <tr>
                                 <th>Zateplený objekt</th>
-                                <td>{{ $ad->apartment->propertyDetails->insulated }}</td>
+                                <td>@if($ad->apartment->propertyDetails->insulated == 1)
+                                        <span data-feather="check"></span>
+                                    @else
+                                        <span data-feather="x"></span>
+                                    @endif
+                                </td>
                             </tr>
                             <tr>
                                 <th>Vykurovanie</th>
@@ -162,20 +231,25 @@
                                 <td>{{ $ad->estate->type }}</td>
                             </tr>
                             <tr>
-                                <th>Rozloha (ár)</th>
-                                <td>{{ $ad->estate->area_ares }}</td>
+                                <th>Rozloha</th>
+                                <td>{{ $ad->estate->area_ares }} m<sup>2</sup></td>
                             </tr>
                             <tr>
-                                <th>Cena (€/ár)</th>
-                                <td>{{ $ad->estate->price_per_ares }}</td>
+                                <th>Cena (€/m<sup>2</sup>)</th>
+                                <td>{{ $ad->estate->price_per_ares }} €/m<sup>2</sup></td>
                             </tr>
                         @endisset
                     </table>
                 </div>
-                <div class="row my-3">
+                <div class="row my-3 mx-0">
+                    <h4 class="table"><strong>POPIS NEHNUTEĽNOSTI:</strong> <br></h4><br>
+                    <textarea id="notes" readonly rows="10" cols="150"
+                              style="max-width: 90%">{{ $ad->notes }}</textarea>
+                </div>
+                <div class="row my-3 mx-0">
                     <table class="table table-striped" style="width:90%; align-items: center;">
                         <tr>
-                            <th>Autor</th>
+                            <th style="width: 24.7%;">Autor</th>
                             <td>{{ $ad->user->surname.' '.$ad->user->lastname }}</td>
                         </tr>
                         <tr>
@@ -188,34 +262,29 @@
                         </tr>
                         <tr>
                             <th>Webová stránka</th>
-                            <td><a href="http://{{ $ad->user->realEstateOffice->web }}">
-                                    @isset($ad->user->realEstateOffice){{ $ad->user->realEstateOffice->web }}
+                            <td>@isset($ad->user->realEstateOffice) <a href="http://{{ $ad->user->realEstateOffice->web }}">
+                                    {{ $ad->user->realEstateOffice->web }}
                                 </a> @endisset
                             </td>
                         </tr>
                     </table>
                 </div>
-                <div class="row my-3">
-                    <label class="table"><strong>Popis nehnuteľnosti:</strong> <br></label><br>
-                    <textarea id="notes" readonly rows="10" cols="100"
-                              style="max-width: 100%">{{ $ad->notes }}</textarea>
-                </div>
             </div>
-            <div class="col-md-5 border-dark border">
+            <div class="col-md-5">
                 @if(($user->id == $ad->user_id) || (strcmp($user->status,'správca') == 0))
-                    <div class="row">
+                    <div class="row m-0">
                         <form method="post" action="{{ route('user.ads.store_image', $ad->id) }}"
                               enctype="multipart/form-data">
                             @csrf
                             <label>Pridať obrázok</label>
                             <div class="row">
-                                <div class="form-group col-md-4">
-                                    <input type="file" name="photos[]" multiple>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-4">
-                                    <button type="submit" class="btn btn-primary text-white">Pridať</button>
+                                <div class="form-group">
+                                    <div class="form-group col-md-6 float-left">
+                                        <input type="file" name="photos[]" multiple>
+                                    </div>
+                                    <div class="form-group col-md-6 float-left">
+                                        <button type="submit" class="btn btn-primary text-white">Pridať</button>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -225,7 +294,7 @@
                     @foreach ($images as $image)
                         <div class="col-md-12 pb-3">
                             <img src="{{ URL::asset($path.$image->name) }}" alt="{{ URL::asset($path.$image->name) }}"
-                                 @php $image->image_string @endphp style="max-width: 85%; max-height: 600px">
+                                 @php $image->image_string @endphp style="max-width: 90%; max-height: 600px">
                             @if(($user->id == $ad->user_id) || (strcmp($user->status,'správca') == 0))
                                 <form action="{{ route('user.ads.delete_image', $image) }}" method="post"
                                       class="float-right">

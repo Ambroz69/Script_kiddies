@@ -19,7 +19,7 @@
   --white: #fff;
   --gray: #6c757d;
   --gray-dark: #343a40;
-  --primary: #f66D9b;
+  --primary: #43425D;
   --secondary: #43425D;
   --success: #38c172;
   --info: #8461A0;
@@ -178,14 +178,14 @@ sup {
 }
 
 a {
-  color: #f66D9b;
+  color: #43425D;
   text-decoration: none;
   background-color: transparent;
   -webkit-text-decoration-skip: objects;
 }
 
 a:hover {
-  color: #f2256a;
+  color: #9290E2;
   text-decoration: underline;
 }
 
