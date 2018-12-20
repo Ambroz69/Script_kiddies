@@ -15,8 +15,10 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->user()->isAdmin == 1) {
-            return $next($request);
+        if (auth()->check()) {
+            if (auth()->user()->isAdmin == 1) {
+                return $next($request);
+            }
         }
         //return redirect('home')->with('error','Nemáte oprávnený prístup!');
         return abort(404);

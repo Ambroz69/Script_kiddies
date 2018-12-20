@@ -11,11 +11,11 @@
     <label for="price">Cena:</label>
     <div class="row">
         <div id="price" class="form-group col-md-6 float-left">
-            <input id="price_min" type="number" class="form-control" name="price_min" placeholder="od"
+            <input id="price_min" type="number" min="0" class="form-control" name="price_min" placeholder="od"
                    value="{{ $filter_data['price_min'] }}">
         </div>
         <div class="form-group col-md-6 float-right">
-            <input id="price_max" type="number" class="form-control" name="price_max" placeholder="do"
+            <input id="price_max" type="number" min="0" class="form-control" name="price_max" placeholder="do"
                    value="{{ $filter_data['price_max'] }}">
         </div>
     </div>
@@ -63,22 +63,22 @@
         <label for="ap__area">Výmera (m<sup>2</sup>):</label>
         <div class="row">
             <div id="ap__area" class="form-group col-md-6 float-left">
-                <input id="ap__area_square_meters_min" type="number" class="form-control" name="ap__area_square_meters_min" placeholder="od">
+                <input id="ap__area_square_meters_min" type="number" min="0" class="form-control" name="ap__area_square_meters_min" placeholder="od">
             </div>
             <div class="form-group col-md-6 float-right">
-                <input id="ap__area_square_meters_max" type="number" class="form-control" name="ap__area_square_meters_max" placeholder="do">
+                <input id="ap__area_square_meters_max" type="number" min="0" class="form-control" name="ap__area_square_meters_max" placeholder="do">
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-12">
                 <label for="a__room_count">Počet izieb:</label>
-                <input id="a__room_count" type="number" class="form-control" name="a__room_count">
+                <input id="a__room_count" type="number" min="0" class="form-control" name="a__room_count">
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-12">
                 <label for="a__floor">Poschodie:</label>
-                <input id="a__floor" type="number" class="form-control" name="a__floor" placeholder="pre prízemie zadajte 0">
+                <input id="a__floor" type="number" min="0" class="form-control" name="a__floor" placeholder="pre prízemie zadajte 0">
             </div>
         </div>
         <div class="row">
@@ -182,16 +182,16 @@
         <label for="hp__area">Výmera (m<sup>2</sup>):</label>
         <div class="row">
             <div id="hp__area" class="form-group col-md-6 float-left">
-                <input id="hp__area_square_meters_min" type="number" class="form-control" name="hp__area_square_meters_min" placeholder="od">
+                <input id="hp__area_square_meters_min" type="number" min="0" class="form-control" name="hp__area_square_meters_min" placeholder="od">
             </div>
             <div class="form-group col-md-6 float-right">
-                <input id="hp__area_square_meters_max" type="number" class="form-control" name="hp__area_square_meters_max" placeholder="do">
+                <input id="hp__area_square_meters_max" type="number" min="0" class="form-control" name="hp__area_square_meters_max" placeholder="do">
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-12">
                 <label for="h__floor_count">Počet podlaží:</label>
-                <input id="h__floor_count" type="number" class="form-control" name="h__floor_count">
+                <input id="h__floor_count" type="number" min="0" class="form-control" name="h__floor_count">
             </div>
         </div>
         <div class="row">
@@ -326,20 +326,20 @@
         <label for="e__area">Rozloha (m<sup>2</sup>):</label>
         <div class="row">
             <div id="e__area" class="form-group col-md-6 float-left">
-                <input id="e__area_ares_min" type="number" class="form-control" name="e__area_ares_min" placeholder="od">
+                <input id="e__area_ares_min" type="number" min="0" class="form-control" name="e__area_ares_min" placeholder="od">
             </div>
             <div class="form-group col-md-6 float-right">
-                <input id="e__area_ares_max" type="number" class="form-control" name="e__area_ares_max" placeholder="do">
+                <input id="e__area_ares_max" type="number" min="0" class="form-control" name="e__area_ares_max" placeholder="do">
             </div>
         </div>
         <label for="e__price_per_ares">Cena za m<sup>2</sup>:</label>
         <div class="row">
             <div id="e__price_per_ares" class="form-group col-md-6 float-left">
-                <input id="e__price_per_ares_min" type="number" class="form-control" name="e__price_per_ares_min"
+                <input id="e__price_per_ares_min" type="number" min="0" class="form-control" name="e__price_per_ares_min"
                        placeholder="od">
             </div>
             <div class="form-group col-md-6 float-right">
-                <input id="e__price_per_ares_max" type="number" class="form-control" name="e__price_per_ares_max"
+                <input id="e__price_per_ares_max" type="number" min="0" class="form-control" name="e__price_per_ares_max"
                        placeholder="do">
             </div>
         </div>

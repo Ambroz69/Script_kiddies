@@ -74,7 +74,7 @@
 
                 @else
                     <div>
-                        <label>Nieste členom RK. Pre vytvorenie RK alebo prehľadávanie existujúcich RK kliknite
+                        <label>Nieste členom Realitnej kancelárie. Pre vytvorenie RK alebo prehľadávanie existujúcich RK, kliknite
                             <a href="{{ route('user.office') }}"><strong>TU</strong></a></label>
                     </div>
                 @endif

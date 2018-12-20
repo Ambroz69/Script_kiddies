@@ -25,12 +25,12 @@
         @endauth
         @guest
             <li class="nav-item text-nowrap pr-3">
-                <a class="nav-link" href="{{ route('login') }}">
+                <a class="nav-link" href="{{ route('login') }}" style="color: white">
                     {{ __('PRIHLÁSENIE') }}
                 </a>
             </li>
             <li class="nav-item text-nowrap pr-3">
-                <a class="nav-link" href="{{ route('register') }}">
+                <a class="nav-link" href="{{ route('register') }}" style="color: white">
                     {{ __('REGISTRÁCIA') }}
                 </a>
             </li>

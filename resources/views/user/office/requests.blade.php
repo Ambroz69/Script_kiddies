@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 @if($remains == 0)
-                    <label>PLACEHOLDER Žiadne nové žiadosti.</label>
+                    <label>Žiadne nové žiadosti.</label>
                 @endif
                 @while($remains > 0)
                     @if(($i % 4) == 0)

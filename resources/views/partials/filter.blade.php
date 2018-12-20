@@ -9,10 +9,10 @@
     <label for="price">Cena:</label>
     <div class="row">
         <div id="price" class="form-group col-md-6 float-left">
-            <input id="price_min" type="text" class="form-control" name="price_min" placeholder="od">
+            <input id="price_min" type="number" min="0" class="form-control" name="price_min" placeholder="od">
         </div>
         <div class="form-group col-md-6 float-right">
-            <input id="price_max" type="text" class="form-control" name="price_max" placeholder="do">
+            <input id="price_max" type="number" min="0" class="form-control" name="price_max" placeholder="do">
         </div>
     </div>
     <div class="row">

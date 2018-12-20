@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\URL;
 use Khill\Lavacharts\Laravel\LavachartsServiceProvider;
 use Orchestra\Parser\Xml\Facade as XmlParser;
 use Khill\Lavacharts\Lavacharts;
+use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
@@ -40,11 +41,20 @@ class HomeController extends Controller
     {
         $piechart_data = DB::table('ads')->leftJoin('addresses','address_id','=','addresses.id')
         ->select(DB::raw('region, count(*) as ads_count '))->groupBy('region')->get();
+        $barchart_data_h = DB::table('ads')->select(DB::raw('count(*) as house_count'))
+            ->where('house_id','NOT LIKE',null)->get();
+        $barchart_data_a = DB::table('ads')->select(DB::raw('count(*) as apartment_count'))
+            ->where('apartment_id','NOT LIKE',null)->get();
+        $barchart_data_e = DB::table('ads')->select(DB::raw('count(*) as estate_count'))
+            ->where('estate_id','NOT LIKE',null)->get();
+        $barchart_data_h = $barchart_data_h[0]->house_count;
+        $barchart_data_a = $barchart_data_a[0]->apartment_count;
+        $barchart_data_e = $barchart_data_e[0]->estate_count;
+
 
         $lava = new Lavacharts;
         $data = $lava->DataTable();
-        $data->addStringColumn('Regions')
-            ->addNumberColumn('Ads count');
+        $data->addStringColumn('Regions')->addNumberColumn('Ads count');
 
         for($i = 0; $i < count($piechart_data); $i++) {
             $data->addRow([$piechart_data[$i]->region, $piechart_data[$i]->ads_count]);
@@ -53,7 +63,23 @@ class HomeController extends Controller
         $piechart = $lava->PieChart('piechart', $data, [
             'title' => 'Počet inzerátov v jednotlivých krajoch',
             'chartArea' => ['width' => '100%', 'height' => '80%'],
-            'legend' => ['position' => 'bottom']
+            'legend' => ['position' => 'bottom'],
+            'fontSize' => '15',
+            'backgroundColor' => '#dbdcff' #f8fafc
+        ]);
+
+        $data2 = $lava->DataTable();
+        $data2->addStringColumn('Property type')->addNumberColumn('Počet inzerátov');
+        $data2->addRow(['Domy',$barchart_data_h]);
+        $data2->addRow(['Byty',$barchart_data_a]);
+        $data2->addRow(['Pozemky',$barchart_data_e]);
+
+        $barchart = $lava->BarChart('barchart', $data2, [
+            'title' => 'Typy nehnuteľností',
+            'chartArea' => ['width' => '100%', 'height' => '80%'],
+            'legend' => ['position' => 'bottom'],
+            'fontSize' => '15',
+            'backgroundColor' => '#dbdcff'
         ]);
 
         return view('user.home', compact('lava'));
@@ -150,6 +176,34 @@ class HomeController extends Controller
 
     public function storeOffice(Request $request)       //vytvorenie novej RK part2
     {
+        $rules = [
+            'name' => 'required|string|max:190|unique:real_estate_offices,name',
+            'web' => 'required|string|max:190',
+            'phone' => 'required|string|max:190',
+            'address_name' => 'required|string|max:190',
+            'address_number' => 'required|integer',
+            'city' => 'required|string|max:190',
+            'zip' => 'required|string|max:190',
+
+        ];
+        $messages = [
+            'required' => 'Vyplňte ":attribute".',
+            'integer' => '":attribute" musí byť celé číslo.',
+            'string' => 'Neznáme znaky v poli ":attribute".',
+            'max' => 'Maximálny počet znakov v poli ":attribute" je :max.',
+            'unique' => 'Názov Realitnej kancelárie je obsadený.'
+        ];
+        $attributes = [
+            'name' => 'Názov',
+            'web' => 'Webová stránka',
+            'phone' => 'Telefónne číslo',
+            'address_name' => 'Ulica',
+            'address_number' => 'Číslo',
+            'city' => 'Mesto',
+            'zip' => 'PSČ',
+        ];
+        Validator::make($request->all(), $rules, $messages, $attributes)->validate();
+
         $statement = DB::select("show table status like 'addresses'");
         $address_id = $statement[0]->Auto_increment;
         $statement2 = DB::select("show table status like 'real_estate_offices'");
@@ -188,6 +242,32 @@ class HomeController extends Controller
 
     public function updateOffice(Request $request, User $user)      //upravenie RK part2 (iba pre spravcu RK))
     {
+        $rules = [
+            'name' => 'required|string|max:190',
+            'web' => 'required|string|max:190',
+            'phone' => 'required|string|max:190',
+            'address_name' => 'required|string|max:190',
+            'address_number' => 'required|integer',
+            'city' => 'required|string|max:190',
+            'zip' => 'required|string|max:190',
+
+        ];
+        $messages = [
+            'required' => 'Vyplňte ":attribute".',
+            'integer' => '":attribute" musí byť celé číslo.',
+            'string' => 'Neznáme znaky v poli ":attribute".',
+            'max' => 'Maximálny počet znakov v poli ":attribute" je :max.'
+        ];
+        $attributes = [
+            'name' => 'Názov',
+            'web' => 'Webová stránka',
+            'phone' => 'Telefónne číslo',
+            'address_name' => 'Ulica',
+            'address_number' => 'Číslo',
+            'city' => 'Mesto',
+            'zip' => 'PSČ',
+        ];
+        Validator::make($request->all(), $rules, $messages, $attributes)->validate();
 
         $office = $user->realEstateOffice;
         $address = $user->realEstateOffice->address;
@@ -362,6 +442,127 @@ class HomeController extends Controller
 
     public function storeAd(Request $request)       //vytvorenie noveho inzeratu part2
     {
+        switch ($request->property_type) {
+            case "byt":
+                $rules = [
+                    'description' => 'required|string|max:500',
+                    'price' => 'required|integer',
+                    'address_name' => 'required|string|max:190',
+                    'address_number' => 'required|integer',
+                    'city' => 'required|string|max:190',
+                    'zip' => 'required|string|max:190',
+                    'notes' => 'required|string|max:5000',
+                    'a_room_count' => 'required|integer',
+                    'a_floor' => 'required|integer',
+                    'a_area_square_meters' => 'required|integer',
+
+                ];
+                $messages = [
+                    'required' => 'Vyplňte ":attribute".',
+                    'integer' => '":attribute" musí byť celé číslo.',
+                    'string' => 'Neznáme znaky v poli ":attribute".',
+                    'max' => 'Maximálny počet znakov v poli ":attribute" je :max.'
+                ];
+                $attributes = [
+                    'description' => 'Názov',
+                    'price' => 'Cena',
+                    'address_name' => 'Ulica',
+                    'address_number' => 'Číslo',
+                    'city' => 'Mesto',
+                    'zip' => 'PSČ',
+                    'notes' => 'Popis',
+                    'a_room_count' => 'Počet izieb',
+                    'a_floor' => 'Poschodie',
+                    'a_area_square_meters' => 'Výmera',
+                ];
+                Validator::make($request->all(), $rules, $messages, $attributes)->validate();
+                break;
+
+            case "dom":
+                $rules = [
+                    'description' => 'required|string|max:500',
+                    'price' => 'required|integer',
+                    'address_name' => 'required|string|max:190',
+                    'address_number' => 'required|integer',
+                    'city' => 'required|string|max:190',
+                    'zip' => 'required|string|max:190',
+                    'notes' => 'required|string|max:5000',
+                    'h_floor_count' => 'required|integer',
+                    'h_area_square_meters' => 'required|integer',
+                    'h_garden' => 'required|integer',
+
+                ];
+                $messages = [
+                    'required' => 'Vyplňte ":attribute".',
+                    'integer' => '":attribute" musí byť celé číslo.',
+                    'string' => 'Neznáme znaky v poli ":attribute".',
+                    'max' => 'Maximálny počet znakov v poli ":attribute" je :max.'
+                ];
+                $attributes = [
+                    'description' => 'Názov',
+                    'price' => 'Cena',
+                    'address_name' => 'Ulica',
+                    'address_number' => 'Číslo',
+                    'city' => 'Mesto',
+                    'zip' => 'PSČ',
+                    'notes' => 'Popis',
+                    'h_floor_count' => 'Počet poschodí',
+                    'h_area_square_meters' => 'Výmera',
+                    'h_garden' => 'Záhrada',
+                ];
+                Validator::make($request->all(), $rules, $messages, $attributes)->validate();
+                break;
+
+            case "pozemok":
+                $rules = [
+                    'description' => 'required|string|max:500',
+                    'price' => 'required|integer',
+                    'address_name' => 'required|string|max:190',
+                    'address_number' => 'required|integer',
+                    'city' => 'required|string|max:190',
+                    'zip' => 'required|string|max:190',
+                    'notes' => 'required|string|max:5000',
+                    'e_area_ares' => 'required|integer',
+                    'e_price_per_ares' => 'required|integer',
+
+
+                ];
+                $messages = [
+                    'required' => 'Vyplňte ":attribute".',
+                    'integer' => '":attribute" musí byť celé číslo.',
+                    'string' => 'Neznáme znaky v poli ":attribute".',
+                    'max' => 'Maximálny počet znakov v poli ":attribute" je :max.'
+                ];
+                $attributes = [
+                    'description' => 'Názov',
+                    'price' => 'Cena',
+                    'address_name' => 'Ulica',
+                    'address_number' => 'Číslo',
+                    'city' => 'Mesto',
+                    'zip' => 'PSČ',
+                    'notes' => 'Popis',
+                    'e_area_ares' => 'Rozloha',
+                    'e_price_per_ares' => 'Cena za Ár',
+                ];
+                Validator::make($request->all(), $rules, $messages, $attributes)->validate();
+                break;
+
+            default:
+                $rules = [
+                    'property_type' => 'required',
+                ];
+                $messages = [
+                    'required' => 'Vyplňte ":attribute".',
+                ];
+                $attributes = [
+                    'property_type' => 'Druh nehnuteľnosti',
+
+                ];
+                $janka=array($request->property_type);
+                Validator::make($janka, $rules, $messages, $attributes)->validate();
+                break;
+        }
+
         $statement = DB::select("show table status like 'addresses'");
         $address_id = $statement[0]->Auto_increment;
 
@@ -427,7 +628,7 @@ class HomeController extends Controller
                 $house = new House();
                 $house->floor_count = $request->get('h_floor_count');
                 $house->terrace = $request->get('h_terrace');
-                $house->garden = $request->get('h_gardedn');
+                $house->garden = $request->get('h_garden');
                 $house->property_details_id = $property_details_id;
                 $house->save();
 
@@ -532,6 +733,126 @@ class HomeController extends Controller
 
     public function updateAd(Request $request, Ad $ad)      //uprava inzeratu part2
     {
+        switch ($request->property_type) {
+            case "byt":
+                $rules = [
+                    'description' => 'required|string|max:500',
+                    'price' => 'required|integer',
+                    'address_name' => 'required|string|max:190',
+                    'address_number' => 'required|integer',
+                    'city' => 'required|string|max:190',
+                    'zip' => 'required|string|max:190',
+                    'notes' => 'required|string|max:5000',
+                    'a_room_count' => 'required|integer',
+                    'a_floor' => 'required|integer',
+                    'a_area_square_meters' => 'required|integer',
+
+                ];
+                $messages = [
+                    'required' => 'Vyplňte ":attribute".',
+                    'integer' => '":attribute" musí byť celé číslo.',
+                    'string' => 'Neznáme znaky v poli ":attribute".',
+                    'max' => 'Maximálny počet znakov v poli ":attribute" je :max.'
+                ];
+                $attributes = [
+                    'description' => 'Názov',
+                    'price' => 'Cena',
+                    'address_name' => 'Ulica',
+                    'address_number' => 'Číslo',
+                    'city' => 'Mesto',
+                    'zip' => 'PSČ',
+                    'notes' => 'Popis',
+                    'a_room_count' => 'Počet izieb',
+                    'a_floor' => 'Poschodie',
+                    'a_area_square_meters' => 'Výmera',
+                ];
+                Validator::make($request->all(), $rules, $messages, $attributes)->validate();
+                break;
+
+            case "dom":
+                $rules = [
+                    'description' => 'required|string|max:500',
+                    'price' => 'required|integer',
+                    'address_name' => 'required|string|max:190',
+                    'address_number' => 'required|integer',
+                    'city' => 'required|string|max:190',
+                    'zip' => 'required|string|max:190',
+                    'notes' => 'required|string|max:5000',
+                    'h_floor_count' => 'required|integer',
+                    'h_area_square_meters' => 'required|integer',
+                    'h_garden' => 'required|integer',
+
+                ];
+                $messages = [
+                    'required' => 'Vyplňte ":attribute".',
+                    'integer' => '":attribute" musí byť celé číslo.',
+                    'string' => 'Neznáme znaky v poli ":attribute".',
+                    'max' => 'Maximálny počet znakov v poli ":attribute" je :max.'
+                ];
+                $attributes = [
+                    'description' => 'Názov',
+                    'price' => 'Cena',
+                    'address_name' => 'Ulica',
+                    'address_number' => 'Číslo',
+                    'city' => 'Mesto',
+                    'zip' => 'PSČ',
+                    'notes' => 'Popis',
+                    'h_floor_count' => 'Počet poschodí',
+                    'h_area_square_meters' => 'Výmera',
+                    'h_garden' => 'Záhrada',
+                ];
+                Validator::make($request->all(), $rules, $messages, $attributes)->validate();
+                break;
+
+            case "pozemok":
+                $rules = [
+                    'description' => 'required|string|max:500',
+                    'price' => 'required|integer',
+                    'address_name' => 'required|string|max:190',
+                    'address_number' => 'required|integer',
+                    'city' => 'required|string|max:190',
+                    'zip' => 'required|string|max:190',
+                    'notes' => 'required|string|max:5000',
+                    'e_area_ares' => 'required|integer',
+                    'e_price_per_ares' => 'required|integer',
+
+
+                ];
+                $messages = [
+                    'required' => 'Vyplňte ":attribute".',
+                    'integer' => '":attribute" musí byť celé číslo.',
+                    'string' => 'Neznáme znaky v poli ":attribute".',
+                    'max' => 'Maximálny počet znakov v poli ":attribute" je :max.'
+                ];
+                $attributes = [
+                    'description' => 'Názov',
+                    'price' => 'Cena',
+                    'address_name' => 'Ulica',
+                    'address_number' => 'Číslo',
+                    'city' => 'Mesto',
+                    'zip' => 'PSČ',
+                    'notes' => 'Popis',
+                    'e_area_ares' => 'Rozloha',
+                    'e_price_per_ares' => 'Cena za Ár',
+                ];
+                Validator::make($request->all(), $rules, $messages, $attributes)->validate();
+                break;
+
+            default:
+                $rules = [
+                    'property_type' => 'required',
+                ];
+                $messages = [
+                    'required' => 'Vyplňte ":attribute".',
+                ];
+                $attributes = [
+                    'property_type' => 'Druh nehnuteľnosti',
+
+                ];
+                $janka=array($request->property_type);
+                Validator::make($janka, $rules, $messages, $attributes)->validate();
+                break;
+        }
 
         $ad_id = $ad->id;
         $ad = Ad::where('id', $ad_id)->first()->load('address', 'user', 'house.propertyDetails', 'apartment.propertyDetails', 'estate');
@@ -624,7 +945,10 @@ class HomeController extends Controller
         $ads_selected = Ad::with('address', 'user', 'house.propertyDetails', 'apartment.propertyDetails', 'estate')
             ->whereHas('user', function ($q) use ($office_id) {
                 $q->where('real_estate_office_id', $office_id);
+            })->whereHas('user', function ($q) {
+                $q->where('status','NOT LIKE', '%čakajúci%');
             })->get()->toArray();
+        //return dd($ads_selected);
         $employees = User::where('real_estate_office_id', $office_id)->where('real_estate_office_id','NOT LIKE', null)->get();
 
         $path = Storage::url('ad_images/');

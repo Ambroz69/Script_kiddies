@@ -13,7 +13,7 @@
                     </div>
                     <div class="col-md-2 float-right pr-0">
                         <a role="button" class="btn btn-secondary btn-block" href="{{ route('home') }}">
-                            Non-admin
+                            Prehľadávanie inzerátov
                         </a>
                     </div>
                 </div>

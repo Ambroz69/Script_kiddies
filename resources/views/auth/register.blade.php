@@ -1,5 +1,14 @@
 @extends('auth.layouts.app')
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="" style="padding-top: 25%">
         <div class="mb-3">
             <h1 style="font-family: 'Open Sans', sans-serif; font-size: 35px; color: #43425D; letter-spacing: 5px;">
@@ -86,8 +95,8 @@
                     </div>
                     <div class="row mt-4 mx-0">
                         <div class="form-check" style="margin-left:20px; padding-left: 0;">
-                            <input class="form-check-input" type="checkbox" name="checkbox"
-                                   id="option" {{ old('option') ? 'checked' : '' }}>
+                            <input class="form-check-input" type="checkbox" name="option"
+                                   id="option" value="1">
 
                             <label class="form-check-label" for="option">
                                 {{ __('Súhlasím so zmluvnými podmienkami') }}

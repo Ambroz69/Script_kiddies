@@ -10,7 +10,7 @@
                             <table class="table table-striped"
                                    style="width:100%; align-items: center; margin-bottom: 2em">
                                 <tr>
-                                    <th style="background-color: #3B3B53 !important; height: 2rem; color: white">
+                                    <th style="background-color: #3B3B53 !important; height: 2rem; color: white; width: 35%">
                                         Realitná kancelária
                                     </th>
                                     <td style="background-color: #3B3B53 !important"></td>
@@ -33,7 +33,7 @@
                             <table class="table table-striped"
                                    style="width:100%; align-items: center; margin-bottom: 2em">
                                 <tr>
-                                    <th style="background-color: #3B3B53 !important; height: 2rem; color: white">
+                                    <th style="background-color: #3B3B53 !important; height: 2rem; color: white; width: 35%">
                                         Adresa
                                     </th>
                                     <td style="background-color: #3B3B53 !important"></td>

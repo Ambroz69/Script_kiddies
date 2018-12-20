@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
@@ -20,9 +21,9 @@ class HomeController extends Controller
         $all_ads = Ad::all()->toArray();
         $images = Image::with('ad')->get()->toArray();
         $ad = $all_ads_paginated;
-        for($i = 0; $i < count($all_ads_paginated['data']); $i++) {
+        for ($i = 0; $i < count($all_ads_paginated['data']); $i++) {
             $count = 0;
-            for($j = 0; $j < count($images); $j++) {
+            for ($j = 0; $j < count($images); $j++) {
                 if ($all_ads_paginated['data'][$i]['id'] == $images[$j]['ad_id']) {
                     $ad['data'][$i]['image_name'] = $images[$j]['name'];
                     $count++;
@@ -33,20 +34,21 @@ class HomeController extends Controller
         }
         $links = Ad::paginate(7)->links();
         //return dd($links);
-        return view('home', compact('ad','path','links'));
+        return view('home', compact('ad', 'path', 'links'));
     }
 
     public function showAd($id)
     {
-        $ad = Ad::all()->load('address','user.realEstateOffice', 'user.realEstateOffice.address',
+        $ad = Ad::all()->load('address', 'user.realEstateOffice', 'user.realEstateOffice.address',
             'house.propertyDetails', 'apartment.propertyDetails', 'estate')->where('id', $id)->first();
-        $images = Image::all()->where('ad_id','==',$id);
+        $images = Image::all()->where('ad_id', '==', $id);
         $path = Storage::url('ad_images/');
         //return dd($path);
-        return view('details', compact('ad','images', 'path'));
+        return view('details', compact('ad', 'images', 'path'));
     }
 
-    public function relation($row) {
+    public function relation($row)
+    {
         if (strpos($row, 'a__') !== false) return 'apartment';
         if (strpos($row, 'ap__') !== false) return 'apartment.propertyDetails';
         if (strpos($row, 'h__') !== false) return 'house';
@@ -56,24 +58,27 @@ class HomeController extends Controller
         return false;
     }
 
-    public function filterType($row, $int_filters, $bool_filters) {
+    public function filterType($row, $int_filters, $bool_filters)
+    {
         if (strcmp($row, 'property_type') == 0) return 0;      //property_type = specialny pripad
         if (in_array($row, $int_filters)) return 1;                 //je to cislo
         if (in_array($row, $bool_filters)) return 2;                //je to boolean
         return 3;                                                   //je to string
     }
 
-    public function removeRelationTags($row) {
-        if (strpos($row, 'a__') !== false) return substr($row,3);
-        if (strpos($row, 'ap__') !== false) return substr($row,4);
-        if (strpos($row, 'h__') !== false) return substr($row,3);
-        if (strpos($row, 'hp__') !== false) return substr($row,4);
-        if (strpos($row, 'e__') !== false) return substr($row,3);
-        if (strpos($row, 'ad__') !== false) return substr($row,4);
+    public function removeRelationTags($row)
+    {
+        if (strpos($row, 'a__') !== false) return substr($row, 3);
+        if (strpos($row, 'ap__') !== false) return substr($row, 4);
+        if (strpos($row, 'h__') !== false) return substr($row, 3);
+        if (strpos($row, 'hp__') !== false) return substr($row, 4);
+        if (strpos($row, 'e__') !== false) return substr($row, 3);
+        if (strpos($row, 'ad__') !== false) return substr($row, 4);
     }
 
-    public function removeMinMaxTags($row) {
-        return substr($row,0,-4);
+    public function removeMinMaxTags($row)
+    {
+        return substr($row, 0, -4);
     }
 
     public function filter(Request $request)        //here we go
@@ -81,6 +86,7 @@ class HomeController extends Controller
         DB::enableQueryLog();
 
         $filter_data = $request->all();
+        //return dd($filter_data);
         $token = array_shift($filter_data);
 
         $int_filters = array('price_min', 'price_max', 'ap__area_square_meters_min', 'ap__area_square_meters_max', 'hp__area_square_meters_min',
@@ -91,7 +97,7 @@ class HomeController extends Controller
 
         foreach ($filter_data as $filter_key => $filter_value) {
             if ($filter_value != null) {//ak je hodnota null, filter nebol pouzity a netreba ho riesit
-                switch ($this->filterType($filter_key, $int_filters, $bool_filters)){
+                switch ($this->filterType($filter_key, $int_filters, $bool_filters)) {
                     case 0:                                 //ak je filter: typ nehnutelnosti
                         if (strcmp($filter_value, 'byt') == 0)
                             $ads = $ads->where('apartment_ID', 'NOT LIKE', null);
@@ -210,9 +216,9 @@ class HomeController extends Controller
         $all_ads = $ads_filtered;
         $images = Image::with('ad')->get()->toArray();
         $ads_filtered = $all_ads;
-        for($i = 0; $i < count($all_ads); $i++) {
+        for ($i = 0; $i < count($all_ads); $i++) {
             $count = 0;
-            for($j = 0; $j < count($images); $j++) {
+            for ($j = 0; $j < count($images); $j++) {
                 if ($all_ads[$i]['id'] == $images[$j]['ad_id']) {
                     $ads_filtered[$i]['image_name'] = $images[$j]['name'];
                     $count++;
@@ -223,7 +229,7 @@ class HomeController extends Controller
         }
         $query = DB::getQueryLog();
         //return dd($filter_data);
-        return view('filtered', compact('ads_filtered', 'filter_data', 'select_data','path'));
+        return view('filtered', compact('ads_filtered', 'filter_data', 'select_data', 'path'));
 
     }
 }

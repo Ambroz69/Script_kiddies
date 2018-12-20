@@ -1,6 +1,15 @@
 @extends('user.layouts.app')
 @section('title', 'Moj inzerat')
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="container-fluid pt-5">
         <div class="row">
             <div class="col-md-12 mb-3">
@@ -114,13 +123,13 @@
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <label for="a_floor">Poschodie:</label>
-                                    <input id="a_floor" type="text" class="form-control" name="a_floor"
+                                    <input id="a_floor" type="text" class="form-control" name="a_floor" placeholder="pre prízemie vyplňte 0"
                                            value="{{ $ad->apartment->floor }}">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <label for="a_area_square_meters">Výmera:</label>
+                                    <label for="a_area_square_meters">Výmera (m<sup>2</sup>):</label>
                                     <input id="a_area_square_meters" type="text" class="form-control" name="a_area_square_meters"
                                            value="{{ $ad->apartment->propertyDetails->area_square_meters }}">
                                 </div>
@@ -225,15 +234,15 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <label for="h_area_square_meters">Výmera:</label>
+                                    <label for="h_area_square_meters">Výmera (m<sup>2</sup>):</label>
                                     <input id="h_area_square_meters" type="text" class="form-control" name="h_area_square_meters"
                                            value="{{ $ad->house->propertyDetails->area_square_meters }}">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <label for="h_garden">Záhrada:</label>
-                                    <input id="h_garden" type="text" class="form-control" name="h_garden"
+                                    <label for="h_garden">Záhrada (m<sup>2</sup>):</label>
+                                    <input id="h_garden" type="text" class="form-control" name="h_garden" placeholder="pre dom bez záhrady vyplňte 0"
                                            value="{{ $ad->house->garden }}">
                                 </div>
                             </div>

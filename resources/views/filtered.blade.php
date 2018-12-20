@@ -2,6 +2,15 @@
 @section('title', 'Vyhladavanie inzeratov')
 @section('content')
     @php $i = 0; $remains = count($ads_filtered); @endphp
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="container-fluid pt-5">
         <div class="row">
             <div class="col-md-9" style="padding-right: 7.2rem"> <!-- zobrazenie inzeratov -->
